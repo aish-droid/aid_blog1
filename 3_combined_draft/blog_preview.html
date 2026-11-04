@@ -30,7 +30,7 @@
   figure iframe { display: block; width: 100%; border: 0; height: 520px; }
   .flo .flourish-embed { width: 100%; }
   /* Figures 1a and 1b sit side by side, so this figure is wider than the text column */
-  figure#fig-1 { max-width: none; width: min(1160px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); }
+  figure#fig-1, figure#fig-8 { max-width: none; width: min(1160px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); }
   .flo.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
   @media (max-width: 760px) { .flo.pair { grid-template-columns: 1fr; } }
   body:not(.local) iframe.loc, body:not(.local) p.loc { display: none; }
@@ -130,10 +130,10 @@
 <p data-edit>[Text for this section to come.] Figure 8 shows remittances and foreign direct investment received per person, by recipient income group.</p>
 
 <figure class="fig hasflo" id="fig-8">
-  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30807230/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>. Use the switch in the toolbar to see the local stand-in instead.</p>
+  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30807271/edit' target='_blank' rel='noopener noreferrer'>8a remittances</a> on the left and <a href='https://app.flourish.studio/visualisation/30807273/edit' target='_blank' rel='noopener noreferrer'>8b foreign direct investment</a> on the right. Use the switch in the toolbar to see the local stand-in instead.</p>
   <h3 class="ftitle" data-edit>Figure 8: Remittances and foreign direct investment in developing countries, by recipient income group</h3>
-  <p class="fsub" data-edit>Per capita, constant 2024 US$, 1990 to 2024</p>
-  <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30807230"></div></div>
+  <p class="fsub" data-edit>Per capita, constant 2024 US$, 1990 to 2024. Panel a is personal remittances received; panel b is net foreign direct investment inflows.</p>
+  <div class="flo pair"><div class="flourish-embed flourish-chart" data-src="visualisation/30807271"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30807273"></div></div>
   <p class="loc">(No offline copy of this figure: it is shown only from Flourish.)</p>
   <p class="fsrc" data-edit></p>
 </figure>
