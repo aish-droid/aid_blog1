@@ -33,7 +33,7 @@
   figure#fig-1 { max-width: none; width: min(1160px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); }
   .flo.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
   @media (max-width: 760px) { .flo.pair { grid-template-columns: 1fr; } }
-  body:not(.local) iframe.loc { display: none; }
+  body:not(.local) iframe.loc, body:not(.local) p.loc { display: none; }
   /* a Flourish chart carries its own title, subtitle and source, so the page copies only show with the local stand-in */
   body:not(.local) figure.hasflo .ftitle, body:not(.local) figure.hasflo .fsub, body:not(.local) figure.hasflo .fsrc { display: none; }
   body.local .flo { display: none; }
@@ -126,6 +126,16 @@
   <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30804677"></div></div>
   <iframe class="loc" src="blog_figures.html?fig=7" title="Bar chart of the cost of cutting extreme poverty to 1 percent as a share of GDP"></iframe>
   <p class="fsrc" data-edit>Source: Sahoo, Blumenstock, Niehaus, Selker &amp; Wager, NBER Working Paper 34583, Table E.4 (annual policy cost divided by GDP in the survey year; the paper plots the same ratio in Figure 13). Poverty line: $2.15 a day, 2017 PPP (the paper's main case; the $3.00 2021 PPP line would raise costs by 64%). Income class is the World Bank's for 2024 (Ethiopia has no class that year, so its 2023 class is used). All 34 countries in the paper's sample.</p>
+</figure>
+<p data-edit>[Text for this section to come.] Figure 8 shows remittances and foreign direct investment received per person, by recipient income group.</p>
+
+<figure class="fig hasflo" id="fig-8">
+  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30807230/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>. Use the switch in the toolbar to see the local stand-in instead.</p>
+  <h3 class="ftitle" data-edit>Figure 8: Remittances and foreign direct investment in developing countries, by recipient income group</h3>
+  <p class="fsub" data-edit>Per capita, constant 2024 US$, 1990 to 2024</p>
+  <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30807230"></div></div>
+  <p class="loc">(No offline copy of this figure: it is shown only from Flourish.)</p>
+  <p class="fsrc" data-edit></p>
 </figure>
 </article>
 
