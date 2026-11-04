@@ -35,10 +35,6 @@
   figure#fig-1, figure#fig-8 { max-width: none; width: min(1160px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); }
   .flo.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
   @media (max-width: 760px) { .flo.pair { grid-template-columns: 1fr; } }
-  body:not(.local) iframe.loc, body:not(.local) p.loc { display: none; }
-  /* a Flourish chart carries its own title, subtitle and source, so the page copies only show with the local stand-in */
-  body:not(.local) figure.hasflo .ftitle, body:not(.local) figure.hasflo .fsub, body:not(.local) figure.hasflo .fsrc { display: none; }
-  body.local .flo { display: none; }
   .devnote { display: none; font-family: "sofia-pro", "Inter", sans-serif; font-size: 0.75rem; background: #FEE8BF; padding: 4px 10px; margin: 0 0 8px; max-width: none; }
   .devnote a { color: var(--teal); }
   body.notes .devnote { display: block; }
@@ -51,7 +47,6 @@
   <b>Blog draft preview</b>
   <label><input type="checkbox" id="optEdit"> Edit text</label>
   <label><input type="checkbox" id="optNotes"> Show figure notes</label>
-  <label><input type="checkbox" id="optLocal"> Use local stand-ins instead of Flourish</label>
   <button type="button" id="btnDownload">Download edited page</button>
   <button type="button" id="btnReset">Discard my edits</button>
   <span class="hint">Tick "Edit text", then click into any heading, paragraph, figure title or source line. Edits autosave in this browser; the download is a full copy of the page.</span>
@@ -63,33 +58,21 @@
 <p data-edit>If we look at the number of people in extreme poverty by continent, extreme poverty has shifted from Asia to Africa, with East Asia and the Pacific seeing the largest gains in the last 15 years. Regional shares of world extreme poverty moved from 30% to 69% for Sub-Saharan Africa (SSA), from 30% to 7% for South Asia, and from 28% to 6% for East Asia and the Pacific from 2010 to 2024 (Figure 1a). If we look at the shift in the shares of extreme poverty by income class in the same period, the share of middle-income countries (MICs) moved from 74% to 55%, and the share of low-income countries (LICs) moved from 26% to 44% (Figure 1b). The share of extreme poverty in MICs remains high, with five SSA countries - Nigeria, Tanzania, Kenya, Angola, and Ghana accounting for 42% of the extreme poverty count in middle-income countries.</p>
 
 <figure class="fig hasflo" id="fig-1">
-  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30806197/edit' target='_blank' rel='noopener noreferrer'>1a by world region</a> on the left and <a href='https://app.flourish.studio/visualisation/30792818/edit' target='_blank' rel='noopener noreferrer'>1b by income class</a> on the right. Use the switch in the toolbar to see the local stand-in instead.</p>
-  <h3 class="ftitle" data-edit>Figure 1: People Living Below $3 a Day, by World Region and by Country Income Class</h3>
-  <p class="fsub" data-edit>Billions of people, 1990 to 2024. Panel a groups people by world region; panel b by their country's World Bank income class in that year, so its jumps reflect countries being reclassified.</p>
+  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30806197/edit' target='_blank' rel='noopener noreferrer'>1a by world region</a> on the left and <a href='https://app.flourish.studio/visualisation/30792818/edit' target='_blank' rel='noopener noreferrer'>1b by income class</a> on the right.</p>
   <div class="flo pair"><div class="flourish-embed flourish-chart" data-src="visualisation/30806197"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30792818"></div></div>
-  <iframe class="loc" src="blog_figures.html?fig=1" title="Two stacked area charts of people below $3 a day: by world region, and by country income class"></iframe>
-  <p class="fsrc" data-edit>Source: World Bank Poverty and Inequality Platform ($3 a day, 2021 PPP), via Our World in Data for panel a. Panel b groups countries by each country's World Bank income class in that year, so its jumps reflect countries being reclassified, not changes in people's lives; its totals differ slightly from panel a (different aggregations). North America (under 5 million people) is not shown in panel a.</p>
 </figure>
 <h2 data-edit>Is aid flowing to the poorest countries?</h2>
 <p data-edit>Figure 2 plots the aid per person in extreme poverty for middle- and low-income countries by dividing the total Official Development Assistance (ODA) received by countries classified as LICs or MICs in that year by the number of people in extreme poverty in those countries. From 2020 to 2024, for MICs this figure has gone up from $168 to $266, while for LICs it has gone down from $176 to $119, making the MICs/LICs ratio move from 0.95x to 2.23x. Since Ukraine accounts for a large share of the post-2021 increase in aid going to MICs, excluding it moves the MICs/LICs ratio from 0.93x to 1.55x.</p>
 
 <figure class="fig hasflo" id="fig-2">
-  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30792837/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>. Use the switch in the toolbar to see the local stand-in instead.</p>
-  <h3 class="ftitle" data-edit>Figure 2: Aid per Person in Extreme Poverty Has Shifted to Middle-Income Countries</h3>
-  <p class="fsub" data-edit>US$ (2024) of net ODA per person living below $3 a day, 2000 to 2024</p>
+  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30792837/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>.</p>
   <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30792837"></div></div>
-  <iframe class="loc" src="blog_figures.html?fig=2" title="Line chart of ODA per extremely poor person"></iframe>
-  <p class="fsrc" data-edit>Each line is the net ODA received by all countries in an income class, divided by the number of people living below $3 a day in those same countries, using each country's World Bank income class in that year. Middle income combines lower-middle and upper-middle income; the third line removes Ukraine (its aid and its extreme poor) from that group. Source: OECD DAC Table 2A net ODA; World Bank Poverty and Inequality Platform ($3 a day).</p>
 </figure>
 <p data-edit>Figure 3 plots a measure of the progressivity of ODA from 1990 to 2024, which calculates the share of aid going to the poorest recipient countries accounting for 20% of the total population. This figure has decreased from 62% at its peak in 2018 to 46% in 2024. From both Figures 2 and 3, the trends in aid going to the poorest countries are declining. The World Bank’s IDA arm that lends to the poorest countries shows a similar picture. Mathiasen, Landers, and Martinez (2026) find that across FY20-25, 42% of IDA financing volumes go to gap and blend countries on average, leaving only 54% for IDA-only countries. In FY25, countries above the operational income threshold ($1,335 for FY25) received 38% of the grant element in IDA (Figure 4).</p>
 
 <figure class="fig hasflo" id="fig-3">
-  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30792841/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>. Use the switch in the toolbar to see the local stand-in instead.</p>
-  <h3 class="ftitle" data-edit>Figure 3: Share of Net ODA Going to the Poorest Recipient Countries</h3>
-  <p class="fsub" data-edit>% of net ODA, 1990 to 2024</p>
+  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30792841/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>.</p>
   <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30792841"></div></div>
-  <iframe class="loc" src="blog_figures.html?fig=3" title="Line chart of the share of net ODA going to the poorest recipient countries"></iframe>
-  <p class="fsrc" data-edit>The poorest recipient countries are those which, ranked by GNI per capita from the poorest, together hold 20% of the population of all aid recipients. Source: Authors' calculations (Appendix A.2, Appendix Figure 1).</p>
 </figure>
 
 <figure class="fig" id="fig-4">
@@ -122,22 +105,14 @@
 <p data-edit>[Text for this section to come.] Figure 7 shows the annual cost of the transfer policy that would cut extreme poverty to 1%, as a share of each country's GDP.</p>
 
 <figure class="fig hasflo" id="fig-7">
-  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30804677/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>. Use the switch in the toolbar to see the local stand-in instead.</p>
-  <h3 class="ftitle" data-edit>Figure 7: Cost of Cutting Extreme Poverty to 1%, as a Share of GDP</h3>
-  <p class="fsub" data-edit>Annual cost of the poverty-minimising transfer policy ($2.15 a day, 2017 PPP) as a percent of GDP, 34 countries by World Bank income class</p>
+  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30804677/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>.</p>
   <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30804677"></div></div>
-  <iframe class="loc" src="blog_figures.html?fig=7" title="Bar chart of the cost of cutting extreme poverty to 1 percent as a share of GDP"></iframe>
-  <p class="fsrc" data-edit>Source: Sahoo, Blumenstock, Niehaus, Selker &amp; Wager, NBER Working Paper 34583, Table E.4 (annual policy cost divided by GDP in the survey year; the paper plots the same ratio in Figure 13). Poverty line: $2.15 a day, 2017 PPP (the paper's main case; the $3.00 2021 PPP line would raise costs by 64%). Income class is the World Bank's for 2024 (Ethiopia has no class that year, so its 2023 class is used). All 34 countries in the paper's sample.</p>
 </figure>
 <p data-edit>[Text for this section to come.] Figure 8 shows remittances and foreign direct investment received per person, by recipient income group.</p>
 
 <figure class="fig hasflo" id="fig-8">
-  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30807271/edit' target='_blank' rel='noopener noreferrer'>8a remittances</a> on the left and <a href='https://app.flourish.studio/visualisation/30807273/edit' target='_blank' rel='noopener noreferrer'>8b foreign direct investment</a> on the right. Use the switch in the toolbar to see the local stand-in instead.</p>
-  <h3 class="ftitle" data-edit>Figure 8: Remittances and foreign direct investment in developing countries, by recipient income group</h3>
-  <p class="fsub" data-edit>Per capita, constant 2024 US$, 1990 to 2024. Panel a is personal remittances received; panel b is net foreign direct investment inflows.</p>
+  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30807271/edit' target='_blank' rel='noopener noreferrer'>8a remittances</a> on the left and <a href='https://app.flourish.studio/visualisation/30807273/edit' target='_blank' rel='noopener noreferrer'>8b foreign direct investment</a> on the right.</p>
   <div class="flo pair"><div class="flourish-embed flourish-chart" data-src="visualisation/30807271"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30807273"></div></div>
-  <p class="loc">(No offline copy of this figure: it is shown only from Flourish.)</p>
-  <p class="fsrc" data-edit></p>
 </figure>
 </article>
 
@@ -155,8 +130,6 @@ EDITABLE.forEach((el, i) => {
 const edit = document.getElementById("optEdit"), notes = document.getElementById("optNotes");
 edit.addEventListener("change", () => { document.body.classList.toggle("editing", edit.checked); EDITABLE.forEach(el => el.contentEditable = edit.checked ? "true" : "false"); });
 notes.addEventListener("change", () => document.body.classList.toggle("notes", notes.checked));
-const local = document.getElementById("optLocal");
-local.addEventListener("change", () => document.body.classList.toggle("local", local.checked));
 document.getElementById("btnReset").addEventListener("click", () => {
   if (!confirm("Discard all edits made in this browser and reload the original text?")) return;
   try { localStorage.removeItem(KEY); } catch (e) {} location.reload();
