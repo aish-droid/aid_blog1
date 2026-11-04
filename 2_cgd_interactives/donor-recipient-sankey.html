@@ -165,17 +165,18 @@ function init(DATA) {
   }
 
   let sel = null;   // {side:"L", id} for a donor, {side:"R", key} for a recipient group
+  let autoSel = false;   // true while the selection is only the load-time default: its detail panel shows, but no flow is dimmed
   const isSel = d => sel && ((sel.side === "L" && d.side === "L" && d.id === sel.id) ||
                              (sel.side === "R" && d.side === "R" && d.key === sel.key));
   function clearSel() {
     if (!sel) return;
-    sel = null; subSel = null; hideTip(); render();
+    sel = null; autoSel = false; subSel = null; hideTip(); render();
     track("detail_close", "selection_clear");
   }
   function toggle(d) {
     if (isSel(d)) return clearSel();
     sel = d.side === "L" ? {side: "L", id: d.id} : {side: "R", key: d.key};
-    subSel = null; hideTip(); render();
+    autoSel = false; subSel = null; hideTip(); render();
     track("detail_open", d.side === "L" ? "donor_node" : "recipient_node", d.side === "L" ? d.name : d.key);
   }
   const linkSel = l => sel && ((sel.side === "L" && l.d === sel.id) ||
@@ -237,7 +238,7 @@ function init(DATA) {
       .attr("stroke-width", d => Math.max(0.6, d.width))
       .attr("stroke", d => groupColor(d.d))
       .attr("stroke-opacity", d => {
-        if (sel) return linkSel(d) ? (view === "cont" && highlight && d.own ? 0.9 : 0.6) : 0.03;
+        if (sel && !autoSel) return linkSel(d) ? (view === "cont" && highlight && d.own ? 0.9 : 0.6) : 0.03;
         if (view !== "cont" || !highlight) return 0.42;
         return d.own ? 0.85 : 0.16;
       })
@@ -267,7 +268,7 @@ function init(DATA) {
       .attr("tabindex", 0).attr("role", "button")
       .attr("aria-pressed", d => isSel(d) ? "true" : "false")
       .attr("aria-label", d => `${d.name}: ${d.side === "L" ? "gave" : "received"} ${fmtBn(d.value)} in ${year}. Select to show country detail.`)
-      .style("opacity", d => !sel || isSel(d) || connected.has(d.id) ? 1 : 0.2);
+      .style("opacity", d => !sel || autoSel || isSel(d) || connected.has(d.id) ? 1 : 0.2);
     nsel.select("rect").attr("stroke", d => isSel(d) ? "#1A272A" : "none").attr("stroke-width", 1.5)
       .attr("x", d => d.x0).attr("y", d => d.y0)
       .attr("width", d => d.x1 - d.x0).attr("height", d => Math.max(1, d.y1 - d.y0)).attr("fill", d => d.col)
@@ -474,6 +475,7 @@ function init(DATA) {
     if (v === view) return;
     view = v;
     if (sel && sel.side === "R") sel = null;
+    autoSel = false;
     document.getElementById("vCont").classList.toggle("on", v === "cont");
     document.getElementById("vInc").classList.toggle("on", v === "inc");
     document.getElementById("vCont").setAttribute("aria-pressed", v === "cont");
@@ -505,7 +507,7 @@ function init(DATA) {
   }).observe(box);
 
   document.getElementById("hlLabel").hidden = view !== "cont";
-  sel = {side: "R", key: "Low income"};   // default selection so the detail panel is visible on load; select another bar or press Esc to change it
+  sel = {side: "R", key: "Low income"}; autoSel = true;   // default selection so the detail panel is visible on load, with every flow still shown at full strength; the first click, Esc or view change makes it an ordinary selection
   render();
   CGDTracking.trackView();
 }
