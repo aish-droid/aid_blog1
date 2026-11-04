@@ -12,6 +12,8 @@
   body { background: #fff; color: var(--black); font-family: "Bitter", Georgia, serif; line-height: 1.65; font-size: 1.0625rem; }
   .toolbar { position: sticky; top: 0; z-index: 20; background: var(--cream); border-bottom: 1px solid var(--gray); font-family: "sofia-pro", "Inter", sans-serif;
              font-size: 0.8125rem; padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
+  .toolbar { display: none; }                      /* hidden: the draft is edited in Word; add ?tools=1 to the address to bring the toolbar back */
+  body.tools .toolbar { display: flex; }
   .toolbar b { color: var(--teal); }
   .toolbar label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; font-weight: 500; }
   .toolbar button { font: inherit; font-weight: 500; padding: 3px 10px; border: 1px solid var(--teal); background: #fff; color: var(--teal); border-radius: 4px; cursor: pointer; }
@@ -141,6 +143,7 @@
 
 <script src="https://public.flourish.studio/resources/embed.js"></script>
 <script>
+if (new URLSearchParams(location.search).get("tools") === "1") document.body.classList.add("tools");
 const KEY = document.documentElement.dataset.key;
 const EDITABLE = [...document.querySelectorAll("[data-edit]")];
 let saved = {};
