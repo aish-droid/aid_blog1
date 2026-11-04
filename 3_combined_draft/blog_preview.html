@@ -29,6 +29,8 @@
   .fsrc { font-family: "sofia-pro", "Inter", sans-serif; font-weight: 300; font-style: italic; font-size: 0.8rem; line-height: 1.45; margin: 10px 0 0; max-width: none; }
   figure iframe { display: block; width: 100%; border: 0; height: 520px; }
   .flo .flourish-embed { width: 100%; }
+  /* Figures 1a and 1b sit side by side, so this figure is wider than the text column */
+  figure#fig-1 { max-width: none; width: min(1160px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); }
   .flo.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
   @media (max-width: 760px) { .flo.pair { grid-template-columns: 1fr; } }
   body:not(.local) iframe.loc { display: none; }
