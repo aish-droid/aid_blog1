@@ -34,7 +34,9 @@
   /* Figures 1a and 1b sit side by side, so this figure is wider than the text column */
   figure#fig-1, figure#fig-8 { max-width: none; width: min(1160px, calc(100vw - 32px)); position: relative; left: 50%; transform: translateX(-50%); }
   .flo.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
-  @media (max-width: 760px) { .flo.pair { grid-template-columns: 1fr; } }
+  figure#fig-8 { width: min(1280px, calc(100vw - 32px)); }       /* three charts side by side */
+  .flo.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
+  @media (max-width: 760px) { .flo.pair, .flo.trio { grid-template-columns: 1fr; } }
   .devnote { display: none; font-family: "sofia-pro", "Inter", sans-serif; font-size: 0.75rem; background: #FEE8BF; padding: 4px 10px; margin: 0 0 8px; max-width: none; }
   .devnote a { color: var(--teal); }
   body.notes .devnote { display: block; }
@@ -58,7 +60,7 @@
 <p data-edit>If we look at the number of people in extreme poverty by continent, extreme poverty has shifted from Asia to Africa, with East Asia and the Pacific seeing the largest gains in the last 15 years. Regional shares of world extreme poverty moved from 30% to 69% for Sub-Saharan Africa (SSA), from 30% to 7% for South Asia, and from 28% to 6% for East Asia and the Pacific from 2010 to 2024 (Figure 1a). If we look at the shift in the shares of extreme poverty by income class in the same period, the share of middle-income countries (MICs) moved from 74% to 55%, and the share of low-income countries (LICs) moved from 26% to 44% (Figure 1b). The share of extreme poverty in MICs remains high, with five SSA countries - Nigeria, Tanzania, Kenya, Angola, and Ghana accounting for 42% of the extreme poverty count in middle-income countries.</p>
 
 <figure class="fig hasflo" id="fig-1">
-  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30806197/edit' target='_blank' rel='noopener noreferrer'>1a by world region</a> on the left and <a href='https://app.flourish.studio/visualisation/30792818/edit' target='_blank' rel='noopener noreferrer'>1b by income class</a> on the right.</p>
+  <p class="devnote">Embedded live from Flourish (shared CGD account), side by side: <a href='https://app.flourish.studio/visualisation/30806197/edit' target='_blank' rel='noopener noreferrer'>1a by world region</a>, <a href='https://app.flourish.studio/visualisation/30792818/edit' target='_blank' rel='noopener noreferrer'>1b by income class</a>.</p>
   <div class="flo pair"><div class="flourish-embed flourish-chart" data-src="visualisation/30806197"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30792818"></div></div>
 </figure>
 <h2 data-edit>Is aid flowing to the poorest countries?</h2>
@@ -108,11 +110,11 @@
   <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30804677/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>.</p>
   <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30804677"></div></div>
 </figure>
-<p data-edit>[Text for this section to come.] Figure 8 shows remittances and foreign direct investment received per person, by recipient income group.</p>
+<p data-edit>[Text for this section to come.] Figure 8 shows remittances, foreign direct investment and net ODA received per person, by recipient income group.</p>
 
 <figure class="fig hasflo" id="fig-8">
-  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30807271/edit' target='_blank' rel='noopener noreferrer'>8a remittances</a> on the left and <a href='https://app.flourish.studio/visualisation/30807273/edit' target='_blank' rel='noopener noreferrer'>8b foreign direct investment</a> on the right.</p>
-  <div class="flo pair"><div class="flourish-embed flourish-chart" data-src="visualisation/30807271"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30807273"></div></div>
+  <p class="devnote">Embedded live from Flourish (shared CGD account), side by side: <a href='https://app.flourish.studio/visualisation/30807271/edit' target='_blank' rel='noopener noreferrer'>8a remittances</a>, <a href='https://app.flourish.studio/visualisation/30807273/edit' target='_blank' rel='noopener noreferrer'>8b foreign direct investment</a>, <a href='https://app.flourish.studio/visualisation/30807671/edit' target='_blank' rel='noopener noreferrer'>8c net ODA</a>.</p>
+  <div class="flo trio"><div class="flourish-embed flourish-chart" data-src="visualisation/30807271"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30807273"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30807671"></div></div>
 </figure>
 </article>
 

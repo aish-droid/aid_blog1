@@ -1,6 +1,6 @@
-# Flourish charts (Figures 1a, 1b, 2, 3, 7, 8)
+# Flourish charts (Figures 1a, 1b, 2, 3, 7, 8a, 8b, 8c)
 
-These six charts live on Flourish, not in this folder. This file records what each one is, so comms can embed it and you can find it again.
+These eight charts live on Flourish, not in this folder. This file records what each one is, so comms can embed it and you can find it again.
 All five use the Flourish "line, bar and pie" template (id 121006). The chart IDs are in the links below.
 
 | Figure | Flourish chart | Title in Flourish | Subtitle |
@@ -12,12 +12,13 @@ All five use the Flourish "line, bar and pie" template (id 121006). The chart ID
 | 7 | [30804677](https://app.flourish.studio/visualisation/30804677/edit) | Figure 7: Cost of Cutting Extreme Poverty to 1%, as a Share of GDP | Estimated annual cost of targeted cash transfers to bring the extreme-poverty rate to 1% by World Bank income class ($2.15 poverty line) |
 | 8a | [30807271](https://app.flourish.studio/visualisation/30807271/edit) | Figure 8a: Per capita personal remittances received, by recipient income group | Per capita flows in constant 2024 USD |
 | 8b | [30807273](https://app.flourish.studio/visualisation/30807273/edit) | Figure 8b: Per capita foreign direct investment net inflows, by recipient income group | Per capita flows in constant 2024 USD |
+| 8c | [30807671](https://app.flourish.studio/visualisation/30807671/edit) | Figure 8c: Per capita OECD net ODA, by recipient income group | Per capita flows in constant 2024 USD |
 
 ## Notes for comms
 
-- **Figures 8a and 8b also go side by side**, 8a on the left. Chart 30807230, a single faceted version with both panels on one shared y-axis, is not used.
+- **Figures 8a, 8b and 8c also go side by side**, in that order from the left. Chart 30807230, a single faceted version with both panels on one shared y-axis, is not used.
 - **Figures 1a and 1b go side by side.** They are two separate charts, each embedded on its own. A single Flourish chart with both panels could not give each panel its own legend. 1a (regions) should sit on the left and 1b (income classes) on the right, at the same height and with the same y-axis (0 to 2.5 billion).
-- **Published** from the shared CGD Flourish account on 4 November 2026, so these links are the ones to use. The combined draft in `3_combined_draft/` embeds them live (Figures 8a and 8b are included). Edits to a chart show in the embed only after you republish it.
+- **Published** from the shared CGD Flourish account on 4 November 2026, so these links are the ones to use. The combined draft in `3_combined_draft/` embeds them live (Figures 8a, 8b and 8c are included). Edits to a chart show in the embed only after you republish it.
 - **Footers are HTML** (the "Note" field under Footer). The exact text of each footer is below. Paste it in the same field if a chart is rebuilt.
 - **Unused drafts you can delete from Flourish:** 30805947 (combined Figure 1), 30806000 (a switch version), 30803600 (old IDA chart), 30792869 (old aid and conflict map).
 
@@ -59,7 +60,13 @@ Source: <a href="https://www.nber.org/papers/w34583" target="_blank" rel="noopen
 Source: <a href="https://databank.worldbank.org/source/world-development-indicators" target="_blank" rel="noopener noreferrer">World Bank WDI</a> for personal remittances received, net foreign direct investment inflows and population, converted to constant 2024 US$ with the US GDP deflator. Per capita is each income group's total flow divided by its population, using the countries with data for that flow in that year. World Bank income classifications change over the years.
 ```
 
-Figure 8 is two charts, 8a (remittances) and 8b (FDI), shown side by side like 1a and 1b, each with its own y-axis scale and legend. The data come from `chart_data_annual.xlsx` (Charts experimental), through `code/20_figure8_remittances_fdi_data.py` to `data/clean/figure8_remittances_fdi_per_capita.csv`.
+Figure 8 is three charts, 8a (remittances), 8b (FDI) and 8c (OECD net ODA), shown side by side, each with its own y-axis scale and legend. The data come from `chart_data_annual.xlsx` (Charts experimental), through `code/20_figure8_remittances_fdi_data.py` to `data/clean/figure8_remittances_fdi_per_capita.csv`.
+
+**8c**
+
+```html
+Source: <a href="https://data-explorer.oecd.org/vis?df[ds]=DisseminateFinalDMZ&amp;df[id]=DSD_DAC2@DF_DAC2A&amp;df[ag]=OECD.DCD.FSD" target="_blank" rel="noopener noreferrer">OECD DAC Table 2A</a> for net ODA from all official donors, in constant 2024 US$; <a href="https://databank.worldbank.org/source/world-development-indicators" target="_blank" rel="noopener noreferrer">World Bank WDI</a> for population. Per capita is each income group's total flow divided by its population, using the countries with data for that flow in that year. World Bank income classifications change over the years.
+```
 
 ## Open item
 
