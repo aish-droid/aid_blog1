@@ -6,21 +6,21 @@ Per the CGD interactive coding standard, static titles, subtitles and source/cre
 
 ## Figure 4: IDA allocations and grant element by income class (`ida-grant-element.html`)
 
-**Title:** Figure 4: IDA's Allocations and Grant Element by Income Class
+**Title:** Figure 4: Where are IDA allocations and grant element going to?
 
-**Subtitle:** Each panel is one World Bank income class; click to change country-wise details
+**Subtitle:** Each panel is one World Bank income class; click to see country-wise details. Bars show % of total IDA allocations and grant element received by countries in that income group.
 
-**Notes:** (one block, placed under the embed; the link is to the Mathiasen paper)
+**Notes:** (one block, placed under the embed)
 
-Notes: Shares of IDA country allocations (nominal SDR) and of their grant element, FY20-FY25, by each recipient's World Bank income class in that year (a country that changes class appears in both panels). Grant element is the part of financing that is effectively a gift, calculated as in [Mathiasen, Landers and Martinez (2026)](https://www.cgdev.org/publication/better-outcome-poorest-finding-right-ida-ibrd-balance): grants count in full, 40-year credits at 69%, small-economy credits at 52%, blend and gap credits at 30%, shorter-maturity loans at 37%, at a 5% discount rate. Counted as gift is grant element divided by allocation. GNI per capita is the World Bank Atlas figure in current US$, two years before the fiscal year; n/a means not published. Source: Authors' calculations from IDA country allocations, FY20-FY25.
+Source: Calculated by Mathiasen, Landers and Martinez (forthcoming, [see their related paper](https://www.cgdev.org/publication/better-outcome-poorest-finding-right-ida-ibrd-balance)). IDA country allocations and their grant element, used to get the shares in the figure, are in nominal SDR. World Bank income classifications for countries change over the years. Grant element is the part of financing that is effectively a gift: grants count in full, 40-year credits at 69%, small-economy credits at 52%, blend and gap credits at 30%, shorter-maturity loans at 37%, at a 5% discount rate.
 
 HTML for the CMS:
 
 ```html
-Notes: Shares of IDA country allocations (nominal SDR) and of their grant element, FY20-FY25, by each recipient's World Bank income class in that year (a country that changes class appears in both panels). Grant element is the part of financing that is effectively a gift, calculated as in <a href="https://www.cgdev.org/publication/better-outcome-poorest-finding-right-ida-ibrd-balance" target="_blank" rel="noopener noreferrer">Mathiasen, Landers and Martinez (2026)</a>: grants count in full, 40-year credits at 69%, small-economy credits at 52%, blend and gap credits at 30%, shorter-maturity loans at 37%, at a 5% discount rate. Counted as gift is grant element divided by allocation. GNI per capita is the World Bank Atlas figure in current US$, two years before the fiscal year; n/a means not published. Source: Authors' calculations from IDA country allocations, FY20-FY25.
+Source: Calculated by Mathiasen, Landers and Martinez (forthcoming, <a href="https://www.cgdev.org/publication/better-outcome-poorest-finding-right-ida-ibrd-balance" target="_blank" rel="noopener noreferrer">see their related paper</a>). IDA country allocations and their grant element, used to get the shares in the figure, are in nominal SDR. World Bank income classifications for countries change over the years. Grant element is the part of financing that is effectively a gift: grants count in full, 40-year credits at 69%, small-economy credits at 52%, blend and gap credits at 30%, shorter-maturity loans at 37%, at a 5% discount rate.
 ```
 
-The embed itself no longer carries a notes block under the country table; everything is in this note.
+The embed itself carries no notes; everything is in this note.
 
 ---
 
@@ -44,7 +44,13 @@ GNI per capita: World Bank WDI series NY.GNP.PCAP.CD (GNI per capita, Atlas meth
 
 Borders: modern country borders throughout. Successor states have no data before independence (e.g. South Sudan before 2011); Kosovo conflict events are coded by UCDP to Serbia.
 
-**Source line (suggested):** Sources: OECD DAC Table 2a; World Bank World Development Indicators; Uppsala Conflict Data Program (UCDP GED v26.1, UCDP/PRIO Armed Conflict Dataset).
+**Source line (suggested):** Sources: [OECD DAC Table 2A](https://data-explorer.oecd.org/vis?df[ds]=DisseminateFinalDMZ&df[id]=DSD_DAC2@DF_DAC2A&df[ag]=OECD.DCD.FSD); [World Bank World Development Indicators](https://databank.worldbank.org/source/world-development-indicators); [Uppsala Conflict Data Program](https://ucdp.uu.se/downloads/) (UCDP GED v26.1 and UCDP/PRIO Armed Conflict Dataset).
+
+HTML for the CMS:
+
+```html
+Sources: <a href="https://data-explorer.oecd.org/vis?df[ds]=DisseminateFinalDMZ&amp;df[id]=DSD_DAC2@DF_DAC2A&amp;df[ag]=OECD.DCD.FSD" target="_blank" rel="noopener noreferrer">OECD DAC Table 2A</a>; <a href="https://databank.worldbank.org/source/world-development-indicators" target="_blank" rel="noopener noreferrer">World Bank World Development Indicators</a>; <a href="https://ucdp.uu.se/downloads/" target="_blank" rel="noopener noreferrer">Uppsala Conflict Data Program</a> (UCDP GED v26.1 and UCDP/PRIO Armed Conflict Dataset).
+```
 
 ---
 
@@ -52,7 +58,7 @@ Borders: modern country borders throughout. Successor states have no data before
 
 **Title:** Who Gives Aid to Whom?
 
-**Subtitle:** Net official development assistance (ODA) from individual donor countries to recipients, 1990–2024, in constant 2024 US$. Each donor has its own colour (teals for European donors, blues for the Americas, golds for Japan and the Gulf). In the continent view, an option highlights the flows that stay within the donor's own continent.
+**Subtitle:** Net official development assistance (ODA) from individual donor countries to recipients, 1990-2024, in constant 2024 US$. Click on a donor/recipient to see detailed composition
 
 **Notes:**
 
@@ -64,4 +70,12 @@ Continents follow Natural Earth: the Middle East is part of Asia, and Türkiye, 
 
 Reading the flows: net ODA can be negative when repayments exceed disbursements; negative totals are left out of the diagram (0.1% of the total). Bar heights are rescaled each year, so compare shares, not absolute sizes, across years; the total is shown above the chart.
 
-**Source line (suggested):** Source: David Roodman's ODA dataset; World Bank income classifications; Natural Earth.
+**Note under the embed (as shown in the draft):**
+
+Net ODA from donors to recipients, in constant 2024 US$, official donors only. The largest bilateral donors are shown individually; European donors other than France, Germany and the United Kingdom are grouped, as are the Gulf countries; remaining small bilateral donors are grouped as 'Other bilateral donors'. Unallocated aid is shown as its own recipient. World Bank income classifications for countries change over the years. Source: [David Roodman's ODA dataset](https://davidroodman.com/data/).
+
+HTML for the CMS:
+
+```html
+Net ODA from donors to recipients, in constant 2024 US$, official donors only. The largest bilateral donors are shown individually; European donors other than France, Germany and the United Kingdom are grouped, as are the Gulf countries; remaining small bilateral donors are grouped as 'Other bilateral donors'. Unallocated aid is shown as its own recipient. World Bank income classifications for countries change over the years. Source: <a href="https://davidroodman.com/data/" target="_blank" rel="noopener noreferrer">David Roodman's ODA dataset</a>.
+```
