@@ -6,19 +6,21 @@ Per the CGD interactive coding standard, static titles, subtitles and source/cre
 
 ## Figure 4: IDA allocations and grant element by income class (`ida-grant-element.html`)
 
-**Title (working):** Who Gets IDA's Grant Element? Allocations and Grant Element by Income Class, FY20–FY25
+**Title:** Figure 4: IDA's Allocations and Grant Element by Income Class
 
-**Subtitle (working):** Each panel is one World Bank income class. Grey bars are the class's share of all IDA country allocations in a fiscal year; teal bars are its share of the grant element, the part of IDA financing that is effectively a gift. Select a class to list its countries.
+**Subtitle:** Each panel is one World Bank income class; click to change country-wise details
 
-**Notes:**
+**Notes:** (one block, placed under the embed; the link is to the Mathiasen paper)
 
-Data: IDA country allocations for FY20–FY25 (SDR millions, nominal), from the grant element calculation behind Mathiasen, Landers and Martinez (2026). Grant element counts grants in full, 40-year credits at 69%, small-economy credits at 52%, blend and gap credits at 30% and shorter-maturity loans (SMLs) at 37%, using a 5% discount rate. Each country's IDA lending group (IDA-only, blend, gap or small economy) is the one the calculation assigns in that year.
+Notes: Shares of IDA country allocations (nominal SDR) and of their grant element, FY20-FY25, by each recipient's World Bank income class in that year (a country that changes class appears in both panels). Grant element is the part of financing that is effectively a gift, calculated as in [Mathiasen, Landers and Martinez (2026)](https://www.cgdev.org/publication/better-outcome-poorest-finding-right-ida-ibrd-balance): grants count in full, 40-year credits at 69%, small-economy credits at 52%, blend and gap credits at 30%, shorter-maturity loans at 37%, at a 5% discount rate. Counted as gift is grant element divided by allocation. GNI per capita is the World Bank Atlas figure in current US$, two years before the fiscal year; n/a means not published. Source: Authors' calculations from IDA country allocations, FY20-FY25.
 
-Income class: the World Bank classification in effect in each fiscal year (so a country can move between panels). Shares are of the total across all recipients that year. The headline under each class name adds the six years together.
+HTML for the CMS:
 
-GNI per capita: World Bank Atlas method, current US$, for the year behind that fiscal year's income classes (two years earlier); "n/a" means the World Bank does not publish a figure.
+```html
+Notes: Shares of IDA country allocations (nominal SDR) and of their grant element, FY20-FY25, by each recipient's World Bank income class in that year (a country that changes class appears in both panels). Grant element is the part of financing that is effectively a gift, calculated as in <a href="https://www.cgdev.org/publication/better-outcome-poorest-finding-right-ida-ibrd-balance" target="_blank" rel="noopener noreferrer">Mathiasen, Landers and Martinez (2026)</a>: grants count in full, 40-year credits at 69%, small-economy credits at 52%, blend and gap credits at 30%, shorter-maturity loans at 37%, at a 5% discount rate. Counted as gift is grant element divided by allocation. GNI per capita is the World Bank Atlas figure in current US$, two years before the fiscal year; n/a means not published. Source: Authors' calculations from IDA country allocations, FY20-FY25.
+```
 
-**Source line (suggested):** Source: Authors' calculations from IDA country allocations, FY20–FY25; World Bank income classifications and World Development Indicators.
+The embed itself no longer carries a notes block under the country table; everything is in this note.
 
 ---
 

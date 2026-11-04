@@ -161,8 +161,7 @@ function init(D) {
     box.innerHTML = `<div class="head"><b>${c.name}</b> &middot; FY20-25 &middot; ${c.n[nY]} IDA recipients &middot; grant element SDR ${fmtInt(c.ge[nY])} m &middot; allocation SDR ${fmtInt(c.alloc[nY])} m</div>` +
       `<div class="scroll"><table><caption class="sr">${c.name}: IDA recipient countries, FY20 to FY25, largest total grant element first</caption><thead><tr><th rowspan="2">Country</th><th rowspan="2">IDA status, latest year</th>` +
       `<th colspan="${nY}" class="grp">Grant element by year, SDR m</th><th rowspan="2">Total grant element, SDR m</th><th rowspan="2">Total allocation, SDR m</th>` +
-      `<th rowspan="2">Counted as gift</th><th rowspan="2">GNI per capita, US$, latest year</th></tr><tr>${Ys.map(y => `<th class="yr">${y}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>` +
-      `<div class="fine">Countries are ranked by total grant element over FY20-25. A dash means the country was not in this income class that year (a country that moved class appears under both classes, and fewer than six years are marked). IDA status is the lending group the grant element calculation assigns the country in its latest year in the class. Counted as gift is total grant element divided by total allocation. GNI per capita is the World Bank Atlas-method figure in current US$ for the year behind that fiscal year's income classes (two years earlier); n/a means the World Bank does not publish it.</div>`;
+      `<th rowspan="2">Counted as gift</th><th rowspan="2">GNI per capita, US$, latest year</th></tr><tr>${Ys.map(y => `<th class="yr">${y}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>`;     // the notes live in the article page (see cms-text.md), not in the embed
   }
 
   document.getElementById("dl").addEventListener("click", () => CGDTracking.trackEngagement("download", "download_data_csv"));
