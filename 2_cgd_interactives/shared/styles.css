@@ -1,0 +1,70 @@
+/* Shared styles for the CGD interactives in this project.
+   Brand tokens and type follow cgd-interactive-toolkit / cgd-brand-reference.md. */
+
+:root {
+  /* Identity */
+  --cgd-teal: #0B4C5B;
+  --cgd-gold: #FFB52C;
+  --cgd-teal-gray: #85A5AD;
+  --cgd-light-teal: #006970;
+  --cgd-cream: #F3F6F7;
+  --cgd-dark-gray: #394649;
+  --cgd-teal-black: #1A272A;
+  /* Supplementary */
+  --cgd-blue: #2D99B5;
+  --cgd-light-blue: #BFDEE0;
+  --cgd-light-gold: #FEE8BF;
+  --cgd-light-gray: #DFE0E2;
+  /* Status */
+  --cgd-red: #D15553;
+  --cgd-green: #00896C;
+}
+
+/* Embed reset: no outer margin/padding on the root, no horizontal scrollbar. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: transparent; }
+body {
+  overflow-x: hidden;
+  color: var(--cgd-teal-black);
+  font-family: "sofia-pro", "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+/* Internal spacing lives on a wrapper, never on <body>. */
+.wrap { padding: 0.5rem 0.25rem; position: relative; }
+
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--cgd-teal); outline-offset: 2px; }
+
+/* Controls */
+.controls { display: flex; align-items: center; gap: 0.75rem; margin: 0.5rem 0 0.25rem; flex-wrap: wrap; }
+#year { font-size: 2.125rem; font-weight: 700; color: var(--cgd-teal); min-width: 5.75rem; font-variant-numeric: tabular-nums; }
+#play { width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1px solid var(--cgd-teal); background: transparent;
+        color: var(--cgd-teal); font-size: 1rem; cursor: pointer; font-family: inherit; }
+#play:hover { background: var(--cgd-teal); color: #fff; }
+#slider { flex: 1 1 16rem; min-width: 12rem; accent-color: var(--cgd-light-teal); }
+.toggle { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; user-select: none; font-weight: 500; }
+.toggle input { accent-color: var(--cgd-light-teal); }
+
+/* Dynamic summary line (changes with the controls, so it stays in the embed) */
+#stat { color: var(--cgd-dark-gray); min-height: 1.25rem; margin: 0.25rem 0 0.5rem; }
+#stat a { color: var(--cgd-teal); text-decoration: underline; }
+
+/* Legend / key */
+.legend h3 { font-size: 0.8125rem; font-weight: 500; color: var(--cgd-teal); margin: 0 0 0.375rem; }
+.hint, .datalink { font-size: 0.8125rem; font-weight: 300; font-style: italic; color: var(--cgd-teal-black); }
+.datalink { margin-top: 0.5rem; }
+.datalink a { color: var(--cgd-teal); text-decoration: underline; }
+
+/* Tooltip (hover/tap detail; no shadow per brand "no effects" rule) */
+#tip { position: absolute; top: 0; left: 0; pointer-events: none; background: #fff; border: 1px solid var(--cgd-teal-gray);
+       border-radius: 4px; padding: 0.5rem 0.625rem; font-size: 0.78rem; max-width: min(340px, calc(100vw - 16px));
+       opacity: 0; transition: opacity .08s; z-index: 5; }
+#tip b { font-size: 0.84rem; font-weight: 700; color: var(--cgd-teal); }
+#tip .row { display: flex; justify-content: space-between; gap: 0.875rem; }
+#tip .lab { color: var(--cgd-dark-gray); }
+#tip .row span:last-child { white-space: nowrap; text-align: right; }
+
+@media (prefers-reduced-motion: reduce) { #tip { transition: none; } }
+@media (max-width: 560px) { #year { font-size: 1.6rem; min-width: 4.4rem; } }

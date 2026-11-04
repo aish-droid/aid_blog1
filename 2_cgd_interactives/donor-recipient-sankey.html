@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who gives aid to whom, 1990–2024</title>
+<link rel="stylesheet" href="https://use.typekit.net/ymp6ujv.css">
+<link rel="stylesheet" href="shared/styles.css">
+<style>
+  .seg { display: inline-flex; border: 1px solid var(--cgd-teal); border-radius: 6px; overflow: hidden; }
+  .seg button { border: 0; background: transparent; padding: 0.45rem 0.75rem; font: inherit; font-weight: 500; cursor: pointer; color: var(--cgd-teal); }
+  .seg button.on { background: var(--cgd-teal); color: #fff; }
+  .seg button:focus-visible { outline-offset: -3px; }
+  #chart { display: block; }
+  .node rect { stroke: none; }
+  .node text { font-size: 11.5px; fill: var(--cgd-teal-black); pointer-events: none; }
+  .node .val { fill: var(--cgd-dark-gray); font-weight: 300; font-style: italic; }
+  .node:focus { outline: none; }
+  .node:focus-visible rect { stroke: var(--cgd-teal); stroke-width: 2.5; }
+  .t2 .node text { font-size: 10.5px; }
+  .hdr { font-size: 0.8125rem; font-weight: 500; fill: var(--cgd-teal); }
+  .link { fill: none; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0.375rem 0 0.25rem; font-size: 0.75rem; color: var(--cgd-teal-black); }
+  .legend span i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -2px; }
+  #tip { min-width: min(250px, 80vw); }
+  #tip .sq { display: inline-block; width: 9px; height: 9px; margin-right: 6px; }
+  #tip .sub { margin-top: 6px; border-top: 1px solid var(--cgd-light-gray); padding-top: 5px; }
+  #tip .fine { font-size: 0.7rem; }
+  #chartbox { width: 100%; }
+  #decomp { margin: 0.375rem 0 0.875rem; }
+  #decomp .pick { display: block; margin: 0.25rem 0 0.5rem; font-weight: 500; color: var(--cgd-teal); }
+  #decomp .pick select { font: inherit; font-weight: 400; color: var(--cgd-teal-black); margin-left: 0.4rem; padding: 0.25rem 0.4rem;
+                         border: 1px solid var(--cgd-teal); border-radius: 4px; background: #fff; max-width: 100%; }
+  #decomp .dhead { font-weight: 700; margin: 0.25rem 0 0.5rem; color: var(--cgd-teal); }
+  #decomp .dcols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; }
+  #decomp h4 { margin: 0 0 6px; font-size: 0.78rem; font-weight: 500; color: var(--cgd-teal); display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--cgd-light-gray); padding-bottom: 3px; }
+  #decomp h4 span { font-weight: 400; color: var(--cgd-dark-gray); }
+  #decomp .list { max-height: 360px; overflow: auto; padding-right: 6px; }
+  #decomp .dr { display: grid; grid-template-columns: minmax(90px,1.4fr) 1fr 62px 38px; gap: 8px; align-items: center; font-size: 0.75rem; padding: 1.5px 0; }
+  #decomp .db { background: var(--cgd-cream); height: 8px; overflow: hidden; }
+  #decomp .db i { display: block; height: 100%; background: var(--cgd-blue); }
+  #decomp .dv, #decomp .dp { text-align: right; font-variant-numeric: tabular-nums; }
+  #decomp .dp, #decomp .lab { color: var(--cgd-dark-gray); }
+  #decomp .cr { grid-template-columns: minmax(90px,1.3fr) 54px 1fr 62px 38px; }
+  #decomp .chip { display: inline-block; font-size: 10px; line-height: 14px; text-align: center; border-radius: 3px; padding: 0 3px; white-space: nowrap; }
+  #decomp .mic { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; font-size: 0.78rem; }
+  #decomp .micbar { flex: 0 0 160px; height: 10px; display: flex; overflow: hidden; background: var(--cgd-light-gray); }
+  #decomp .micbar i { display: block; height: 100%; }
+  #decomp .aggs { max-height: none; margin-top: 6px; border-top: 1px solid var(--cgd-light-gray); padding-top: 4px; }
+  #err { color: var(--cgd-red); font-weight: 500; }
+  @media (max-width: 640px) { #decomp .dcols { grid-template-columns: 1fr; } #decomp .mic { flex-direction: column; align-items: flex-start; } }
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <div class="controls">
+    <button id="play" type="button" aria-label="Play or pause animation" title="Play / pause">&#9654;</button>
+    <div id="year" aria-live="polite">2024</div>
+    <input id="slider" type="range" min="1990" max="2024" step="1" value="2024" aria-label="Year">
+  </div>
+  <div class="controls">
+    <span class="seg" role="group" aria-label="Recipient grouping">
+      <button id="vInc" type="button" class="on" aria-pressed="true">Recipients by income group</button>
+      <button id="vCont" type="button" aria-pressed="false">Recipients by continent</button>
+    </span>
+    <label class="toggle" id="hlLabel" hidden><input type="checkbox" id="hl"> Highlight flows within own continent</label>
+  </div>
+  <p class="hint">Click a donor or recipient to isolate its flows and see country-by-country detail; click again or press Esc to clear.</p>
+  <div id="stat" aria-live="polite"><span id="err" hidden></span></div>
+
+  <div id="chartbox">
+    <!-- aria-label rather than a <title> child: a <title> shows as a browser tooltip over the chart -->
+    <svg id="chart" role="img" aria-label="Sankey diagram of net ODA from donors to recipient groups, 1990–2024" aria-describedby="chart-desc">
+      <desc id="chart-desc">Donors are listed on the left and recipient groups on the right; flow width shows net official development assistance. The sentence above the diagram summarises the selected year. Donor and recipient bars can be selected with the keyboard to show a country-by-country breakdown below the diagram.</desc>
+    </svg>
+  </div>
+  <div id="decomp" aria-live="polite"></div>
+  <p class="datalink"><a id="dl" href="data/donor-recipient-flows.csv" download>Download the data (CSV, about 14 MB)</a></p>
+  <div id="tip" role="tooltip"></div>
+</div>
+
+<script>window.CGD_INTERACTIVE_NAME = 'aid-middle-income-donor-sankey';</script>
+<script src="shared/tracking.js"></script>
+<script src="shared/iframe-resize.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"
+        integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"
+        integrity="sha384-SM54CE5h+qdDI046d2Y5ym7wq1kq4uxcQ1cqGq5/+5jrE5tPLeDJSq711Q8sIska"
+        crossorigin="anonymous"></script>
+<script>
+fetch("data/sankey-data.json")
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(init)
+  .catch(() => {
+    const e = document.getElementById("err");
+    e.hidden = false; e.textContent = "The data could not be loaded. Please refresh the page.";
+  });
+
+function init(DATA) {
+  const Y0 = DATA.years[0], Y1 = DATA.years[DATA.years.length - 1];
+  const track = CGDTracking.trackEngagement;
+
+  // --- responsive geometry: real pixel width, three label tiers (no horizontal scroll) ---
+  const box = document.getElementById("chartbox");
+  let W = 960, H = 960, M = {t: 26, r: 170, b: 6, l: 150}, tier = 0, lastW = 0;
+  function geom() {
+    W = Math.max(280, Math.floor(box.clientWidth) || 960);
+    lastW = Math.floor(box.clientWidth);
+    if (W >= 760)      { M = {t: 26, r: 170, b: 6, l: 170}; H = 760; tier = 0; }
+    else if (W >= 480) { M = {t: 26, r: 130, b: 6, l: 112}; H = 720; tier = 1; }
+    else               { M = {t: 26, r: 112, b: 6, l: 96};  H = 680; tier = 2; }
+  }
+  const SHORT_ALL = {"Unallocated (no recipient given)": "Unallocated (no recipient)"};
+  const SHORT_NARROW = {"Multilateral organisations": "Multilateral", "Other bilateral donors": "Other bilateral",
+                        "Other European countries": "Other European", "United Arab Emirates": "UAE", "Unallocated (no recipient given)": "Unallocated",
+                        "High income / unclassified": "High inc. / unclass.", "Regional / unallocated": "Regional / unalloc."};
+  function label(n) {
+    let t = SHORT_ALL[n.name] || n.name;
+    if (tier > 0) t = SHORT_NARROW[n.name] || t;
+    const max = Math.floor(((n.side === "L" ? M.l : M.r) - 12) / (tier === 2 ? 5.5 : 5.9));
+    return t.length > max ? t.slice(0, max - 1) + "…" : t;
+  }
+
+  // --- CGD palette ---------------------------------------------------------------
+  const CONT_COL = {Europe: "#006970", Americas: "#2D99B5", Asia: "#FFB52C", Africa: "#0B4C5B",
+                    Oceania: "#85A5AD", Other: "#BFDEE0", Multilateral: "#394649",
+                    Unallocated: "#DFE0E2"};
+  const INC_COL = {"Low income": "#0B4C5B", "Lower-middle income": "#2D99B5", "Upper-middle income": "#BFDEE0",
+                   "High income / unclassified": "#DFE0E2", "Regional / unallocated": "#85A5AD"};
+  const RIGHT_LABEL = {Unallocated: "Unallocated (no recipient given)"};
+
+  const donors = DATA.donors;            // [{name, group, kind}]
+  const views = {
+    cont: {names: DATA.contNames, flows: DATA.flowsCont, color: n => CONT_COL[n] || "#85A5AD"},
+    inc:  {names: DATA.incNames,  flows: DATA.flowsInc,  color: n => INC_COL[n] || "#85A5AD"}
+  };
+  let view = "inc", year = Y1, highlight = false;   // own-continent highlight is opt-in
+  const fmtBn = v => Math.abs(v) < 100 ? "$" + d3.format(",.0f")(v) + " m" : "$" + d3.format(",.1f")(v / 1000) + " bn";
+  const pct = v => d3.format(".0%")(v);
+  const pctS = v => v > 0 && v < 0.01 ? "<1%" : pct(v);
+
+  const svg = d3.select("#chart");
+  const linkG = svg.append("g").attr("class", "links");
+  const nodeG = svg.append("g").attr("class", "nodes");
+  const lHdr = svg.append("text").attr("class", "hdr").attr("y", 14).attr("text-anchor", "end").text("Donors");
+  const rHdr = svg.append("text").attr("class", "hdr").attr("y", 14);
+
+  // One colour per donor, in continent families: teals = Europe, blues = Americas, golds = Asia.
+  // Light steps within a family are tints of the brand colour. Donors are labelled directly, so there is no legend.
+  const DONOR_COL = {
+    "Germany": "#0B4C5B", "United Kingdom": "#4C969B", "France": "#99C0C3", "Other European countries": "#006970",
+    "EU Institutions": "#394649",
+    "United States": "#2D99B5", "Canada": "#8CC7D6",
+    "Japan": "#FFB52C", "Gulf countries": "#FEE8BF",
+    "Other bilateral donors": "#DFE0E2", "Multilateral organisations": "#85A5AD"
+  };
+  const groupColor = d => DONOR_COL[donors[d].name] || CONT_COL[donors[d].group] || CONT_COL.Other;
+
+  function dataFor(v, yi) {
+    return (views[v].flows[yi] || []).filter(l => l[2] > 0);   // [donorIdx, recipIdx, value]
+  }
+  function ownContinent(link, v) {
+    return v === "cont" && DATA.donors[link[0]].group === views.cont.names[link[1]];
+  }
+
+  let sel = null;   // {side:"L", id} for a donor, {side:"R", key} for a recipient group
+  const isSel = d => sel && ((sel.side === "L" && d.side === "L" && d.id === sel.id) ||
+                             (sel.side === "R" && d.side === "R" && d.key === sel.key));
+  function clearSel() {
+    if (!sel) return;
+    sel = null; subSel = null; hideTip(); render();
+    track("detail_close", "selection_clear");
+  }
+  function toggle(d) {
+    if (isSel(d)) return clearSel();
+    sel = d.side === "L" ? {side: "L", id: d.id} : {side: "R", key: d.key};
+    subSel = null; hideTip(); render();
+    track("detail_open", d.side === "L" ? "donor_node" : "recipient_node", d.side === "L" ? d.name : d.key);
+  }
+  const linkSel = l => sel && ((sel.side === "L" && l.d === sel.id) ||
+                               (sel.side === "R" && views[view].names[l.r] === sel.key));
+
+  function render() {
+    geom();
+    svg.attr("viewBox", `0 0 ${W} ${H}`).attr("width", W).attr("height", H).classed("t2", tier === 2);
+    lHdr.attr("x", M.l);
+    rHdr.attr("x", W - M.r);
+
+    const V = views[view], yi = year - Y0;
+    document.getElementById("year").textContent = year;
+    document.getElementById("slider").value = year;
+    rHdr.text(tier > 0 ? "Recipients" : (view === "cont" ? "Recipient continent" : "Recipient income group"));
+
+    const raw = dataFor(view, yi);
+    const nDon = donors.length;
+    const nodes = [
+      ...donors.map((d, i) => ({id: i, side: "L", name: d.name, order: i, col: groupColor(i)})),
+      ...V.names.map((n, j) => ({id: nDon + j, side: "R", name: RIGHT_LABEL[n] && view === "cont" ? RIGHT_LABEL[n] : n,
+                                 key: n, order: j, col: V.color(n)}))
+    ];
+    const links = raw.map(l => ({source: l[0], target: nDon + l[1], value: l[2], own: ownContinent(l, view), d: l[0], r: l[1]}));
+
+    const used = new Set(); links.forEach(l => { used.add(l.source); used.add(l.target); });
+    const nodesU = nodes.filter(n => used.has(n.id));
+    const idx = new Map(nodesU.map((n, i) => [n.id, i]));
+    const sk = d3.sankey().nodeWidth(12).nodePadding(17).extent([[M.l, M.t], [W - M.r, H - M.b]])
+      .nodeAlign(d3.sankeyJustify).nodeSort((a, b) => a.order - b.order)
+      .linkSort((a, b) => (a.source.order - b.source.order) || (a.target.order - b.target.order));
+    const g = sk({nodes: nodesU.map(n => ({...n})), links: links.map(l => ({...l, source: idx.get(l.source), target: idx.get(l.target)}))});
+
+    const total = d3.sum(g.links, l => l.value);
+    let ownSum = 0, cSum = 0;
+    g.links.forEach(l => { if (donors[l.d].kind === "country" && views.cont.names[l.r] !== "Unallocated" && view === "cont") { cSum += l.value; if (l.own) ownSum += l.value; } });
+    document.getElementById("stat").innerHTML =
+      `<b>${year}:</b> ${fmtBn(total)} of net ODA shown.` +
+      (view === "cont" && cSum ? ` Of the aid country donors assigned to a continent, ${pct(ownSum / cSum)} stayed in their own continent.` : "");
+
+    if (sel) {
+      const isL = sel.side === "L";
+      const name = isL ? donors[sel.id].name : (sel.key === "Unallocated" && view === "cont" ? RIGHT_LABEL.Unallocated : sel.key);
+      const fl = g.links.filter(linkSel);
+      const tot = d3.sum(fl, l => l.value);
+      const top = fl.slice().sort((a, b) => b.value - a.value).slice(0, 3)
+        .map(l => `${isL ? l.target.name : l.source.name} ${pct(l.value / tot)}`).join(", ");
+      document.getElementById("stat").innerHTML += `<br><b>${name}</b> ${isL ? "gave" : "received"} ${tot ? fmtBn(tot) : "no aid shown"}` +
+        (tot ? ` &mdash; largest ${isL ? "recipients" : "donors"}: ${top}.` : ` in ${year}.`) +
+        ` <a href="#" id="clr">Clear selection</a>`;
+      const c = document.getElementById("clr");
+      if (c) c.addEventListener("click", e => { e.preventDefault(); clearSel(); });
+    }
+
+    // links
+    const path = d3.sankeyLinkHorizontal();
+    linkG.selectAll("path").data(g.links, d => d.d + "-" + d.r).join("path")
+      .attr("class", "link").attr("d", path)
+      .attr("stroke-width", d => Math.max(0.6, d.width))
+      .attr("stroke", d => groupColor(d.d))
+      .attr("stroke-opacity", d => {
+        if (sel) return linkSel(d) ? (view === "cont" && highlight && d.own ? 0.9 : 0.6) : 0.03;
+        if (view !== "cont" || !highlight) return 0.42;
+        return d.own ? 0.85 : 0.16;
+      })
+      .on("pointerenter pointermove", (ev, d) => tipLink(ev, d, total, g))
+      .on("pointerleave", hideTip);
+
+    // nodes. Each label gets a second line (the amount) wherever it fits between its neighbours' labels,
+    // not only on tall bars, so small bars such as France or the Gulf countries are labelled too.
+    const twoLine = new Map();
+    ["L", "R"].forEach(side => {
+      const col = g.nodes.filter(n => n.side === side).sort((a, b) => a.y0 - b.y0);
+      let lastBottom = -Infinity;
+      col.forEach((n, i) => {
+        const c = (n.y0 + n.y1) / 2, nextC = i + 1 < col.length ? (col[i + 1].y0 + col[i + 1].y1) / 2 : Infinity;
+        const two = (n.y1 - n.y0) >= 26 || (c - 13 >= lastBottom && nextC - 7 >= c + 13);
+        twoLine.set(n.id, two);
+        lastBottom = c + (two ? 13 : 7);
+      });
+    });
+    const nsel = nodeG.selectAll("g.node").data(g.nodes, d => d.id).join(
+      e => { const n = e.append("g").attr("class", "node"); n.append("rect"); n.append("text").attr("class", "nm"); n.append("text").attr("class", "val"); return n; });
+    const focusLinks = sel ? g.links.filter(linkSel) : [];
+    const connected = new Set();
+    focusLinks.forEach(l => { connected.add(l.source.id); connected.add(l.target.id); });
+    nsel.style("cursor", "pointer").on("click", (ev, d) => toggle(d))
+      .on("keydown", (ev, d) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(d); } })
+      .attr("tabindex", 0).attr("role", "button")
+      .attr("aria-pressed", d => isSel(d) ? "true" : "false")
+      .attr("aria-label", d => `${d.name}: ${d.side === "L" ? "gave" : "received"} ${fmtBn(d.value)} in ${year}. Select to show country detail.`)
+      .style("opacity", d => !sel || isSel(d) || connected.has(d.id) ? 1 : 0.2);
+    nsel.select("rect").attr("stroke", d => isSel(d) ? "#1A272A" : "none").attr("stroke-width", 1.5)
+      .attr("x", d => d.x0).attr("y", d => d.y0)
+      .attr("width", d => d.x1 - d.x0).attr("height", d => Math.max(1, d.y1 - d.y0)).attr("fill", d => d.col)
+      .on("pointerenter pointermove", (ev, d) => tipNode(ev, d, total)).on("pointerleave", hideTip)
+      .style("pointer-events", "all");
+    nsel.select("text.nm").style("pointer-events", "all").attr("x", d => d.side === "L" ? d.x0 - 6 : d.x1 + 6)
+      .attr("y", d => (d.y0 + d.y1) / 2 - (twoLine.get(d.id) ? 6 : 0)).attr("dy", "0.35em")
+      .attr("text-anchor", d => d.side === "L" ? "end" : "start")
+      .text(label);
+    nsel.select("text.val").attr("x", d => d.side === "L" ? d.x0 - 6 : d.x1 + 6)
+      .attr("y", d => (d.y0 + d.y1) / 2 + 7).attr("dy", "0.35em").attr("text-anchor", d => d.side === "L" ? "end" : "start")
+      .text(d => twoLine.get(d.id) ? fmtBn(d.value) : "");
+    lastGraph = g;
+    renderDecomp();
+  }
+  let lastGraph = null;
+
+  // ---- drill-down panel: select a donor or a recipient group ------------------------------
+  const CT = DATA.country;
+  const INC_ABBR = ["LIC", "LMIC", "UMIC", "High/unclass.", "Regional"];
+  const INC_TXT = ["#fff", "#fff", "#1A272A", "#1A272A", "#1A272A"];
+  const chip = c => `<span class="chip" style="background:${INC_COL[DATA.incNames[c]]};color:${INC_TXT[c]}" title="${DATA.incNames[c]} (World Bank class that year)">${INC_ABBR[c]}</span>`;
+
+  function countryRows(members, yi, keep) {
+    const agg = new Map();
+    (CT.flows[yi] || []).forEach(([fd, rc, v]) => {
+      if (members && !members.has(fd)) return;
+      const inc = CT.inc[rc][yi];
+      if (!keep(rc, inc)) return;
+      const a = agg.get(rc) || {rc, inc, v: 0}; a.v += v; agg.set(rc, a);
+    });
+    return [...agg.values()];
+  }
+  function countryList(rows, tot, title) {
+    const named = rows.filter(r => CT.recips[r.rc].kind === "country").sort((a, b) => b.v - a.v);
+    const regV = d3.sum(rows.filter(r => CT.recips[r.rc].kind !== "country"), r => r.v);
+    const nv = d3.sum(named, r => r.v), mx = named.length ? named[0].v : 1;
+    let h = `<div><h4>${title} (${named.length}) <span>${fmtBn(nv)} &middot; ${pctS(nv / tot)}</span></h4><div class="list">`;
+    named.forEach(r => {
+      h += `<div class="dr cr"><span class="dn">${CT.recips[r.rc].name}</span>${chip(r.inc)}<span class="db"><i style="width:${(100 * r.v / mx).toFixed(1)}%"></i></span><span class="dv">${fmtBn(r.v)}</span><span class="dp">${pctS(r.v / tot)}</span></div>`;
+    });
+    if (regV > 0) h += `<div class="dr cr"><span class="dn lab">Regional programmes &amp; unspecified</span>${chip(4)}<span class="db"></span><span class="dv">${fmtBn(regV)}</span><span class="dp">${pctS(regV / tot)}</span></div>`;
+    return h + `</div></div>`;
+  }
+  function micLine(rows) {
+    const cl = rows.filter(r => CT.recips[r.rc].kind === "country" && r.inc <= 2);
+    const t = d3.sum(cl, r => r.v);
+    if (!t) return "";
+    const by = [0, 1, 2].map(k => d3.sum(cl.filter(r => r.inc === k), r => r.v));
+    const bar = by.map((v, k) => `<i style="width:${100 * v / t}%;background:${INC_COL[DATA.incNames[k]]}" title="${DATA.incNames[k]}: ${pct(v / t)}"></i>`).join("");
+    return `<div class="mic"><div class="micbar">${bar}</div><span>Of the aid that went to countries with a World Bank income class, <b>${pct((by[1] + by[2]) / t)}</b> went to middle-income countries and ${pct(by[0] / t)} to low-income countries.</span></div>`;
+  }
+
+  // Members of each donor node that have any aid in the data, alphabetical (a picker is offered when there are 2+).
+  let subSel = null;                              // chosen member (index into CT.donorNames), or null for the whole group
+  const memberCache = new Map();
+  let appearing = null;
+  function memberOptions(nodeId) {
+    if (!memberCache.has(nodeId)) {
+      if (!appearing) { appearing = new Set(); CT.flows.forEach(y => y.forEach(r => appearing.add(r[0]))); }
+      const out = [];
+      CT.donorNode.forEach((n, fi) => { if (n === nodeId && appearing.has(fi)) out.push({fi, name: CT.donorNames[fi]}); });
+      memberCache.set(nodeId, out.sort((a, b) => a.name.localeCompare(b.name)));
+    }
+    return memberCache.get(nodeId);
+  }
+
+  function renderDecomp() {
+    const box = document.getElementById("decomp");
+    if (!sel) { box.innerHTML = ""; return; }
+    const yi = year - Y0, F = DATA.full;
+
+    if (sel.side === "L") {                       // a donor (or donor group): where did it go?
+      const nodeName = donors[sel.id].name;
+      const options = memberOptions(sel.id);      // member countries/organisations, for grouped donors
+      const members = new Set(options.map(o => o.fi));
+      const pick = subSel != null && members.has(subSel) ? subSel : null;
+      const rows = countryRows(pick != null ? new Set([pick]) : members, yi, () => true);
+      const tot = d3.sum(rows, r => r.v);
+      const picker = options.length > 1
+        ? `<label class="pick">Show detail for: <select id="memberSel"><option value="">All ${nodeName} (${options.length})</option>` +
+          options.map(o => `<option value="${o.fi}"${o.fi === pick ? " selected" : ""}>${o.name}</option>`).join("") + `</select></label>`
+        : "";
+      if (!tot && !picker) { box.innerHTML = ""; return; }
+      const who = pick != null ? CT.donorNames[pick] : nodeName;
+      const head = tot
+        ? `<div class="dhead">Where ${who}${/s$/.test(who) ? "&rsquo;" : "&rsquo;s"} ${fmtBn(tot)} went in ${year}${pick != null ? ` (part of ${nodeName})` : ""}, country by country</div>`
+        : `<div class="dhead">${who} recorded no aid to recipient countries in ${year}.</div>`;
+      box.innerHTML = picker + head + (tot ? micLine(rows) + `<div>` + countryList(rows, tot, "Recipient countries") + `</div>` : "");
+      const ms = document.getElementById("memberSel");
+      if (ms) ms.addEventListener("change", () => {
+        subSel = ms.value === "" ? null : +ms.value;
+        renderDecomp();
+        const again = document.getElementById("memberSel"); if (again) again.focus();
+        track("filter", "donor_member_select", nodeName);
+      });
+      return;
+    }
+
+    const V = views[view], j = V.names.indexOf(sel.key);   // a recipient group: who is in it, who funds it?
+    const keep = view === "cont" ? (rc) => CT.recips[rc].cont === sel.key : (rc, inc) => inc === j;
+    const crow = countryRows(null, yi, keep);
+    const ctot = d3.sum(crow, r => r.v);
+    const flows = (view === "cont" ? F.flowsCont : F.flowsInc)[yi] || [];
+    const items = flows.filter(f => f[1] === j && f[2] > 0).map(f => ({name: F.donors[f[0]].name, kind: F.donors[f[0]].kind, v: f[2]}));
+    const tot = d3.sum(items, i => i.v);
+    if (!tot || !ctot) { box.innerHTML = ""; return; }
+    const label = view === "cont" && sel.key === "Unallocated" ? "unallocated aid" : sel.key;
+    const cv = d3.sum(items.filter(i => i.kind === "country"), i => i.v);
+    const ev = d3.sum(items.filter(i => i.kind === "eu"), i => i.v);
+    const mv = d3.sum(items.filter(i => i.kind === "multilateral"), i => i.v);
+    const seg = (v, c, n) => `<i style="width:${100 * v / tot}%;background:${c}" title="${n}: ${pct(v / tot)}"></i>`;
+    const srcBar = `<div class="mic"><div class="micbar" style="flex:0 0 220px">${seg(cv, "#0B4C5B", "Country donors")}${seg(ev, "#2D99B5", "EU Institutions")}${seg(mv, "#85A5AD", "Multilateral organisations")}</div>` +
+      `<span>Source of the money: <b>${pctS(cv / tot)}</b> country donors, <b>${pctS(ev / tot)}</b> EU Institutions, <b>${pctS(mv / tot)}</b> multilateral organisations (development banks, UN agencies, global funds).</span></div>`;
+    const aggRow = (nm, v) => `<div class="dr"><span class="dn">${nm}</span><span class="db"></span><span class="dv">${fmtBn(v)}</span><span class="dp">${pctS(v / tot)}</span></div>`;
+    const aggRows = `<div class="list aggs">` +
+      (ev > 0 ? aggRow("EU Institutions", ev) : "") + (mv > 0 ? aggRow("All multilateral organisations", mv) : "") + `</div>`;
+    const sec = (title, arr) => {
+      if (!arr.length) return "";
+      arr.sort((a, b) => b.v - a.v);
+      const sub = d3.sum(arr, i => i.v);
+      return `<div><h4>${title} (${arr.length}) <span>${fmtBn(sub)} &middot; ${pctS(sub / tot)}</span></h4><div class="list">` +
+        arr.map(i => `<div class="dr"><span class="dn">${i.name}</span><span class="db"><i style="width:${(100 * i.v / arr[0].v).toFixed(1)}%"></i></span><span class="dv">${fmtBn(i.v)}</span><span class="dp">${pctS(i.v / tot)}</span></div>`).join("") +
+        `</div></div>`;
+    };
+    box.innerHTML = `<div class="dhead">${label}, ${year}: ${fmtBn(tot)} received, by recipient country and by donor</div>` +
+      (view === "cont" ? micLine(crow) : "") + srcBar + `<div class="dcols">` +
+      countryList(crow, ctot, "Largest recipient countries") +
+      `<div>` + sec("Country donors", items.filter(i => i.kind === "country")) + aggRows + `</div></div>`;
+  }
+
+  // tooltips (hover / tap detail)
+  const tip = document.getElementById("tip"), wrap = document.getElementById("wrap");
+  function place(ev) {
+    const r = wrap.getBoundingClientRect();
+    let x = ev.clientX - r.left + 14, y = ev.clientY - r.top + 14;
+    if (x + 350 > r.width) x = Math.max(4, ev.clientX - r.left - 354);
+    y = Math.max(0, Math.min(y, r.height - tip.offsetHeight - 4));   // keep inside the page so no scrollbar appears
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  }
+  function hideTip() { tip.style.opacity = 0; }
+  function row(l, v) { return `<div class="row"><span class="lab">${l}</span><span>${v}</span></div>`; }
+  function tipLink(ev, d, total, g) {
+    const dn = donors[d.d], rn = d.target.name;
+    const donorTotal = d3.sum(g.links.filter(l => l.d === d.d), l => l.value);
+    let h = `<b>${dn.name} &rarr; ${rn}</b>` + row("Net ODA", fmtBn(d.value)) +
+            row(`${dn.name}: share of its aid going to ${rn}`, pct(d.value / donorTotal));
+    if (view === "cont") {
+      const allBil = d3.sum(g.links.filter(l => l.r === d.r && donors[l.d].kind === "country"), l => l.value);
+      const allBilTot = d3.sum(g.links.filter(l => donors[l.d].kind === "country"), l => l.value);
+      if (allBilTot) h += row(`For comparison, all country donors combined: share going to ${rn}`, pct(allBil / allBilTot));
+      if (d.own) h += `<div class="lab fine">Within the donor&rsquo;s own continent</div>`;
+      h += `<div class="lab fine">The two shares use different totals, so they do not add to 100%.</div>`;
+    }
+    tip.innerHTML = h; tip.style.opacity = 1; place(ev);
+  }
+  function tipNode(ev, d, total) {
+    let h = `<b>${d.name}</b>` + row(d.side === "L" ? "Gives" : "Receives", fmtBn(d.value)) +
+            row("Share of total shown", pct(d.value / total));
+    if (d.side === "L" && donors[d.id].kind === "multilateral") h += `<div class="lab fine">Multilateral organisations, incl. IDA, GFATM, UN agencies</div>`;
+    if (d.side === "L" && donors[d.id].note) h += `<div class="lab fine">${donors[d.id].note}</div>`;
+    if (d.side === "L" && lastGraph) {
+      const fl = lastGraph.links.filter(l => l.source.id === d.id).sort((a, b) => b.value - a.value);
+      const TOPN = 8, rest = fl.slice(TOPN);
+      h += `<div class="lab sub">Where this aid goes:</div>`;
+      fl.slice(0, TOPN).forEach(l => {
+        h += `<div class="row"><span><i class="sq" style="background:${l.target.col}"></i>${l.target.name}</span><span>${fmtBn(l.value)} &middot; ${pctS(l.value / d.value)}</span></div>`;
+      });
+      if (rest.length) {
+        const rv = d3.sum(rest, l => l.value);
+        h += `<div class="row"><span class="lab">${rest.length} other recipient group${rest.length > 1 ? "s" : ""}</span><span>${fmtBn(rv)} &middot; ${pctS(rv / d.value)}</span></div>`;
+      }
+    }
+    if (d.side === "R" && lastGraph) {
+      const fl = lastGraph.links.filter(l => l.target.id === d.id).sort((a, b) => b.value - a.value);
+      const TOPN = 8, rest = fl.slice(TOPN);
+      h += `<div class="lab sub">Where this total comes from:</div>`;
+      fl.slice(0, TOPN).forEach(l => {
+        h += `<div class="row"><span><i class="sq" style="background:${groupColor(l.d)}"></i>${l.source.name}</span><span>${fmtBn(l.value)} &middot; ${pct(l.value / d.value)}</span></div>`;
+      });
+      if (rest.length) {
+        const rv = d3.sum(rest, l => l.value);
+        h += `<div class="row"><span class="lab">${rest.length} other donor${rest.length > 1 ? "s" : ""}</span><span>${fmtBn(rv)} &middot; ${pct(rv / d.value)}</span></div>`;
+      }
+    }
+    tip.innerHTML = h; tip.style.opacity = 1; place(ev);
+  }
+
+  // controls
+  const slider = document.getElementById("slider");
+  let renderTimer;
+  slider.addEventListener("input", () => {            // light debounce: the layout is recomputed on every render
+    year = +slider.value;
+    document.getElementById("year").textContent = year;
+    clearTimeout(renderTimer); renderTimer = setTimeout(render, 50);
+  });
+  slider.addEventListener("change", () => track("filter", "year_slider", slider.value));
+  document.getElementById("dl").addEventListener("click", () => track("download", "download_data_csv"));
+  document.getElementById("hl").addEventListener("change", e => {
+    highlight = e.target.checked; render();
+    track("view_control", "highlight_own_continent_toggle", highlight ? "on" : "off");
+  });
+  function setView(v) {
+    if (v === view) return;
+    view = v;
+    if (sel && sel.side === "R") sel = null;
+    document.getElementById("vCont").classList.toggle("on", v === "cont");
+    document.getElementById("vInc").classList.toggle("on", v === "inc");
+    document.getElementById("vCont").setAttribute("aria-pressed", v === "cont");
+    document.getElementById("vInc").setAttribute("aria-pressed", v === "inc");
+    document.getElementById("hlLabel").hidden = v !== "cont";   // the highlight only applies to the continent view
+    render();
+    track("view_control", "recipient_grouping_toggle", v === "cont" ? "continent" : "income_group");
+  }
+  document.getElementById("vCont").addEventListener("click", () => setView("cont"));
+  document.getElementById("vInc").addEventListener("click", () => setView("inc"));
+
+  const playBtn = document.getElementById("play"); let timer = null;
+  function stop() { clearInterval(timer); timer = null; playBtn.innerHTML = "&#9654;"; }
+  playBtn.addEventListener("click", () => {
+    if (timer) { stop(); track("view_control", "play_pause_button", "pause"); return; }
+    if (year >= Y1) year = Y0;
+    playBtn.innerHTML = "&#10074;&#10074;"; render();
+    timer = setInterval(() => { if (year >= Y1) return stop(); year++; render(); }, 900);
+    track("view_control", "play_pause_button", "play");
+  });
+
+  document.addEventListener("keydown", e => { if (e.key === "Escape") clearSel(); });
+
+  // re-layout when the iframe width changes (not on height changes, to avoid a resize loop)
+  let resizeTimer;
+  new ResizeObserver(() => {
+    if (Math.floor(box.clientWidth) === lastW) return;
+    clearTimeout(resizeTimer); resizeTimer = setTimeout(render, 80);
+  }).observe(box);
+
+  document.getElementById("hlLabel").hidden = view !== "cont";
+  sel = {side: "R", key: "Low income"};   // default selection so the detail panel is visible on load; select another bar or press Esc to change it
+  render();
+  CGDTracking.trackView();
+}
+</script>
+</body>
+</html>

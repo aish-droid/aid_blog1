@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDA allocations and grant element by income class, FY20–FY25</title>
+<link rel="stylesheet" href="https://use.typekit.net/ymp6ujv.css">
+<link rel="stylesheet" href="shared/styles.css">
+<style>
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  #chart { width: 100%; display: block; }
+  #chart text { font-family: inherit; }
+  .key { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin: 0.25rem 0 0.5rem; font-size: 0.8125rem; font-weight: 500; }
+  .key span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .key i { display: inline-block; width: 0.75rem; height: 0.75rem; }
+  .panel-hit { cursor: pointer; }
+  .panel-hit:focus-visible { outline: 2px solid var(--cgd-teal); outline-offset: 1px; }
+  .idalist { background: var(--cgd-cream); border-left: 4px solid var(--cgd-light-teal); margin-top: 0.75rem; padding: 0.75rem 1rem 0.625rem; line-height: 1.45; }
+  .idalist .hint { margin: 0; }
+  .idalist .head b { color: var(--cgd-teal); font-weight: 700; }
+  .idalist .scroll { max-height: 360px; overflow: auto; margin-top: 0.5rem; padding-right: 0.375rem; }
+  .idalist table { border-collapse: collapse; width: 100%; font-size: 0.8rem; }
+  .idalist th { position: sticky; top: 0; background: var(--cgd-cream); font-weight: 500; font-size: 0.78rem; text-align: right; color: var(--cgd-dark-gray);
+                padding: 2px 0 4px 0.75rem; border-bottom: 1px solid var(--cgd-teal-gray); vertical-align: bottom; }
+  .idalist td { padding: 2px 0 2px 0.75rem; text-align: right; font-variant-numeric: tabular-nums; border-bottom: 1px solid var(--cgd-light-gray); }
+  .idalist th:nth-child(-n+2), .idalist td:nth-child(-n+2) { text-align: left; }
+  .idalist th:nth-child(1), .idalist td:nth-child(1) { padding-left: 0; }
+  .idalist td:nth-child(2) { white-space: nowrap; }
+  .idalist th.grp { text-align: center; padding-bottom: 2px; border-bottom: 1px solid var(--cgd-teal-gray); }
+  .idalist th.yr, .idalist td.yr { padding-left: 0.375rem; font-size: 0.76rem; }
+  .idalist td.tot { font-weight: 500; }
+  .idalist .yrs { font-size: 0.74rem; font-weight: 300; font-style: italic; color: var(--cgd-dark-gray); }
+  .idalist .fine { font-size: 0.74rem; font-weight: 300; font-style: italic; color: var(--cgd-dark-gray); margin-top: 0.5rem; }
+  #err { color: var(--cgd-red); font-weight: 500; }
+  #tip { min-width: min(220px, 80vw); }
+  #tip .fine { font-size: 0.7rem; }
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <div id="stat"><span id="err" role="alert" hidden></span></div>
+  <div class="key" aria-hidden="true">
+    <span><i style="background:#85A5AD"></i>Share of IDA allocations</span>
+    <span><i style="background:#006970"></i>Share of IDA grant element</span>
+  </div>
+
+  <!-- aria-label rather than a <title> child: a <title> shows as a browser tooltip that covers the hover callout -->
+  <svg id="chart" role="img" aria-label="Four small bar charts, one per World Bank income class, of the shares of IDA allocations and of IDA grant element in each fiscal year from 2020 to 2025" aria-describedby="chart-desc">
+    <desc id="chart-desc">Each panel is one World Bank income class. Grey bars are the class's share of all IDA country allocations in a fiscal year and teal bars are its share of the grant element, the part of financing that is effectively a gift. The same scale is used in every panel. Select a panel to list its countries in a table below the chart; the full data can be downloaded as a CSV file.</desc>
+  </svg>
+
+  <div class="idalist" id="list" aria-live="polite"></div>
+  <p class="hint" style="margin-top:0.5rem">Hover over or tap a bar for its figures.</p>
+  <p class="datalink"><a id="dl" href="data/ida-grant-element-country-year.csv" download>Download the data (CSV)</a></p>
+  <div id="tip" role="tooltip"></div>
+</div>
+
+<script>window.CGD_INTERACTIVE_NAME = 'aid-middle-income-ida-grant-element';</script>
+<script src="shared/tracking.js"></script>
+<script src="shared/iframe-resize.js"></script>
+<script>
+fetch("data/ida-grant-element.json")
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(init)
+  .catch(() => {
+    const e = document.getElementById("err");
+    e.hidden = false; e.textContent = "The data could not be loaded. Please refresh the page.";
+  });
+
+function init(D) {
+  const NS = "http://www.w3.org/2000/svg", Ys = D.years, nY = Ys.length;
+  const COLORS = ["#85A5AD", "#006970"], INK = "#1A272A", DGRAY = "#394649", GRID = "#DFE0E2";
+  const svg = document.getElementById("chart"), wrap = document.getElementById("wrap"), box = document.getElementById("list");
+  const tip = document.getElementById("tip");
+  let selected = "Lower-middle income";     // default selection so the country table is visible on load; select another panel to change it
+
+  const fmtInt = v => Math.round(v).toLocaleString("en-US");
+  const pct = v => (v < 10 ? v.toFixed(1) : Math.round(v)) + "%";
+  const val = v => v < 10 ? v.toFixed(1) : String(Math.round(v));
+  const num = v => v == null ? "–" : (v < 0 ? "−" : "") + (Math.abs(v) < 1 ? Math.abs(v).toFixed(1) : fmtInt(Math.abs(v)));
+  const mk = (p, tag, a, t) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); if (t !== undefined) e.textContent = t; p.appendChild(e); return e; };
+  const lin = (d0, d1, r0, r1) => v => r0 + (v - d0) / (d1 - d0) * (r1 - r0);
+  const trow = (l, v, c) => `<div class="row"><span class="lab">${c ? `<i style="display:inline-block;width:9px;height:9px;margin-right:6px;background:${c}"></i>` : ""}${l}</span><span>${v}</span></div>`;
+
+  // ---- tooltip (hover / tap detail; positioned inside the wrapper) ---------------------------------------------------
+  function showTip(ev, html) {
+    tip.innerHTML = html; tip.style.opacity = 1;
+    const r = wrap.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = ev.clientX - r.left + 14, y = ev.clientY - r.top + 14;
+    if (x + w > r.width - 4) x = Math.max(4, ev.clientX - r.left - w - 14);
+    if (y + h > wrap.scrollHeight - 4) y = Math.max(4, ev.clientY - r.top - h - 14);
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  }
+  const hideTip = () => { tip.style.opacity = 0; };
+
+  // ---- selection ---------------------------------------------------------------------------------------------------------
+  function pick(name) {
+    if (selected === name) { selected = null; CGDTracking.trackEngagement("detail_close", "selection_clear"); }
+    else { selected = name; CGDTracking.trackEngagement("detail_open", "income_class_panel", name); }
+    draw();
+  }
+
+  // ---- chart: one small panel per income class, grey allocation bar and teal grant element bar for every fiscal year -----
+  function draw() {
+    const W = Math.max(280, Math.floor(wrap.clientWidth - 8)), narrow = W < 620, cols = narrow ? 1 : 2, gut = 28;
+    const pw = Math.floor((W - gut * (cols - 1)) / cols), pm = { t: 50, r: 4, b: 26, l: 30 }, ph = 150, cellH = pm.t + ph + pm.b + 12;
+    const H = Math.ceil(D.classes.length / cols) * cellH;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
+    [...svg.querySelectorAll("g.panels")].forEach(g => g.remove());
+    const root = mk(svg, "g", { class: "panels" });
+    D.classes.forEach((c, k) => {
+      const gx = (k % cols) * (pw + gut), gy = Math.floor(k / cols) * cellH, sel = c.name === selected;
+      const g = mk(root, "g", {});
+      mk(g, "rect", { x: gx - 6, y: gy, width: pw + 12, height: cellH - 8, rx: 4, fill: sel ? "rgba(191,222,224,.4)" : "transparent" });
+      mk(g, "text", { x: gx, y: gy + 15, "font-size": 13.5, "font-weight": 500, fill: "#0B4C5B" }, c.name);
+      mk(g, "text", { x: gx, y: gy + 33, "font-size": 12.5, "font-weight": 300, "font-style": "italic", fill: INK },
+        `FY20-25: ${pct(c.a[nY])} of allocations, ${pct(c.b[nY])} of grant element`);
+      const x0 = gx + pm.l, x1 = gx + pw - pm.r, slot = (x1 - x0) / nY, bw = Math.min(25, (slot - 8) / 2);
+      const ys = lin(0, 70, gy + pm.t + ph, gy + pm.t);
+      [0, 20, 40, 60].forEach(t => {
+        if (t) mk(g, "line", { x1: x0, x2: x1, y1: ys(t), y2: ys(t), stroke: GRID, "stroke-width": 1 });
+        mk(g, "text", { x: x0 - 5, y: ys(t), dy: "0.32em", "text-anchor": "end", "font-size": 11, fill: INK }, t + "%");
+      });
+      mk(g, "line", { x1: x0, x2: x1, y1: ys(0), y2: ys(0), stroke: INK, "stroke-width": 1 });
+      Ys.forEach((yl, i) => {
+        const bx = x0 + i * slot + (slot - 2 * bw) / 2;
+        mk(g, "text", { x: x0 + i * slot + slot / 2, y: ys(0) + 16, "text-anchor": "middle", "font-size": 11, fill: INK }, yl);
+        if (c.n[i] > 0) [c.a[i], c.b[i]].forEach((v, j) => {
+          const bh = ys(0) - ys(v), inside = bh >= 17;                         // the value sits inside the bar; bars too short to hold it get it just above
+          mk(g, "rect", { x: bx + j * bw, y: ys(v), width: bw - 1, height: Math.max(1.2, bh), fill: COLORS[j] });
+          mk(g, "text", { x: bx + j * bw + (bw - 1) / 2, y: inside ? ys(v) + 12 : ys(v) - 4, "text-anchor": "middle", "font-size": 11, "font-weight": 500,
+            fill: inside && j ? "#fff" : INK }, val(v));
+        });
+        const hit = mk(g, "rect", { x: x0 + i * slot, y: gy + pm.t - 4, width: slot, height: ph + 8, fill: "transparent", style: "cursor:pointer" });
+        const detail = ev => showTip(ev, `<b>${c.name} &middot; ${yl}</b>` + (c.n[i] > 0
+          ? trow("IDA recipients", c.n[i]) + trow("Allocation", `${pct(c.a[i])} &middot; SDR ${fmtInt(c.alloc[i])} m`, COLORS[0]) +
+            trow("Grant element", `${pct(c.b[i])} &middot; SDR ${fmtInt(c.ge[i])} m`, COLORS[1])
+          : `<div class="fine">No IDA recipients in this class.</div>`) + `<div class="fine">Select to list the countries.</div>`);
+        hit.addEventListener("pointermove", detail); hit.addEventListener("pointerleave", hideTip);
+        hit.addEventListener("click", ev => { detail(ev); pick(c.name); });
+      });
+      // keyboard-operable panel header: Enter or Space selects the class
+      const btn = mk(g, "rect", { x: gx - 6, y: gy, width: pw + 12, height: 38, fill: "transparent", class: "panel-hit", tabindex: 0, role: "button",
+        "aria-pressed": sel, "aria-label": `${c.name}: list the ${c.n[nY]} recipient countries` });
+      btn.addEventListener("click", () => pick(c.name));
+      btn.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); pick(c.name); } });
+    });
+    renderList();
+  }
+
+  // ---- country table under the chart -------------------------------------------------------------------------------------------
+  function renderList() {
+    const c = D.classes.find(x => x.name === selected);
+    if (!c) {
+      box.innerHTML = `<p class="hint">Select an income class to list its IDA recipient countries, largest grant element first.</p>`;
+      return;
+    }
+    const rows = c.countries.map(r => `<tr><td>${r.name}${r.yrs < nY ? ` <span class="yrs">(${r.yrs} yr${r.yrs > 1 ? "s" : ""})</span>` : ""}</td><td>${r.status}</td>` +
+      r.ge_y.map(v => `<td class="yr">${num(v)}</td>`).join("") +
+      `<td class="tot">${num(r.ge)}</td><td>${num(r.alloc)}</td><td>${r.gift == null ? "n/a" : Math.round(r.gift) + "%"}</td><td>${r.gni == null ? "n/a" : "$" + fmtInt(r.gni)}</td></tr>`).join("");
+    box.innerHTML = `<div class="head"><b>${c.name}</b> &middot; FY20-25 &middot; ${c.n[nY]} IDA recipients &middot; grant element SDR ${fmtInt(c.ge[nY])} m &middot; allocation SDR ${fmtInt(c.alloc[nY])} m</div>` +
+      `<div class="scroll"><table><caption class="sr">${c.name}: IDA recipient countries, FY20 to FY25, largest total grant element first</caption><thead><tr><th rowspan="2">Country</th><th rowspan="2">IDA status, latest year</th>` +
+      `<th colspan="${nY}" class="grp">Grant element by year, SDR m</th><th rowspan="2">Total grant element, SDR m</th><th rowspan="2">Total allocation, SDR m</th>` +
+      `<th rowspan="2">Counted as gift</th><th rowspan="2">GNI per capita, US$, latest year</th></tr><tr>${Ys.map(y => `<th class="yr">${y}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>` +
+      `<div class="fine">Countries are ranked by total grant element over FY20-25. A dash means the country was not in this income class that year (a country that moved class appears under both classes, and fewer than six years are marked). IDA status is the lending group the grant element calculation assigns the country in its latest year in the class. Counted as gift is total grant element divided by total allocation. GNI per capita is the World Bank Atlas-method figure in current US$ for the year behind that fiscal year's income classes (two years earlier); n/a means the World Bank does not publish it.</div>`;
+  }
+
+  document.getElementById("dl").addEventListener("click", () => CGDTracking.trackEngagement("download", "download_data_csv"));
+  let t; const redraw = () => { clearTimeout(t); t = setTimeout(draw, 80); };
+  if (window.ResizeObserver) new ResizeObserver(redraw).observe(wrap); else window.addEventListener("resize", redraw);
+  draw();
+  CGDTracking.trackView();
+}
+</script>
+</body>
+</html>

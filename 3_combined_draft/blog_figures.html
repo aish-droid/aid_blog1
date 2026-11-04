@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog figures in CGD style</title>
+<link rel="stylesheet" href="https://use.typekit.net/ymp6ujv.css">
+<style>
+  :root {
+    --cgd-teal: #0B4C5B; --cgd-gold: #FFB52C; --cgd-teal-gray: #85A5AD; --cgd-light-teal: #006970;
+    --cgd-cream: #F3F6F7; --cgd-dark-gray: #394649; --cgd-teal-black: #1A272A;
+    --cgd-blue: #2D99B5; --cgd-light-blue: #BFDEE0; --cgd-light-gold: #FEE8BF; --cgd-light-gray: #DFE0E2;
+    --w: 820px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #fff; color: var(--cgd-teal-black); font-family: "sofia-pro", "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.4; }
+  .bar { background: var(--cgd-cream); font-size: 0.8125rem; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 6px 22px; align-items: center; }
+  .bar b { color: var(--cgd-teal); font-weight: 700; }
+  .bar label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 500; }
+  .bar select { font: inherit; padding: 2px 6px; border: 1px solid var(--cgd-teal); border-radius: 4px; background: #fff; }
+  .bar .hint { font-weight: 300; font-style: italic; }
+  main { width: 100%; max-width: calc(var(--w) + 48px); margin: 0 auto; padding: 32px 24px 80px; }
+  figure { margin-bottom: 88px; }
+  .fignum { font-size: 1.125rem; font-weight: 700; color: var(--cgd-teal); line-height: 1.25; margin-bottom: 10px; }
+  .warn { background: var(--cgd-light-gold); color: var(--cgd-teal-black); font-size: 0.875rem; padding: 10px 16px; }
+  .chart { width: 100%; }
+  .chart iframe { display: block; width: 100%; border: 0; height: 700px; }
+  .src { font-size: 0.78rem; font-weight: 300; font-style: italic; color: var(--cgd-teal-black); line-height: 1.4; margin-top: 10px; }
+  body.no-titles .fig-head { display: none; }
+  body.no-src .src { display: none; }
+  /* SVG text roles (brand type hierarchy) */
+  svg text { font-family: inherit; }
+  .tick { font-size: 12.5px; font-weight: 400; fill: var(--cgd-teal-black); }
+  .axlab { font-size: 13.5px; font-weight: 500; fill: var(--cgd-teal); }
+  .dl { font-size: 13px; font-weight: 300; font-style: italic; fill: var(--cgd-teal-black); }
+  .dlb { font-size: 12.5px; font-weight: 500; fill: var(--cgd-teal-black); }
+  .halo { paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
+  .grid { stroke: var(--cgd-light-gray); stroke-width: 1; }
+  .axis { stroke: var(--cgd-teal-black); stroke-width: 1; }
+  .sep { stroke: var(--cgd-teal-gray); stroke-width: 1; stroke-dasharray: 10 4; }
+  .series { fill: none; stroke-width: 3.5; stroke-linejoin: round; stroke-linecap: round; }
+  .guide { stroke: var(--cgd-teal-black); stroke-width: 1; pointer-events: none; }
+  /* hover callout */
+  #tip { position: fixed; z-index: 10; left: 0; top: 0; pointer-events: none; background: #fff; border: 1px solid var(--cgd-teal-gray);
+         border-radius: 4px; padding: 8px 11px; font-size: 0.8rem; line-height: 1.4; min-width: 200px; max-width: 320px; opacity: 0; transition: opacity .08s; }
+  #tip b { color: var(--cgd-teal); font-weight: 700; font-size: 0.86rem; }
+  #tip .row { display: flex; justify-content: space-between; gap: 16px; }
+  #tip .row span:last-child { white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+  #tip .lab { color: var(--cgd-dark-gray); }
+  #tip .sw { display: inline-block; width: 9px; height: 9px; margin-right: 6px; }
+  #tip .tot { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--cgd-light-gray); font-weight: 500; }
+  #tip .fine { font-size: 0.7rem; font-weight: 300; font-style: italic; margin-top: 4px; color: var(--cgd-dark-gray); }
+  @media (prefers-reduced-motion: reduce) { #tip { transition: none; } }
+  body.bare { background: transparent; }
+  body.bare .bar, body.bare .warn, body.bare .fig-head, body.bare .src { display: none; }
+  body.bare main { max-width: none; padding: 0; }
+  body.bare figure { margin: 0; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <b>Blog figures, CGD style</b>
+  <label><input type="checkbox" id="optTitles" checked> Figure names</label>
+  <label><input type="checkbox" id="optSrc" checked> Source notes</label>
+  <label>Width <select id="optW"><option value="1000">Wide (1000 px)</option><option value="820" selected>Standard (820 px)</option><option value="640">Narrow (640 px)</option></select></label>
+  <span class="hint">Hover over any chart for exact figures. Figures 4, 5 and 6 are interactive: set the class, year and view before you screenshot. Screenshot each figure from its title down to its source note.</span>
+</div>
+<div class="warn" id="fileWarn" hidden>This page was opened as a file, so Figures 5 and 6 (the interactive map and Sankey) cannot load their data. Open it with <b>open_blog_figures.bat</b> instead.</div>
+<main id="figs"></main>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const DATA = {"poverty_region":{"years":[1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"series":{"ssa":[0.3206,0.3362,0.3513,0.3651,0.3752,0.3844,0.3912,0.3992,0.4096,0.4186,0.4253,0.4285,0.4373,0.4419,0.4316,0.4316,0.4349,0.4374,0.4391,0.4473,0.442,0.4452,0.4457,0.4481,0.4521,0.4651,0.4752,0.4821,0.4899,0.4999,0.5378,0.5541,0.5619,0.5751,0.5821],"sa":[0.5034,0.5137,0.5173,0.5195,0.5225,0.5293,0.5362,0.5461,0.5557,0.5619,0.5704,0.58,0.5897,0.5946,0.5965,0.5838,0.5567,0.5286,0.518,0.4933,0.4393,0.4035,0.3743,0.3422,0.3044,0.2633,0.2235,0.1879,0.158,0.1399,0.1522,0.1287,0.101,0.0777,0.0634],"eap":[1.2184,1.2172,1.2041,1.1898,1.1346,1.0819,1.0224,1.0195,1.0382,0.9977,0.9551,0.9115,0.8351,0.7622,0.6971,0.6166,0.5963,0.5419,0.5106,0.4696,0.4175,0.3406,0.2979,0.2038,0.1773,0.1394,0.1162,0.0966,0.0772,0.061,0.0645,0.0623,0.0574,0.0521,0.0472],"mena":[0.1312,0.126,0.1144,0.1182,0.1101,0.1112,0.1039,0.1047,0.1092,0.1131,0.1179,0.1245,0.1252,0.1178,0.1082,0.1048,0.1006,0.0977,0.0878,0.0933,0.0835,0.0829,0.0803,0.0776,0.0782,0.0787,0.0802,0.0795,0.0808,0.0864,0.0953,0.1031,0.1053,0.1108,0.1168],"lac":[0.0914,0.0901,0.0923,0.0937,0.0921,0.0892,0.0972,0.0966,0.0968,0.0998,0.094,0.0944,0.0914,0.0898,0.0838,0.079,0.0674,0.0612,0.0569,0.0553,0.0498,0.0459,0.0451,0.0414,0.0397,0.0374,0.0388,0.0388,0.0387,0.0396,0.0376,0.0406,0.033,0.0304,0.0284],"eca":[0.0342,0.0386,0.047,0.0522,0.0651,0.0626,0.0642,0.0588,0.0608,0.0757,0.066,0.0602,0.0536,0.0518,0.0446,0.0441,0.0388,0.0356,0.033,0.0332,0.0336,0.0324,0.0327,0.01,0.0109,0.0109,0.009,0.0091,0.0077,0.0071,0.0078,0.0074,0.007,0.0061,0.0053]}},"poverty_income":{"years":[1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"series":{"low":[2.0646,2.0866,2.0844,1.947,1.9218,1.8876,1.8455,1.0967,2.0454,1.3259,1.3403,1.3563,1.3376,1.2237,1.194,1.1632,1.1314,0.6181,0.4628,0.4128,0.3808,0.3785,0.3793,0.3707,0.3163,0.3288,0.3355,0.3658,0.3599,0.3392,0.3571,0.3864,0.3755,0.388,0.3548],"lmic":[0.12,0.1418,0.1518,0.2987,0.291,0.2875,0.2777,1.0308,0.147,0.8458,0.7937,0.777,0.7571,0.7997,0.7076,0.6388,0.5918,1.0168,1.1058,1.1005,0.7384,0.6992,0.6548,0.6064,0.6181,0.5618,0.5234,0.4504,0.4262,0.4084,0.4867,0.4564,0.4234,0.402,0.3902],"umic":[0.0771,0.0824,0.0804,0.082,0.0772,0.0721,0.0805,0.086,0.0657,0.0843,0.084,0.0539,0.0231,0.0237,0.05,0.0484,0.0625,0.0587,0.0687,0.0704,0.338,0.269,0.2361,0.1412,0.1213,0.1002,0.0795,0.0736,0.0613,0.0814,0.0448,0.0473,0.0602,0.0559,0.0495],"high":[0.0043,0.0047,0.0052,0.0059,0.006,0.0059,0.0057,0.0057,0.0062,0.0053,0.0052,0.0061,0.0061,0.0063,0.0063,0.0062,0.006,0.006,0.0064,0.0062,0.0067,0.0066,0.0084,0.0077,0.0106,0.0076,0.0077,0.0076,0.0078,0.0075,0.0055,0.0052,0.009,0.0086,0.0081]}},"perpoor":{"lic":[[2000,24.2],[2001,30.2],[2002,34.3],[2003,37.2],[2004,37.2],[2005,43.3],[2006,51.8],[2007,76.5],[2008,97.4],[2009,110.1],[2010,107.2],[2011,119.8],[2012,118.8],[2013,125.6],[2014,119.3],[2015,123.7],[2016,120.6],[2017,162.7],[2018,173.4],[2019,166.0],[2020,175.6],[2021,152.6],[2022,132.9],[2023,135.0],[2024,119.0]],"mic":[[2000,33.4],[2001,36.1],[2002,37.1],[2003,42.1],[2004,50.0],[2005,83.3],[2006,64.3],[2007,40.7],[2008,43.9],[2009,46.3],[2010,45.5],[2011,58.6],[2012,64.0],[2013,86.6],[2014,97.2],[2015,114.5],[2016,139.3],[2017,132.3],[2018,133.9],[2019,141.2],[2020,167.6],[2021,167.1],[2022,232.5],[2023,262.7],[2024,265.5]],"micx":[[2000,33.6],[2001,36.3],[2002,36.2],[2003,41.5],[2004,49.4],[2005,82.6],[2006,63.4],[2007,40.3],[2008,43.3],[2009,45.7],[2010,44.9],[2011,57.8],[2012,63.0],[2013,85.4],[2014,95.2],[2015,111.8],[2016,136.5],[2017,129.6],[2018,131.1],[2019,138.6],[2020,162.7],[2021,162.3],[2022,168.2],[2023,175.5],[2024,184.5]],"yMax":300.0,"ticks":[0.0,100.0,200.0,300.0]},"progress":[[1990,21.370093701335865],[1991,24.946129570439155],[1992,28.1775913468575],[1993,26.543340546475523],[1994,30.31077012838011],[1995,30.284962678496502],[1996,29.96919305868201],[1997,30.379200235352787],[1998,29.374324095868154],[1999,29.361495284167137],[2000,31.438523661200822],[2001,33.23778910272595],[2002,36.92994725737799],[2003,43.40036134445121],[2004,39.70021358363574],[2005,33.18369857271649],[2006,40.23221424969488],[2007,45.95527871065123],[2008,39.48713563980439],[2009,47.29442823344891],[2010,52.94753588765926],[2011,56.26817962081183],[2012,53.272685321018166],[2013,54.573922658381655],[2014,52.41657365215158],[2015,56.28838247933563],[2016,55.20251444447661],[2017,59.188848620837234],[2018,61.861431687757616],[2019,57.850101185434056],[2020,53.36944396317441],[2021,54.85250531487049],[2022,44.286436812761984],[2023,40.37419460658172],[2024,46.05025056010236]],"sahoo":[{"name":"Low-income countries","rows":[{"name":"Burundi","v":386.111,"pg":89.103,"cost":2.78,"ci":0.07,"gdp":3.12,"rev":0.72,"year":2020},{"name":"Central African Rep.","v":533.333,"pg":73.498,"cost":2.08,"ci":0.07,"gdp":2.83,"rev":0.39,"year":2021},{"name":"DR Congo","v":588.268,"pg":55.073,"cost":31.59,"ci":0.33,"gdp":57.36,"rev":5.37,"year":2020},{"name":"Malawi","v":220.103,"pg":32.422,"cost":4.27,"ci":0.13,"gdp":13.17,"rev":1.94,"year":2019},{"name":"Madagascar","v":275.978,"pg":30.607,"cost":4.94,"ci":0.14,"gdp":16.14,"rev":1.79,"year":2021},{"name":"Niger","v":166.784,"pg":30.295,"cost":4.72,"ci":0.21,"gdp":15.58,"rev":2.83,"year":2018},{"name":"Liberia","v":83.051,"pg":23.614,"cost":0.98,"ci":0.09,"gdp":4.15,"rev":1.18,"year":2014},{"name":"Ethiopia","v":185.29,"pg":20.438,"cost":25.57,"ci":1.78,"gdp":125.11,"rev":13.8,"year":2021},{"name":"Togo","v":96.774,"pg":17.585,"cost":1.5,"ci":0.1,"gdp":8.53,"rev":1.55,"year":2018},{"name":"Uganda","v":117.989,"pg":15.876,"cost":6.69,"ci":0.46,"gdp":42.14,"rev":5.67,"year":2019},{"name":"Burkina Faso","v":74.541,"pg":14.73,"cost":2.84,"ci":0.15,"gdp":19.28,"rev":3.81,"year":2018},{"name":"Rwanda","v":53.333,"pg":11.724,"cost":1.68,"ci":0.06,"gdp":14.33,"rev":3.15,"year":2023},{"name":"Guinea-Bissau","v":75.0,"pg":11.111,"cost":0.21,"ci":0.03,"gdp":1.89,"rev":0.28,"year":2018},{"name":"Sierra Leone","v":96.154,"pg":9.677,"cost":0.75,"ci":0.05,"gdp":7.75,"rev":0.78,"year":2018},{"name":"Yemen","v":34.271,"pg":8.106,"cost":4.51,"ci":0.32,"gdp":55.64,"rev":13.16,"year":2014},{"name":"Mali","v":45.714,"pg":7.12,"cost":1.76,"ci":0.22,"gdp":24.72,"rev":3.85,"year":2018},{"name":"Sudan","v":30.994,"pg":4.637,"cost":3.4,"ci":0.25,"gdp":73.32,"rev":10.97,"year":2009}]},{"name":"Lower-middle-income countries","rows":[{"name":"Tanzania","v":120.725,"pg":17.974,"cost":13.98,"ci":1.3,"gdp":77.78,"rev":11.58,"year":2020},{"name":"Timor-Leste","v":37.838,"pg":17.5,"cost":0.14,"ci":0.01,"gdp":0.8,"rev":0.37,"year":2007},{"name":"Benin","v":68.511,"pg":9.301,"cost":1.61,"ci":0.17,"gdp":17.31,"rev":2.35,"year":2018},{"name":"Kenya","v":46.554,"pg":7.831,"cost":9.66,"ci":0.46,"gdp":123.36,"rev":20.75,"year":2021},{"name":"Ghana","v":52.188,"pg":6.86,"cost":4.89,"ci":0.25,"gdp":71.28,"rev":9.37,"year":2016},{"name":"Nigeria","v":67.785,"pg":5.765,"cost":29.5,"ci":1.48,"gdp":511.75,"rev":43.52,"year":2018},{"name":"Zimbabwe","v":23.042,"pg":4.032,"cost":2.56,"ci":0.08,"gdp":63.49,"rev":11.11,"year":2017},{"name":"Senegal","v":20.943,"pg":3.957,"cost":1.11,"ci":0.19,"gdp":28.05,"rev":5.3,"year":2018},{"name":"Namibia","v":8.544,"pg":3.02,"cost":0.44,"ci":0.03,"gdp":14.57,"rev":5.15,"year":2015},{"name":"Côte d'Ivoire","v":17.963,"pg":2.633,"cost":1.87,"ci":0.26,"gdp":71.01,"rev":10.41,"year":2018},{"name":"Pakistan","v":9.697,"pg":1.303,"cost":5.63,"ci":0.6,"gdp":432.14,"rev":58.06,"year":2018},{"name":"Bangladesh","v":10.908,"pg":0.973,"cost":4.66,"ci":0.52,"gdp":479.07,"rev":42.72,"year":2022},{"name":"India","v":2.253,"pg":0.454,"cost":15.8,"ci":1.98,"gdp":3483.84,"rev":701.39,"year":2022}]},{"name":"Upper-middle-income countries","rows":[{"name":"South Africa","v":6.57,"pg":1.565,"cost":9.13,"ci":0.52,"gdp":583.21,"rev":138.96,"year":2010},{"name":"Indonesia","v":4.202,"pg":0.627,"cost":7.93,"ci":0.24,"gdp":1264.73,"rev":188.71,"year":2018},{"name":"Colombia","v":1.538,"pg":0.426,"cost":1.53,"ci":0.13,"gdp":358.93,"rev":99.49,"year":2016},{"name":"Mexico","v":0.05,"pg":0.012,"cost":0.22,"ci":0.21,"gdp":1799.64,"rev":443.51,"year":2024}]}]};
+
+const C = {teal: "#0B4C5B", ltl: "#006970", gold: "#FFB52C", tgray: "#85A5AD", cream: "#F3F6F7", dgray: "#394649",
+           black: "#1A272A", blue: "#2D99B5", lblue: "#BFDEE0", lgold: "#FEE8BF", lgray: "#DFE0E2"};
+const NS = "http://www.w3.org/2000/svg";
+
+// ---- small SVG toolkit ---------------------------------------------------------------------
+function mk(parent, tag, attrs, text) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in (attrs || {})) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  parent.appendChild(e); return e;
+}
+const lin = (d0, d1, r0, r1) => v => r0 + (v - d0) / (d1 - d0) * (r1 - r0);
+const logS = (d0, d1, r0, r1) => { const a = Math.log10(d0), b = Math.log10(d1); return v => r0 + (Math.log10(v) - a) / (b - a) * (r1 - r0); };
+function start(el, w, h, label) {
+  el.innerHTML = "";
+  const s = document.createElementNS(NS, "svg");
+  s.setAttribute("viewBox", `0 0 ${w} ${h}`); s.setAttribute("width", w); s.setAttribute("height", h);
+  s.setAttribute("role", "img"); s.setAttribute("aria-label", label);
+  s.style.display = "block"; el.appendChild(s); return s;
+}
+// push overlapping labels apart (items: {y, h})
+function spread(items, lo, hi) {
+  items.sort((a, b) => a.y - b.y);
+  for (let it = 0; it < 80; it++) {
+    for (let i = 1; i < items.length; i++) {
+      const need = (items[i - 1].h + items[i].h) / 2 + 2, d = items[i].y - items[i - 1].y;
+      if (d < need) { const m = (need - d) / 2; items[i - 1].y -= m; items[i].y += m; }
+    }
+    items.forEach(o => o.y = Math.min(hi - o.h / 2, Math.max(lo + o.h / 2, o.y)));
+  }
+}
+function multiline(parent, x, y, lines, cls, anchor) {
+  const t = mk(parent, "text", {x, y: y - (lines.length - 1) * 7, class: cls, "text-anchor": anchor || "start"});
+  lines.forEach((ln, i) => mk(t, "tspan", {x, dy: i ? "14" : "0.32em"}, ln));
+  return t;
+}
+// ---- hover callouts ------------------------------------------------------------------------
+const tipEl = document.getElementById("tip");
+function showTip(ev, html) {
+  tipEl.innerHTML = html; tipEl.style.opacity = 1;
+  const r = tipEl.getBoundingClientRect();
+  let x = ev.clientX + 16, y = ev.clientY + 16;
+  if (x + r.width > innerWidth - 8) x = ev.clientX - r.width - 16;
+  if (y + r.height > innerHeight - 8) y = innerHeight - r.height - 8;
+  tipEl.style.left = Math.max(8, x) + "px"; tipEl.style.top = Math.max(8, y) + "px";
+}
+const hideTip = () => { tipEl.style.opacity = 0; };
+const trow = (label, value, color) => `<div class="row"><span class="lab">${color ? `<i class="sw" style="background:${color}"></i>` : ""}${label}</span><span>${value}</span></div>`;
+const fmtInt = v => Math.round(v).toLocaleString("en-US");
+// vertical guide + callout following the pointer across a time axis. o: {m,w,h,x0,x1,xs,html(year),dots:[{color,y(year)}]}
+function yearHover(s, o) {
+  const guide = mk(s, "line", {y1: o.m.t, y2: o.h - o.m.b, class: "guide", opacity: 0});
+  const dots = (o.dots || []).map(d => mk(s, "circle", {r: 5, fill: d.color, stroke: "#fff", "stroke-width": 1.5, opacity: 0}));
+  const area = mk(s, "rect", {x: o.m.l, y: o.m.t, width: o.w - o.m.r - o.m.l, height: o.h - o.m.t - o.m.b, fill: "transparent"});
+  area.addEventListener("pointermove", ev => {
+    const px = ev.clientX - s.getBoundingClientRect().left;
+    const yr = Math.min(o.x1, Math.max(o.x0, Math.round(o.x0 + (px - o.m.l) / (o.w - o.m.r - o.m.l) * (o.x1 - o.x0))));
+    const gx = o.xs(yr);
+    guide.setAttribute("x1", gx); guide.setAttribute("x2", gx); guide.setAttribute("opacity", 1);
+    (o.dots || []).forEach((d, i) => { const y = d.y(yr); dots[i].setAttribute("cx", gx); dots[i].setAttribute("cy", y); dots[i].setAttribute("opacity", y == null ? 0 : 1); });
+    showTip(ev, o.html(yr));
+  });
+  area.addEventListener("pointerleave", () => { guide.setAttribute("opacity", 0); dots.forEach(d => d.setAttribute("opacity", 0)); hideTip(); });
+}
+
+// grid + axes. spec: {xs, ys, yTicks, xTicks, m, w, h, yfmt, ylabel}
+function axes(s, o) {
+  const {xs, ys, m, w, h} = o;
+  o.yTicks.forEach(t => {
+    if (t !== 0) mk(s, "line", {x1: m.l, x2: w - m.r, y1: ys(t), y2: ys(t), class: "grid"});
+    mk(s, "text", {x: m.l - 8, y: ys(t), dy: "0.32em", "text-anchor": "end", class: "tick"}, (o.yfmt || String)(t));
+  });
+  mk(s, "line", {x1: m.l, x2: w - m.r, y1: ys(o.yTicks[0]), y2: ys(o.yTicks[0]), class: "axis"});
+  o.xTicks.forEach(t => {
+    mk(s, "line", {x1: xs(t), x2: xs(t), y1: ys(o.yTicks[0]), y2: ys(o.yTicks[0]) + 5, class: "axis"});
+    mk(s, "text", {x: xs(t), y: ys(o.yTicks[0]) + 19, "text-anchor": "middle", class: "tick"}, t);
+  });
+  mk(s, "text", {x: 0, y: 12, class: "axlab"}, o.ylabel);   // horizontal, top-left
+}
+
+// ---- stacked areas (figures 1a, 1b) -----------------------------------------------------
+function stackedArea(el, w, spec) {
+  const narrow = w < 620;
+  const m = {t: spec.top || 34, r: narrow ? 128 : 172, b: 30, l: 34};
+  const h = (spec.height || 380) + m.t - 34 + (narrow ? 20 : 0);
+  const s = start(el, w, h, spec.aria);
+  const yrs = spec.years, y0 = yrs[0], y1 = yrs[yrs.length - 1];
+  const xs = lin(y0, y1, m.l, w - m.r), ys = lin(0, spec.yMax, h - m.b, m.t);
+  axes(s, {xs, ys, m, w, h, yTicks: spec.yTicks, xTicks: spec.xTicks, ylabel: spec.ylabel});
+  const base = yrs.map(() => 0);
+  const labels = [];
+  spec.layers.forEach(L => {
+    const top = L.vals.map((v, i) => base[i] + v);
+    const up = yrs.map((y, i) => `${xs(y).toFixed(1)},${ys(top[i]).toFixed(1)}`);
+    const dn = yrs.map((y, i) => `${xs(y).toFixed(1)},${ys(base[i]).toFixed(1)}`).reverse();
+    mk(s, "path", {d: "M" + up.join("L") + "L" + dn.join("L") + "Z", fill: L.color, stroke: "#fff", "stroke-width": 0.6});
+    const n = yrs.length - 1;
+    labels.push({y: ys((top[n] + base[n]) / 2), band: ys((top[n] + base[n]) / 2), color: L.color, lines: narrow && L.short ? L.short : L.lines, h: 14 * (narrow && L.short ? L.short.length : L.lines.length)});
+    top.forEach((v, i) => base[i] = v);
+  });
+  spread(labels, m.t, h - m.b);
+  labels.forEach(l => {
+    const x = w - m.r;
+    if (Math.abs(l.y - l.band) > 3) mk(s, "line", {x1: x + 2, y1: l.band, x2: x + 9, y2: l.y, stroke: C.tgray, "stroke-width": 1});
+    mk(s, "rect", {x: x + 12, y: l.y - 5, width: 10, height: 10, fill: l.color});   // swatch ties the label to its band
+    multiline(s, x + 28, l.y, l.lines, "dlb", "start");
+  });
+  (spec.marks || []).forEach(k => {      // dashed separators with labels in the top margin
+    const x = xs(k.year);
+    mk(s, "line", {x1: x, y1: k.y + 30, x2: x, y2: h - m.b, class: "sep"});
+    multiline(s, x + (k.align === "end" ? -5 : 5), k.y + 8, k.lines, "dl", k.align || "start");
+  });
+  yearHover(s, {m, w, h, x0: y0, x1: y1, xs, html: yr => {
+    const i = yr - y0, tot = spec.layers.reduce((a, L) => a + L.vals[i], 0);
+    return `<b>${yr}</b>` +
+      spec.layers.slice().reverse().map(L => trow(L.lines.join(" "), `${fmtInt(L.vals[i] * 1000)} m (${Math.round(100 * L.vals[i] / tot)}%)`, L.color)).join("") +
+      `<div class="row tot"><span>Total</span><span>${fmtInt(tot * 1000)} m</span></div>` + (spec.note ? `<div class="fine">${spec.note}</div>` : "");
+  }});
+}
+
+// ---- line charts (figures 2, 3) --------------------------------------------------------
+function lineChart(el, w, spec) {
+  const narrow = w < 620;
+  const m = {t: 34, r: spec.right ? (narrow ? 112 : spec.right) : 24, b: 30, l: 40};
+  const h = spec.height || 340;
+  const s = start(el, w, h, spec.aria);
+  const xs = lin(spec.x0, spec.x1, m.l, w - m.r), ys = lin(0, spec.yMax, h - m.b, m.t);
+  axes(s, {xs, ys, m, w, h, yTicks: spec.yTicks, xTicks: spec.xTicks, ylabel: spec.ylabel, yfmt: spec.yfmt});
+  (spec.hlines || []).forEach(L => {
+    mk(s, "line", {x1: m.l, x2: w - m.r, y1: ys(L.y), y2: ys(L.y), class: "sep"});
+    mk(s, "text", {x: L.align === "end" ? w - m.r - 4 : m.l + 4, y: ys(L.y) - 6, "text-anchor": L.align === "end" ? "end" : "start", class: "dl"}, L.text);
+  });
+  spec.series.forEach(S => {
+    mk(s, "path", {d: "M" + S.pts.map(p => `${xs(p[0]).toFixed(1)},${ys(p[1]).toFixed(1)}`).join("L"), class: "series", stroke: S.color});
+  });
+  const labs = spec.series.filter(S => S.lines).map(S => ({S, y: ys(S.pts[S.pts.length - 1][1]), h: 14 * S.lines.length}));
+  spread(labs, m.t, h - m.b);
+  labs.forEach(l => {
+    const x = w - m.r + 8;
+    mk(s, "line", {x1: x, x2: x + 14, y1: l.y, y2: l.y, stroke: l.S.color, "stroke-width": 3.5, "stroke-linecap": "round"});
+    multiline(s, x + 20, l.y, narrow && l.S.short ? l.S.short : l.S.lines, "dlb", "start");
+  });
+  (spec.points || []).forEach(P => {      // direct data labels on a few key points
+    mk(s, "circle", {cx: xs(P.x), cy: ys(P.y), r: 4.5, fill: P.color || C.ltl, stroke: "#fff", "stroke-width": 1.5});
+    mk(s, "text", {x: xs(P.x) + (P.dx || 0), y: ys(P.y) + (P.dy || -10), "text-anchor": P.anchor || "middle", class: "dl halo"}, P.text);
+  });
+  yearHover(s, {m, w, h, x0: spec.x0, x1: spec.x1, xs, html: spec.tip,
+    dots: spec.series.map(S => ({color: S.color, y: yr => { const p = S.pts.find(q => q[0] === yr); return p ? ys(p[1]) : null; }}))});
+}
+
+// ---- figure 4: cost as % of government revenue, log scale ---------------------------------
+function costBars(el, w, spec) {
+  const narrow = w < 620;
+  const m = {t: 8, r: 16, b: 58, l: narrow ? 108 : 132};
+  const rowH = 17, headH = 30, gap = 16;
+  const n = spec.groups.reduce((a, g) => a + g.rows.length, 0);
+  const h = m.t + spec.groups.length * (headH + gap) + n * rowH + m.b - gap;
+  const s = start(el, w, h, spec.aria);
+  const key = spec.key || "v";                       // "v" = % of government revenue (log axis), "pg" = % of GDP (linear axis)
+  const xs = spec.linear ? lin(0, spec.xmax, m.l, w - m.r) : logS(0.02, 2200, m.l, w - m.r);
+  const ticks = spec.ticks || [[0.1, "0.1%"], [1, "1%"], [10, "10%"], [100, "100%"], [1000, "1,000%"]];
+  ticks.forEach(([v, t]) => mk(s, "line", {x1: xs(v), x2: xs(v), y1: m.t, y2: h - m.b, class: "grid"}));
+  let y = m.t;
+  const firstTop = y;
+  const refs = spec.refs || [{v: 25, text: "a quarter of revenue", anchor: "end"}, {v: 100, text: "all of revenue", anchor: "start", strong: true}];
+  // reference lines go in first so the bars and value labels sit on top of them
+  refs.forEach(f => mk(s, "line", Object.assign({x1: xs(f.v), x2: xs(f.v), y1: firstTop + headH, y2: h - m.b},
+    f.strong ? {stroke: C.dgray, "stroke-width": 1.5} : {class: "sep"})));
+  spec.groups.forEach((g, gi) => {
+    mk(s, "text", {x: 0, y: y + headH - 12, class: "axlab"}, g.name);
+    if (gi === 0) refs.filter(f => f.text).forEach(f => mk(s, "text", {x: xs(f.v) + (f.anchor === "end" ? -5 : 5), y: y + headH - 12, "text-anchor": f.anchor, class: "dl"}, f.text));
+    y += headH;
+    const top = y;
+    g.rows.forEach(r => {
+      const band = mk(s, "rect", {x: 0, y, width: w, height: rowH, fill: "transparent"});     // row highlight, behind the bar
+      const rowY = y;
+      mk(s, "text", {x: m.l - 8, y: y + rowH / 2, dy: "0.32em", "text-anchor": "end", class: "tick"}, r.name);
+      const val = Math.max(r[key], spec.linear ? 0 : 0.02);
+      mk(s, "rect", {x: m.l, y: y + 2.5, width: Math.max(1.5, xs(val) - m.l), height: rowH - 5, fill: C.ltl});
+      const lab = r[key] < 0.1 ? "<0.1%" : r[key] < 10 ? r[key].toFixed(1) + "%" : Math.round(r[key]) + "%";
+      mk(s, "text", {x: xs(val) + 5, y: y + rowH / 2, dy: "0.32em", class: "dl halo"}, lab);
+      const pc = v => v < 0.1 ? "<0.1%" : v < 10 ? v.toFixed(1) + "%" : fmtInt(v) + "%";
+      const hit = mk(s, "rect", {x: 0, y: rowY, width: w, height: rowH, fill: "transparent"});    // hover target, on top
+      hit.addEventListener("pointermove", ev => {
+        band.setAttribute("fill", C.cream);
+        showTip(ev, `<b>${r.name}</b>` + trow("Income class", g.name.replace(" countries", "")) + trow("Survey year of GDP and revenue", r.year) +
+          trow("Policy cost per year", `$${r.cost.toFixed(2)} bn &plusmn; ${r.ci.toFixed(2)}`) +
+          trow("GDP", `$${r.gdp >= 100 ? fmtInt(r.gdp) : r.gdp.toFixed(1)} bn`) + trow("Government revenue", `$${r.rev >= 100 ? fmtInt(r.rev) : r.rev.toFixed(2)} bn`) +
+          (key === "pg"
+            ? `<div class="row tot" style="font-weight:500"><span>Cost as % of GDP</span><span>${pc(r.pg)}</span></div><div class="row"><span>Cost as % of revenue</span><span>${pc(r.v)}</span></div>`
+            : `<div class="row tot"><span>Cost as % of GDP</span><span>${pc(r.pg)}</span></div><div class="row" style="font-weight:500"><span>Cost as % of revenue</span><span>${pc(r.v)}</span></div>`) +
+          `<div class="fine">NBER WP 34583, Table E.4. Cost = gap-minimising transfers to cut the $2.15 (2017 PPP) poverty rate to 1%; $ are 2023 nominal.</div>`);
+      });
+      hit.addEventListener("pointerleave", () => { band.setAttribute("fill", "transparent"); hideTip(); });
+      y += rowH;
+    });
+    mk(s, "line", {x1: m.l, x2: m.l, y1: top, y2: y, class: "axis"});
+    y += gap;
+  });
+  const bottom = y - gap;
+  ticks.forEach(([v, t]) => {
+    mk(s, "line", {x1: xs(v), x2: xs(v), y1: bottom, y2: bottom + 5, class: "axis"});
+    mk(s, "text", {x: xs(v), y: bottom + 19, "text-anchor": "middle", class: "tick"}, t);
+  });
+  mk(s, "text", {x: (m.l + w - m.r) / 2, y: bottom + 44, "text-anchor": "middle", class: "axlab"}, spec.xlabel);
+}
+
+// ---- figure definitions -----------------------------------------------------------------
+const Y = DATA.poverty_region.years;
+const V = yr => DATA.progress.find(p => p[0] === yr)[1];
+const FIG1A = {id: "1a",
+   src: "Source: World Bank Poverty and Inequality Platform, via Our World in Data ($3 a day, 2021 PPP). North America (under 5 million people) is not shown.",
+   draw: (el, w) => stackedArea(el, w, {
+     years: Y, yMax: 2.5, yTicks: [0, 0.5, 1, 1.5, 2, 2.5], xTicks: [1990, 2000, 2010, 2020, 2024], ylabel: "People below $3 a day (billions)",
+     aria: "Stacked area chart of people living below $3 a day by world region, 1990 to 2024. Extreme poverty falls overall and concentrates in Sub-Saharan Africa.",
+     layers: [
+       {color: C.ltl,  vals: DATA.poverty_region.series.ssa,  lines: ["Sub-Saharan Africa"], short: ["Sub-Saharan", "Africa"]},
+       {color: C.gold, vals: DATA.poverty_region.series.sa,   lines: ["South Asia"]},
+       {color: C.blue, vals: DATA.poverty_region.series.eap,  lines: ["East Asia & Pacific"], short: ["East Asia", "& Pacific"]},
+       {color: C.lblue, vals: DATA.poverty_region.series.mena, lines: ["MENA, Afghanistan", "& Pakistan"], short: ["MENA,", "Afghanistan", "& Pakistan"]},
+       {color: C.lgold, vals: DATA.poverty_region.series.lac,  lines: ["Latin America", "& Caribbean"]},
+       {color: C.tgray, vals: DATA.poverty_region.series.eca,  lines: ["Europe &", "Central Asia"]}]})};
+const FIG1B = {id: "1b",
+   src: "Source: World Bank Poverty and Inequality Platform ($3 a day, 2021 PPP), grouped by each country's World Bank income class in that year. The jumps reflect countries being reclassified, not changes in people's lives.",
+   draw: (el, w) => stackedArea(el, w, {
+     years: DATA.poverty_income.years, yMax: 2.5, yTicks: [0, 0.5, 1, 1.5, 2, 2.5], xTicks: [1990, 2000, 2010, 2020, 2024], top: 112, height: 380,
+     ylabel: "People below $3 a day (billions)",
+     note: "Income-class totals differ slightly from the regional totals in Figure 1a (different aggregations).",
+     aria: "Stacked area chart of people living below $3 a day by their country's World Bank income class, 1990 to 2024. Steps in the chart reflect reclassification of China, India and Indonesia.",
+     marks: [{year: 1998, y: 40, lines: ["China & Indonesia", "reclassified 1997-99"]},
+             {year: 2007, y: 74, lines: ["India becomes", "lower-middle (2007)"], align: "end"},
+             {year: 2010, y: 74, lines: ["China becomes", "upper-middle (2010)"]}],
+     layers: [
+       {color: C.ltl,   vals: DATA.poverty_income.series.low,  lines: ["Low income"]},
+       {color: C.blue,  vals: DATA.poverty_income.series.lmic, lines: ["Lower-middle income"], short: ["Lower-middle", "income"]},
+       {color: C.lblue, vals: DATA.poverty_income.series.umic, lines: ["Upper-middle income"], short: ["Upper-middle", "income"]},
+       {color: C.lgray, vals: DATA.poverty_income.series.high, lines: ["High income"]}]})};
+
+const FIGS = [
+  {id: "1",
+   src: "Source: World Bank Poverty and Inequality Platform ($3 a day, 2021 PPP), via Our World in Data for panel a. Panel b groups countries by each country's World Bank income class in that year, so its jumps reflect countries being reclassified, not changes in people's lives; its totals differ slightly from panel a (different aggregations). North America (under 5 million people) is not shown in panel a.",
+   draw: (el, w) => {
+     const two = w >= 700, pw = two ? Math.floor((w - 28) / 2) : w;
+     const head = txt => `<div style="font-weight:500;color:var(--cgd-teal);margin:0 0 6px">${txt}</div>`;
+     el.innerHTML = `<div style="display:flex;gap:28px;flex-wrap:wrap"><div style="width:${pw}px">${head("a. By world region")}<div class="pa"></div></div>` +
+                    `<div style="width:${pw}px">${head("b. By country income class")}<div class="pb"></div></div></div>`;
+     FIG1A.draw(el.querySelector(".pa"), pw); FIG1B.draw(el.querySelector(".pb"), pw);
+   }},
+
+  {id: "2",
+   src: "Each line is the net ODA received by all countries in an income class, divided by the number of people living below $3 a day in those same countries, using each country's World Bank income class in that year. Middle income combines lower-middle and upper-middle income; the third line removes Ukraine (its aid and its extreme poor) from that group. Source: OECD DAC Table 2A net ODA; World Bank Poverty and Inequality Platform ($3 a day).",
+   draw: (el, w) => lineChart(el, w, {
+     x0: 2000, x1: 2024, yMax: DATA.perpoor.yMax, yTicks: DATA.perpoor.ticks, xTicks: [2000, 2005, 2010, 2015, 2020, 2024], right: 150,
+     ylabel: "US$ (2024) of ODA per person in extreme poverty", yfmt: v => "$" + v,
+     aria: "Line chart of ODA per extremely poor person, 2000 to 2024, for low-income and middle-income countries.",
+     tip: yr => {
+       const at = k => DATA.perpoor[k].find(p => p[0] === yr)[1];
+       const lic = at("lic"), mic = at("mic"), micx = at("micx");
+       return `<b>${yr}</b>` + trow("Low-income countries", "$" + fmtInt(lic), C.ltl) + trow("Middle-income countries", "$" + fmtInt(mic), C.gold) +
+         trow("Middle-income excl. Ukraine", "$" + fmtInt(micx), C.blue) +
+         `<div class="row tot"><span>Middle-income / low-income</span><span>${(mic / lic).toFixed(2)}x</span></div>` +
+         `<div class="row"><span>Excl. Ukraine / low-income</span><span>${(micx / lic).toFixed(2)}x</span></div>` +
+         `<div class="fine">US$ (2024) of net ODA per person living below $3 a day.</div>`;
+     },
+     // drawn bottom to top: gold last, so it sits over the blue line until the two split in 2022
+     series: [{color: C.ltl, pts: DATA.perpoor.lic, lines: ["Low-income", "countries"]},
+              {color: C.blue, pts: DATA.perpoor.micx, lines: ["Middle-income", "excluding Ukraine"], short: ["Middle-income", "excl. Ukraine"]},
+              {color: C.gold, pts: DATA.perpoor.mic, lines: ["Middle-income", "countries"]}]})},
+
+  {id: "3",
+   src: "The poorest recipient countries are those which, ranked by GNI per capita from the poorest, together hold 20% of the population of all aid recipients. Source: Authors' calculations (Appendix A.2, Appendix Figure 1).",
+   draw: (el, w) => lineChart(el, w, {
+     x0: 1990, x1: 2024, yMax: 70, yTicks: [0, 10, 20, 30, 40, 50, 60, 70], xTicks: [1990, 2000, 2010, 2020, 2024], height: 330,
+     ylabel: "% of net ODA", yfmt: v => v,
+     aria: "Line chart of the share of net ODA going to the poorest recipient countries, 1990 to 2024. It rises from 21 percent to a peak of 62 percent in 2018, then falls to 46 percent in 2024.",
+     tip: yr => {
+       const v = DATA.progress.find(p => p[0] === yr)[1];
+       return `<b>${yr}</b>` + trow("Share of net ODA to the poorest countries", v.toFixed(1) + "%", C.ltl) +
+         `<div class="fine">Authors' calculations, Appendix Figure 1.</div>`;
+     },
+     series: [{color: C.ltl, pts: DATA.progress}],
+     points: [{x: 1990, y: V(1990), text: V(1990).toFixed(1) + "%", dy: -12, dx: 8}, {x: 2018, y: V(2018), text: V(2018).toFixed(1) + "% (2018)", dy: -12},
+              {x: 2024, y: V(2024), text: V(2024).toFixed(1) + "%", dy: -12, anchor: "end", dx: 2}]})},
+
+  {id: "4", embed: "../2_cgd_interactives/ida-grant-element.html",
+   alt: "Bar charts of the shares of IDA allocations and of IDA grant element by World Bank income class, FY20 to FY25",
+   src: "Shares of IDA country allocations and of their grant element, by each recipient's World Bank income class in that fiscal year, FY20 to FY25 (allocations are in nominal SDR). Grant element is the part of financing that is effectively a gift: grants count in full, 40-year credits at 69%, small-economy credits at 52%, blend and gap credits at 30%, and shorter-maturity loans (SMLs) at 37% (5% discount rate). Source: Authors' calculations from IDA country allocations FY20-25, using the grant element calculation behind Mathiasen, Landers and Martinez (2026)."},
+
+  {id: "5", embed: "../2_cgd_interactives/aid-conflict-map.html",
+   alt: "Interactive world map of aid per person and armed conflict, 1990 to 2024",
+   src: "Net ODA received per person, in constant 2024 US$; the five shades are quintiles within the selected year. A red outline marks countries with 1,000 or more deaths in the year from state-based armed conflict. Hover over a country for its figures. Sources: OECD DAC Table 2A; World Bank World Development Indicators; Uppsala Conflict Data Program (UCDP GED v26.1 and UCDP/PRIO Armed Conflict Dataset). Modern borders throughout."},
+
+  {id: "6", embed: "../2_cgd_interactives/donor-recipient-sankey.html",
+   alt: "Interactive Sankey diagram of net ODA from donors to recipients, 1990 to 2024",
+   src: "Net ODA from donors to recipients, in constant 2024 US$, official donors only. The largest bilateral donors are shown individually; European donors other than France, Germany and the United Kingdom are grouped, as are the Gulf countries; remaining small bilateral donors are grouped as 'Other bilateral donors'. Unallocated aid is shown as its own recipient. Source: David Roodman's ODA dataset; World Bank income classifications; Natural Earth."},
+
+  {id: "7",
+   src: "Source: Sahoo, Blumenstock, Niehaus, Selker & Wager, NBER Working Paper 34583, Table E.4 (annual policy cost divided by GDP in the survey year; the paper plots the same ratio in Figure 13). Poverty line: $2.15 a day, 2017 PPP (the paper's main case; the $3.00 2021 PPP line would raise costs by 64%). Income class is the World Bank's for 2024 (Ethiopia has no class that year, so its 2023 class is used). All 34 countries in the paper's sample.",
+   draw: (el, w) => {
+     costBars(el, w, {
+       key: "pg", linear: true, xmax: 100, ticks: [0, 20, 40, 60, 80, 100].map(v => [v, v + "%"]),
+       refs: [],
+       xlabel: "Cost of cutting extreme poverty to 1%, as a share of GDP",
+       aria: "Horizontal bar chart of the cost of cutting extreme poverty to 1 percent as a share of GDP, for 34 countries in three income groups. The cost exceeds half of GDP in three countries, all low-income.",
+       groups: DATA.sahoo});
+   }}
+];
+
+// ---- page ----------------------------------------------------------------------------------
+if (location.protocol === "file:") document.getElementById("fileWarn").hidden = false;
+const root = document.getElementById("figs");
+const only = new URLSearchParams(location.search).get("fig");
+if (only) document.body.classList.add("bare");
+const SHOWN = only ? FIGS.filter(f => f.id === only) : FIGS;
+SHOWN.forEach(f => {
+  const fig = document.createElement("figure");
+  fig.id = "fig" + f.id;
+  const inner = f.embed ? `<iframe src="${f.embed}" title="${f.alt}"></iframe>` : "";    // interactive figures are the live pages
+  fig.innerHTML = `<div class="fig-head"><div class="fignum">Figure ${f.id}</div></div><div class="chart">${inner}</div><p class="src">${f.src}</p>`;
+  root.appendChild(fig); f.el = fig.querySelector(".chart");
+});
+function drawAll() {
+  SHOWN.forEach(f => { const w = Math.floor(f.el.clientWidth); if (f.draw && w > 240) f.draw(f.el, w); });   // skip the pre-layout pass (width 0) that made the SVG rects invalid
+}
+// Size each embedded interactive to its content. On cgdev.org this is done by the cgd-iframe-resize message; that is
+// addressed to cgdev.org and does not reach this local page, so here the (same-origin) iframe is read directly.
+setInterval(() => document.querySelectorAll(".chart iframe").forEach(fr => {
+  const doc = fr.contentDocument;
+  if (!doc || !doc.body || doc.location.href === "about:blank") return;
+  const h = Math.ceil(doc.body.getBoundingClientRect().height);
+  if (h > 0 && fr.style.height !== h + "px") fr.style.height = h + "px";
+}), 250);
+let lastW = 0, timer;
+new ResizeObserver(() => { const w = root.clientWidth; if (w === lastW) return; lastW = w; clearTimeout(timer); timer = setTimeout(drawAll, 60); }).observe(root);
+const setOpt = () => {
+  document.body.classList.toggle("no-titles", !document.getElementById("optTitles").checked);
+  document.body.classList.toggle("no-src", !document.getElementById("optSrc").checked);
+  document.documentElement.style.setProperty("--w", document.getElementById("optW").value + "px");
+  drawAll();     // reading clientWidth forces layout, so the new width/visibility is already applied
+};
+["optTitles", "optSrc", "optW"].forEach(id => document.getElementById(id).addEventListener("change", setOpt));
+setOpt();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawAll);
+</script>
+</body>
+</html>

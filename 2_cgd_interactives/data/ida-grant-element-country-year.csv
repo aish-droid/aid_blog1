@@ -1,0 +1,452 @@
+﻿fiscal_year,country,iso3,world_bank_income_class,ida_lending_group,grants_sdr_millions,credits_sdr_millions,pba_smls_sdr_millions,allocation_sdr_millions,grant_element_sdr_millions,gni_per_capita_atlas_current_usd
+FY20,"Congo, Democratic Republic of",COD,Low income,IDA-only,209.06,432.51,0.0,641.57,509.52,460.0
+FY20,Tanzania,TZA,Low income,IDA-only,0.0,687.9,0.0,687.9,477.88,1010.0
+FY20,Ethiopia,ETH,Low income,IDA-only,251.86,161.94,0.0,413.8,364.36,730.0
+FY20,Niger,NER,Low income,IDA-only,221.15,180.55,0.0,401.7,346.58,580.0
+FY20,Uganda,UGA,Low income,IDA-only,0.0,491.78,0.0,491.78,341.64,770.0
+FY20,Somalia,SOM,Low income,IDA-only,304.79,0.0,0.0,304.79,304.79,510.0
+FY20,Malawi,MWI,Low income,IDA-only,277.04,10.7,0.0,287.74,284.47,490.0
+FY20,Rwanda,RWA,Low income,IDA-only,0.0,387.37,0.0,387.37,269.1,760.0
+FY20,Tajikistan,TJK,Low income,IDA-only,195.39,19.51,0.0,214.9,208.94,1000.0
+FY20,Afghanistan,AFG,Low income,IDA-only,196.47,0.0,0.0,196.47,196.47,520.0
+FY20,Mali,MLI,Low income,IDA-only,74.04,136.09,0.0,210.13,168.58,930.0
+FY20,Chad,TCD,Low income,IDA-only,160.25,0.0,0.0,160.25,160.25,890.0
+FY20,Madagascar,MDG,Low income,IDA-only,81.57,111.97,0.0,193.55,159.36,480.0
+FY20,Mozambique,MOZ,Low income,IDA-only,158.88,0.0,0.0,158.88,158.88,470.0
+FY20,Guinea,GIN,Low income,IDA-only,101.42,66.78,0.0,168.2,147.81,860.0
+FY20,Sierra Leone,SLE,Low income,IDA-only,142.17,-5.59,0.0,136.58,138.29,830.0
+FY20,Burundi,BDI,Low income,IDA-only,126.55,0.0,0.0,126.55,126.55,250.0
+FY20,Burkina Faso,BFA,Low income,IDA-only,65.97,76.6,0.0,142.57,119.19,730.0
+FY20,Nepal,NPL,Low income,Gap,0.0,388.13,0.0,388.13,116.44,1120.0
+FY20,Togo,TGO,Low income,IDA-only,59.08,78.7,0.0,137.77,113.75,920.0
+FY20,Benin,BEN,Low income,Gap,68.89,89.06,0.0,157.95,95.61,1120.0
+FY20,"Gambia, The",GMB,Low income,IDA-only,85.72,0.0,0.0,85.72,85.72,680.0
+FY20,Haiti,HTI,Low income,IDA-only,85.34,0.0,0.0,85.34,85.34,1430.0
+FY20,Liberia,LBR,Low income,IDA-only,63.29,21.02,0.0,84.31,77.89,620.0
+FY20,South Sudan,SSD,Low income,IDA-only,29.1,0.0,0.0,29.1,29.1,
+FY20,"Yemen, Republic of",YEM,Low income,IDA-only,6.1,0.0,0.0,6.1,6.1,740.0
+FY20,Guinea-Bissau,GNB,Low income,IDA-only,-5.0,15.94,0.0,10.94,6.08,750.0
+FY20,Central African Republic,CAF,Low income,IDA-only,3.6,0.0,0.0,3.6,3.6,470.0
+FY20,Syria,SYR,Low income,IDA-only,0.0,0.0,0.0,0.0,0.0,810.0
+FY20,Nigeria,NGA,Lower middle income,Blend,0.0,1434.02,0.0,1434.02,430.21,1950.0
+FY20,Myanmar,MMR,Lower middle income,IDA-only,0.0,470.6,0.0,470.6,326.93,1310.0
+FY20,Pakistan,PAK,Lower middle income,Blend,0.0,831.66,0.0,831.66,249.5,1560.0
+FY20,Zambia,ZMB,Lower middle income,IDA-only,0.0,233.96,0.0,233.96,162.53,1390.0
+FY20,Ghana,GHA,Lower middle income,Gap,0.0,517.18,0.0,517.18,155.15,2060.0
+FY20,Mauritania,MRT,Lower middle income,Gap,111.15,0.0,0.0,111.15,111.15,1680.0
+FY20,Kyrgyz Republic,KGZ,Lower middle income,Gap,68.85,68.82,0.0,137.67,89.5,1200.0
+FY20,Kenya,KEN,Lower middle income,Blend,0.0,289.16,0.0,289.16,86.75,1720.0
+FY20,Uzbekistan,UZB,Lower middle income,Blend,0.0,272.55,0.0,272.55,81.76,2490.0
+FY20,Cameroon,CMR,Lower middle income,Blend,0.0,253.05,0.0,253.05,75.91,1520.0
+FY20,Senegal,SEN,Lower middle income,Gap,0.0,237.52,0.0,237.52,71.25,1390.0
+FY20,Bangladesh,BGD,Lower middle income,Gap,0.0,181.1,0.0,181.1,54.33,2020.0
+FY20,Comoros,COM,Lower middle income,Small economy,38.83,25.77,0.0,64.6,52.11,1490.0
+FY20,Honduras,HND,Lower middle income,Gap,0.0,149.06,0.0,149.06,44.72,2280.0
+FY20,Kiribati,KIR,Lower middle income,Small economy,43.64,0.0,0.0,43.64,43.64,3280.0
+FY20,Mongolia,MNG,Lower middle income,Blend,0.0,138.39,0.0,138.39,41.52,3650.0
+FY20,Vanuatu,VUT,Lower middle income,Small economy,25.92,25.92,0.0,51.85,39.29,3910.0
+FY20,Timor-Leste,TLS,Lower middle income,Small economy,0.0,71.6,0.0,71.6,36.91,1790.0
+FY20,Lao People's Democratic Republic,LAO,Lower middle income,Gap,0.0,80.8,0.0,80.8,24.24,2460.0
+FY20,Lesotho,LSO,Lower middle income,IDA-only,0.0,34.28,0.0,34.28,23.82,1250.0
+FY20,Cambodia,KHM,Lower middle income,Gap,0.0,79.1,0.0,79.1,23.73,1920.0
+FY20,Papua New Guinea,PNG,Lower middle income,Blend,0.0,76.4,0.0,76.4,22.92,2310.0
+FY20,"Micronesia, Federated States of",FSM,Lower middle income,Small economy,21.9,0.0,0.0,21.9,21.9,3420.0
+FY20,Cote d'Ivoire,CIV,Lower middle income,Blend,0.0,71.51,0.0,71.51,21.45,2010.0
+FY20,Moldova,MDA,Lower middle income,Blend,0.0,62.55,0.0,62.55,18.76,3850.0
+FY20,Bhutan,BTN,Lower middle income,Small economy,0.0,34.65,0.0,34.65,17.86,3150.0
+FY20,Djibouti,DJI,Lower middle income,IDA-only,0.0,22.21,0.0,22.21,15.43,2600.0
+FY20,Sao Tome and Principe,STP,Lower middle income,Small economy,12.5,0.0,0.0,12.5,12.5,1660.0
+FY20,"Congo, Republic of",COG,Lower middle income,Blend,0.0,40.39,0.0,40.39,12.12,2070.0
+FY20,Solomon Islands,SLB,Lower middle income,Small economy,8.67,0.59,0.0,9.25,8.97,2150.0
+FY20,Cape Verde,CPV,Lower middle income,Small economy,0.0,3.63,0.0,3.63,1.87,4040.0
+FY20,Sudan,SDN,Lower middle income,IDA-only,0.0,0.0,0.0,0.0,0.0,810.0
+FY20,Zimbabwe,ZWE,Lower middle income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,2140.0
+FY20,Nicaragua,NIC,Lower middle income,Gap,0.0,0.0,0.0,0.0,0.0,1990.0
+FY20,Maldives,MDV,Upper middle income,Small economy,19.85,19.85,0.0,39.7,30.08,10220.0
+FY20,St. Lucia,LCA,Upper middle income,Small economy,0.0,57.83,0.0,57.83,29.81,11060.0
+FY20,St. Vincent and the Grenadines,VCT,Upper middle income,Small economy,0.0,40.97,0.0,40.97,21.12,8370.0
+FY20,Grenada,GRD,Upper middle income,Small economy,0.0,36.32,0.0,36.32,18.72,9220.0
+FY20,Tuvalu,TUV,Upper middle income,Small economy,18.15,0.0,0.0,18.15,18.15,6230.0
+FY20,Dominica,DMA,Upper middle income,Small economy,0.0,33.78,0.0,33.78,17.41,8880.0
+FY20,Samoa,WSM,Upper middle income,Small economy,17.27,0.0,0.0,17.27,17.27,4100.0
+FY20,Kosovo,XKX,Upper middle income,Gap,0.0,43.36,0.0,43.36,13.01,4300.0
+FY20,Fiji,FJI,Upper middle income,Small economy,0.0,21.72,0.0,21.72,11.2,5690.0
+FY20,Marshall Islands,MHL,Upper middle income,Small economy,10.79,0.0,0.0,10.79,10.79,6040.0
+FY20,Tonga,TON,Upper middle income,Small economy,-3.16,8.05,0.0,4.9,0.99,4650.0
+FY20,Guyana,GUY,Upper middle income,Small economy,0.0,0.0,0.0,0.0,0.0,6100.0
+FY21,Ethiopia,ETH,Low income,IDA-only,722.97,940.87,0.0,1663.84,1376.59,790.0
+FY21,Sudan,SDN,Low income,IDA-only,870.44,0.0,0.0,870.44,870.44,720.0
+FY21,Mozambique,MOZ,Low income,IDA-only,722.97,94.74,0.0,817.71,788.79,500.0
+FY21,"Congo, Democratic Republic of",COD,Low income,IDA-only,328.79,328.79,0.0,657.59,557.21,460.0
+FY21,Niger,NER,Low income,IDA-only,278.66,278.66,0.0,557.31,472.24,600.0
+FY21,Uganda,UGA,Low income,IDA-only,34.27,608.44,0.0,642.71,456.96,810.0
+FY21,Burkina Faso,BFA,Low income,IDA-only,259.8,259.8,0.0,519.6,440.28,750.0
+FY21,Mali,MLI,Low income,IDA-only,228.17,228.17,0.0,456.34,386.68,960.0
+FY21,Afghanistan,AFG,Low income,IDA-only,342.92,0.0,0.0,342.92,342.92,520.0
+FY21,Somalia,SOM,Low income,IDA-only,262.81,0.0,0.0,262.81,262.81,520.0
+FY21,Madagascar,MDG,Low income,IDA-only,137.38,137.38,0.0,274.76,232.82,500.0
+FY21,Rwanda,RWA,Low income,IDA-only,126.73,126.73,0.0,253.46,214.77,820.0
+FY21,Malawi,MWI,Low income,IDA-only,123.6,123.6,0.0,247.19,209.46,540.0
+FY21,"Yemen, Republic of",YEM,Low income,IDA-only,190.62,0.0,0.0,190.62,190.62,
+FY21,Guinea,GIN,Low income,IDA-only,94.98,94.98,0.0,189.96,160.96,970.0
+FY21,Sierra Leone,SLE,Low income,IDA-only,144.13,0.0,0.0,144.13,144.13,850.0
+FY21,Chad,TCD,Low income,IDA-only,134.15,0.0,0.0,134.15,134.15,930.0
+FY21,Central African Republic,CAF,Low income,IDA-only,124.86,0.0,0.0,124.86,124.86,500.0
+FY21,Tajikistan,TJK,Low income,IDA-only,121.33,0.0,0.0,121.33,121.33,1050.0
+FY21,Togo,TGO,Low income,IDA-only,60.28,60.28,0.0,120.56,102.15,950.0
+FY21,Burundi,BDI,Low income,IDA-only,102.03,0.0,0.0,102.03,102.03,250.0
+FY21,South Sudan,SSD,Low income,IDA-only,91.1,0.0,0.0,91.1,91.1,
+FY21,Haiti,HTI,Low income,IDA-only,79.35,0.0,0.0,79.35,79.35,1410.0
+FY21,Liberia,LBR,Low income,IDA-only,32.25,32.25,0.0,64.5,54.65,600.0
+FY21,"Gambia, The",GMB,Low income,IDA-only,41.17,0.0,0.0,41.17,41.17,720.0
+FY21,Guinea-Bissau,GNB,Low income,IDA-only,24.39,0.0,0.0,24.39,24.39,850.0
+FY21,Eritrea,ERI,Low income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,
+FY21,Syria,SYR,Low income,IDA-only,0.0,0.0,0.0,0.0,0.0,970.0
+FY21,Nigeria,NGA,Lower middle income,Blend,0.0,1800.39,0.0,1800.39,540.12,2260.0
+FY21,Tanzania,TZA,Lower middle income,IDA-only,0.0,663.18,0.0,663.18,460.71,1050.0
+FY21,Pakistan,PAK,Lower middle income,Blend,0.0,1347.19,0.0,1347.19,404.16,1520.0
+FY21,Bangladesh,BGD,Lower middle income,Gap,0.0,1277.13,0.0,1277.13,383.14,2220.0
+FY21,Kenya,KEN,Lower middle income,Blend,0.0,767.68,0.0,767.68,230.3,1880.0
+FY21,Ghana,GHA,Lower middle income,Gap,0.0,500.17,0.0,500.17,150.05,2170.0
+FY21,Zambia,ZMB,Lower middle income,IDA-only,0.0,200.89,0.0,200.89,139.56,1380.0
+FY21,Uzbekistan,UZB,Lower middle income,Blend,0.0,464.61,0.0,464.61,139.38,2240.0
+FY21,Senegal,SEN,Lower middle income,Gap,101.41,101.41,0.0,202.82,131.83,1430.0
+FY21,Benin,BEN,Lower middle income,Gap,99.53,99.53,0.0,199.06,129.39,1170.0
+FY21,Mauritania,MRT,Lower middle income,Gap,124.33,0.0,0.0,124.33,124.33,1720.0
+FY21,Cote d'Ivoire,CIV,Lower middle income,Blend,0.0,383.07,0.0,383.07,114.92,2120.0
+FY21,Nepal,NPL,Lower middle income,Gap,0.0,375.56,0.0,375.56,112.67,1240.0
+FY21,Cameroon,CMR,Lower middle income,Blend,0.0,285.26,0.0,285.26,85.58,1560.0
+FY21,Kyrgyz Republic,KGZ,Lower middle income,Gap,49.1,49.1,0.0,98.19,63.83,1240.0
+FY21,Cambodia,KHM,Lower middle income,Gap,0.0,191.54,0.0,191.54,57.46,2100.0
+FY21,Lesotho,LSO,Lower middle income,IDA-only,0.0,54.54,0.0,54.54,37.89,1290.0
+FY21,Honduras,HND,Lower middle income,Gap,0.0,117.89,0.0,117.89,35.37,2330.0
+FY21,Nicaragua,NIC,Lower middle income,Gap,0.0,92.53,0.0,92.53,27.76,1930.0
+FY21,Lao People's Democratic Republic,LAO,Lower middle income,Gap,0.0,75.52,0.0,75.52,22.66,2520.0
+FY21,Papua New Guinea,PNG,Lower middle income,Blend,0.0,75.38,0.0,75.38,22.61,2420.0
+FY21,Sao Tome and Principe,STP,Lower middle income,Small economy,22.15,0.0,0.0,22.15,22.15,1810.0
+FY21,Djibouti,DJI,Lower middle income,IDA-only,0.0,25.51,0.0,25.51,17.72,2780.0
+FY21,Cape Verde,CPV,Lower middle income,Small economy,0.0,32.45,0.0,32.45,16.73,4420.0
+FY21,Kiribati,KIR,Lower middle income,Small economy,16.19,0.0,0.0,16.19,16.19,3610.0
+FY21,Comoros,COM,Lower middle income,Small economy,10.48,10.48,0.0,20.95,15.88,1530.0
+FY21,"Micronesia, Federated States of",FSM,Lower middle income,Small economy,15.81,0.0,0.0,15.81,15.81,3850.0
+FY21,"Congo, Republic of",COG,Lower middle income,Blend,0.0,52.66,0.0,52.66,15.8,2180.0
+FY21,Bhutan,BTN,Lower middle income,Small economy,0.0,30.2,0.0,30.2,15.57,3370.0
+FY21,Solomon Islands,SLB,Lower middle income,Small economy,9.98,9.98,0.0,19.97,15.13,2210.0
+FY21,Vanuatu,VUT,Lower middle income,Small economy,9.32,9.32,0.0,18.64,14.12,4120.0
+FY21,Timor-Leste,TLS,Lower middle income,Small economy,0.0,24.99,0.0,24.99,12.88,2180.0
+FY21,Zimbabwe,ZWE,Lower middle income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,2430.0
+FY21,Myanmar,MMR,Lower middle income,IDA-only,0.0,0.0,0.0,0.0,0.0,1380.0
+FY21,Samoa,WSM,Upper middle income,Small economy,19.38,0.0,0.0,19.38,19.38,4270.0
+FY21,Maldives,MDV,Upper middle income,Small economy,18.28,0.0,0.0,18.28,18.28,10730.0
+FY21,Tonga,TON,Upper middle income,Small economy,16.51,0.0,0.0,16.51,16.51,4980.0
+FY21,Marshall Islands,MHL,Upper middle income,Small economy,15.39,0.0,0.0,15.39,15.39,6770.0
+FY21,Tuvalu,TUV,Upper middle income,Small economy,15.1,0.0,0.0,15.1,15.1,6860.0
+FY21,St. Vincent and the Grenadines,VCT,Upper middle income,Small economy,0.0,27.68,0.0,27.68,14.27,8700.0
+FY21,Fiji,FJI,Upper middle income,Small economy,0.0,24.44,0.0,24.44,12.6,5570.0
+FY21,Guyana,GUY,Upper middle income,Small economy,0.0,23.07,0.0,23.07,11.89,6380.0
+FY21,Kosovo,XKX,Upper middle income,Gap,0.0,36.22,0.0,36.22,10.87,4640.0
+FY21,St. Lucia,LCA,Upper middle income,Small economy,0.0,17.42,0.0,17.42,8.98,11060.0
+FY21,Grenada,GRD,Upper middle income,Small economy,0.0,16.46,0.0,16.46,8.48,9400.0
+FY21,Dominica,DMA,Upper middle income,Small economy,0.0,16.04,0.0,16.04,8.27,9350.0
+FY22,"Congo, Democratic Republic of",COD,Low income,IDA-only,572.97,648.57,0.0,1221.54,1023.54,480.0
+FY22,Mozambique,MOZ,Low income,IDA-only,707.95,335.77,0.0,1043.72,941.21,480.0
+FY22,Uganda,UGA,Low income,IDA-only,380.37,675.29,0.0,1055.66,849.49,820.0
+FY22,Ethiopia,ETH,Low income,IDA-only,768.75,-0.0,0.0,768.75,768.75,820.0
+FY22,Niger,NER,Low income,IDA-only,462.46,431.2,0.0,893.66,762.02,570.0
+FY22,Madagascar,MDG,Low income,IDA-only,300.17,214.97,0.0,515.14,449.51,450.0
+FY22,Chad,TCD,Low income,IDA-only,429.91,0.0,0.0,429.91,429.91,890.0
+FY22,"Yemen, Republic of",YEM,Low income,IDA-only,419.74,0.0,0.0,419.74,419.74,
+FY22,Somalia,SOM,Low income,IDA-only,363.49,0.0,0.0,363.49,363.49,500.0
+FY22,Malawi,MWI,Low income,IDA-only,210.56,172.16,0.0,382.73,330.16,560.0
+FY22,Burkina Faso,BFA,Low income,IDA-only,177.4,195.96,0.0,373.36,313.53,780.0
+FY22,Rwanda,RWA,Low income,IDA-only,170.27,170.06,0.0,340.33,288.41,780.0
+FY22,South Sudan,SSD,Low income,IDA-only,259.97,0.0,0.0,259.97,259.97,
+FY22,Burundi,BDI,Low income,IDA-only,183.04,0.0,0.0,183.04,183.04,240.0
+FY22,Central African Republic,CAF,Low income,IDA-only,167.39,0.0,0.0,167.39,167.39,490.0
+FY22,Togo,TGO,Low income,IDA-only,95.17,86.75,0.0,181.92,155.44,970.0
+FY22,Sierra Leone,SLE,Low income,IDA-only,153.24,0.0,0.0,153.24,153.24,840.0
+FY22,"Gambia, The",GMB,Low income,IDA-only,137.8,0.0,0.0,137.8,137.8,720.0
+FY22,Liberia,LBR,Low income,IDA-only,60.72,65.62,0.0,126.34,106.31,570.0
+FY22,Mali,MLI,Low income,IDA-only,36.1,35.61,0.0,71.71,60.84,930.0
+FY22,Guinea-Bissau,GNB,Low income,IDA-only,53.45,0.0,0.0,53.45,53.45,860.0
+FY22,Guinea,GIN,Low income,IDA-only,7.57,7.57,0.0,15.14,12.83,1030.0
+FY22,Eritrea,ERI,Low income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,
+FY22,Sudan,SDN,Low income,IDA-only,0.0,0.0,0.0,0.0,0.0,600.0
+FY22,Syria,SYR,Low income,IDA-only,0.0,0.0,0.0,0.0,0.0,820.0
+FY22,Afghanistan,AFG,Low income,IDA-only,-0.0,0.0,0.0,-0.0,-0.0,490.0
+FY22,Tanzania,TZA,Lower middle income,IDA-only,0.0,1142.79,0.0,1142.79,793.9,1060.0
+FY22,Nigeria,NGA,Lower middle income,Blend,0.0,1519.36,0.0,1519.36,455.81,2460.0
+FY22,Zambia,ZMB,Lower middle income,IDA-only,0.0,604.53,0.0,604.53,419.97,1110.0
+FY22,Bangladesh,BGD,Lower middle income,Gap,0.0,1272.33,0.0,1272.33,381.7,2320.0
+FY22,Kenya,KEN,Lower middle income,Blend,0.0,967.15,0.0,967.15,290.14,1910.0
+FY22,Pakistan,PAK,Lower middle income,Blend,0.0,810.95,0.0,810.95,243.29,1370.0
+FY22,Tajikistan,TJK,Lower middle income,IDA-only,222.58,0.0,0.0,222.58,222.58,1030.0
+FY22,Benin,BEN,Lower middle income,Gap,152.15,150.8,0.0,302.95,197.39,1190.0
+FY22,Haiti,HTI,Lower middle income,IDA-only,190.78,0.0,0.0,190.78,190.78,1340.0
+FY22,Ghana,GHA,Lower middle income,Gap,0.0,609.88,0.0,609.88,182.96,2120.0
+FY22,Cameroon,CMR,Lower middle income,Blend,0.0,595.48,0.0,595.48,178.64,1540.0
+FY22,Cote d'Ivoire,CIV,Lower middle income,Blend,0.0,455.04,0.0,455.04,136.51,2120.0
+FY22,Nepal,NPL,Lower middle income,Gap,0.0,392.6,0.0,392.6,117.78,1190.0
+FY22,Uzbekistan,UZB,Lower middle income,Blend,0.0,375.57,0.0,375.57,112.67,2090.0
+FY22,Kyrgyz Republic,KGZ,Lower middle income,Gap,71.18,71.18,0.0,142.36,92.53,1210.0
+FY22,Senegal,SEN,Lower middle income,Gap,-30.52,364.94,0.0,334.42,78.96,1430.0
+FY22,Solomon Islands,SLB,Lower middle income,Small economy,48.41,48.41,0.0,96.81,73.36,2170.0
+FY22,Cambodia,KHM,Lower middle income,Gap,0.0,202.02,0.0,202.02,60.61,2050.0
+FY22,Kiribati,KIR,Lower middle income,Small economy,47.4,0.0,0.0,47.4,47.4,3070.0
+FY22,Samoa,WSM,Lower middle income,Small economy,46.63,0.0,0.0,46.63,46.63,4080.0
+FY22,Timor-Leste,TLS,Lower middle income,Small economy,0.0,87.59,0.0,87.59,45.16,2040.0
+FY22,"Micronesia, Federated States of",FSM,Lower middle income,Small economy,41.64,0.0,0.0,41.64,41.64,4070.0
+FY22,Vanuatu,VUT,Lower middle income,Small economy,27.29,27.29,0.0,54.58,41.35,3740.0
+FY22,Sao Tome and Principe,STP,Lower middle income,Small economy,36.75,0.0,0.0,36.75,36.75,2030.0
+FY22,Lesotho,LSO,Lower middle income,IDA-only,0.0,50.96,0.0,50.96,35.4,1170.0
+FY22,Lao People's Democratic Republic,LAO,Lower middle income,Gap,0.0,111.7,0.0,111.7,33.51,2470.0
+FY22,Cape Verde,CPV,Lower middle income,Small economy,0.0,64.62,0.0,64.62,33.31,3510.0
+FY22,Bhutan,BTN,Lower middle income,Small economy,0.0,60.91,0.0,60.91,31.4,3040.0
+FY22,Djibouti,DJI,Lower middle income,IDA-only,0.0,44.8,0.0,44.8,31.12,2780.0
+FY22,Papua New Guinea,PNG,Lower middle income,Blend,0.0,87.8,0.0,87.8,26.34,2410.0
+FY22,"Congo, Republic of",COG,Lower middle income,Blend,0.0,87.52,0.0,87.52,26.26,2230.0
+FY22,Nicaragua,NIC,Lower middle income,Gap,0.0,82.88,0.0,82.88,24.86,1810.0
+FY22,Honduras,HND,Lower middle income,Gap,0.0,82.56,0.0,82.56,24.77,2120.0
+FY22,Comoros,COM,Lower middle income,Small economy,14.57,17.61,0.0,32.18,23.65,1530.0
+FY22,Mauritania,MRT,Lower middle income,Gap,-24.89,88.75,0.0,63.85,1.73,1720.0
+FY22,Zimbabwe,ZWE,Lower middle income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,1980.0
+FY22,Myanmar,MMR,Lower middle income,IDA-only,0.0,0.0,0.0,0.0,0.0,1320.0
+FY22,Marshall Islands,MHL,Upper middle income,Small economy,55.03,0.0,0.0,55.03,55.03,6610.0
+FY22,Tuvalu,TUV,Upper middle income,Small economy,46.58,0.0,0.0,46.58,46.58,6920.0
+FY22,Tonga,TON,Upper middle income,Small economy,42.67,0.0,0.0,42.67,42.67,5210.0
+FY22,Fiji,FJI,Upper middle income,Small economy,0.0,72.46,0.0,72.46,37.35,4560.0
+FY22,Maldives,MDV,Upper middle income,Small economy,23.9,0.0,0.0,23.9,23.9,7050.0
+FY22,Kosovo,XKX,Upper middle income,Gap,0.0,73.7,0.0,73.7,22.11,4450.0
+FY22,Grenada,GRD,Upper middle income,Small economy,0.0,34.46,0.0,34.46,17.77,8390.0
+FY22,St. Vincent and the Grenadines,VCT,Upper middle income,Small economy,0.0,31.46,0.0,31.46,16.22,8360.0
+FY22,Guyana,GUY,Upper middle income,Small economy,0.0,29.48,0.0,29.48,15.19,8090.0
+FY22,Dominica,DMA,Upper middle income,Small economy,0.0,28.52,0.0,28.52,14.7,8230.0
+FY22,St. Lucia,LCA,Upper middle income,Small economy,0.0,10.7,0.0,10.7,5.52,8700.0
+FY23,Ethiopia,ETH,Low income,IDA-only,699.62,303.01,0.0,1002.64,910.13,880.0
+FY23,Mozambique,MOZ,Low income,IDA-only,663.27,0.0,0.0,663.27,663.27,490.0
+FY23,"Congo, Democratic Republic of",COD,Low income,IDA-only,0.0,781.89,105.57,887.46,582.1,530.0
+FY23,Niger,NER,Low income,IDA-only,0.0,363.63,49.1,412.73,270.72,580.0
+FY23,Burkina Faso,BFA,Low income,IDA-only,0.0,357.83,48.31,406.14,266.39,820.0
+FY23,Chad,TCD,Low income,IDA-only,235.94,0.0,0.0,235.94,235.94,890.0
+FY23,Somalia,SOM,Low income,IDA-only,196.16,0.0,0.0,196.16,196.16,540.0
+FY23,Uganda,UGA,Low income,IDA-only,0.0,251.0,33.89,284.89,186.86,860.0
+FY23,Malawi,MWI,Low income,IDA-only,169.62,0.0,0.0,169.62,169.62,600.0
+FY23,"Yemen, Republic of",YEM,Low income,IDA-only,157.91,0.0,0.0,157.91,157.91,
+FY23,Rwanda,RWA,Low income,IDA-only,0.0,194.36,26.24,220.61,144.7,850.0
+FY23,Madagascar,MDG,Low income,IDA-only,0.0,190.59,25.73,216.32,141.89,470.0
+FY23,Sierra Leone,SLE,Low income,IDA-only,123.23,0.0,0.0,123.23,123.23,890.0
+FY23,Mali,MLI,Low income,IDA-only,0.0,127.04,17.15,144.19,94.58,960.0
+FY23,Zambia,ZMB,Low income,IDA-only,0.0,107.95,33.7,141.65,87.42,1050.0
+FY23,Central African Republic,CAF,Low income,IDA-only,84.49,0.0,0.0,84.49,84.49,510.0
+FY23,Guinea,GIN,Low income,IDA-only,0.0,107.06,14.46,121.52,79.71,1120.0
+FY23,Burundi,BDI,Low income,IDA-only,74.81,0.0,0.0,74.81,74.81,250.0
+FY23,"Gambia, The",GMB,Low income,IDA-only,74.74,0.0,0.0,74.74,74.74,760.0
+FY23,South Sudan,SSD,Low income,IDA-only,66.12,0.0,0.0,66.12,66.12,
+FY23,Togo,TGO,Low income,IDA-only,0.0,86.16,11.63,97.79,64.14,1040.0
+FY23,Liberia,LBR,Low income,IDA-only,0.0,60.15,8.12,68.27,44.78,630.0
+FY23,Guinea-Bissau,GNB,Low income,IDA-only,20.96,0.0,0.0,20.96,20.96,910.0
+FY23,Eritrea,ERI,Low income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,
+FY23,Sudan,SDN,Low income,IDA-only,0.0,0.0,0.0,0.0,0.0,620.0
+FY23,Syria,SYR,Low income,IDA-only,0.0,0.0,0.0,0.0,0.0,730.0
+FY23,Afghanistan,AFG,Low income,IDA-only,0.0,0.0,0.0,0.0,0.0,380.0
+FY23,Nigeria,NGA,Lower middle income,Blend,0.0,1008.48,182.51,1190.99,369.84,2860.0
+FY23,Tanzania,TZA,Lower middle income,IDA-only,0.0,481.61,65.03,546.64,358.55,1130.0
+FY23,Pakistan,PAK,Lower middle income,Blend,0.0,781.31,141.4,922.7,286.53,1420.0
+FY23,Bangladesh,BGD,Lower middle income,Gap,0.0,623.06,194.51,817.57,258.63,2600.0
+FY23,Kenya,KEN,Lower middle income,Blend,0.0,543.45,169.66,713.11,225.59,2070.0
+FY23,Uzbekistan,UZB,Lower middle income,Blend,0.0,333.59,104.14,437.73,138.47,2360.0
+FY23,Cameroon,CMR,Lower middle income,Blend,0.0,266.65,83.25,349.9,110.69,1610.0
+FY23,Ghana,GHA,Lower middle income,Gap,0.0,258.52,80.71,339.23,107.31,2250.0
+FY23,Sri Lanka,LKA,Lower middle income,Gap,0.0,208.68,65.15,273.83,86.62,4010.0
+FY23,Cote d'Ivoire,CIV,Lower middle income,Blend,0.0,205.65,64.2,269.85,85.37,2300.0
+FY23,Tajikistan,TJK,Lower middle income,IDA-only,82.26,0.0,0.0,82.26,82.26,1130.0
+FY23,Senegal,SEN,Lower middle income,Gap,0.0,193.59,60.44,254.03,80.36,1540.0
+FY23,Nepal,NPL,Lower middle income,Gap,0.0,190.49,59.47,249.96,79.07,1250.0
+FY23,Haiti,HTI,Lower middle income,IDA-only,50.25,0.0,0.0,50.25,50.25,1450.0
+FY23,Benin,BEN,Lower middle income,Gap,0.0,117.92,36.81,154.74,48.95,1280.0
+FY23,Cambodia,KHM,Lower middle income,Gap,0.0,103.2,32.22,135.42,42.84,2120.0
+FY23,Kyrgyz Republic,KGZ,Lower middle income,Gap,0.0,86.61,11.69,98.31,30.3,1270.0
+FY23,Honduras,HND,Lower middle income,Gap,0.0,66.19,20.66,86.86,27.48,2440.0
+FY23,Comoros,COM,Lower middle income,Small economy,21.9,0.0,0.0,21.9,21.9,1590.0
+FY23,Djibouti,DJI,Lower middle income,IDA-only,0.0,30.35,0.0,30.35,21.09,2990.0
+FY23,Lao People's Democratic Republic,LAO,Lower middle income,Gap,0.0,44.73,13.96,58.69,18.57,2500.0
+FY23,Papua New Guinea,PNG,Lower middle income,Blend,0.0,44.13,13.78,57.91,18.32,2370.0
+FY23,Samoa,WSM,Lower middle income,Small economy,17.95,0.0,0.0,17.95,17.95,3990.0
+FY23,Mauritania,MRT,Lower middle income,Gap,0.0,41.14,13.72,54.86,17.4,1810.0
+FY23,Sao Tome and Principe,STP,Lower middle income,Small economy,16.5,0.0,0.0,16.5,16.5,2220.0
+FY23,Kiribati,KIR,Lower middle income,Small economy,15.89,0.0,0.0,15.89,15.89,3150.0
+FY23,"Micronesia, Federated States of",FSM,Lower middle income,Small economy,15.64,0.0,0.0,15.64,15.64,4090.0
+FY23,Solomon Islands,SLB,Lower middle income,Small economy,9.24,7.04,2.2,18.48,13.68,2120.0
+FY23,Vanuatu,VUT,Lower middle income,Small economy,8.69,6.62,2.07,17.38,12.87,3990.0
+FY23,"Congo, Republic of",COG,Lower middle income,Blend,0.0,30.76,9.6,40.37,12.77,2040.0
+FY23,Bhutan,BTN,Lower middle income,Small economy,0.0,19.52,6.09,25.61,12.31,3300.0
+FY23,Cape Verde,CPV,Lower middle income,Small economy,0.0,17.49,5.46,22.95,11.03,3870.0
+FY23,Timor-Leste,TLS,Lower middle income,Small economy,0.0,16.42,5.13,21.55,10.36,2050.0
+FY23,Lesotho,LSO,Lower middle income,IDA-only,0.0,8.01,7.34,15.35,8.27,1190.0
+FY23,Zimbabwe,ZWE,Lower middle income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,2330.0
+FY23,Myanmar,MMR,Lower middle income,IDA-only,0.0,0.0,0.0,0.0,0.0,1240.0
+FY23,Nicaragua,NIC,Lower middle income,Gap,0.0,0.0,0.0,0.0,0.0,2060.0
+FY23,Tuvalu,TUV,Upper middle income,Small economy,18.84,0.0,0.0,18.84,18.84,7460.0
+FY23,Fiji,FJI,Upper middle income,Small economy,0.0,29.17,9.11,38.28,18.4,4380.0
+FY23,Tonga,TON,Upper middle income,Small economy,15.96,0.0,0.0,15.96,15.96,5240.0
+FY23,Marshall Islands,MHL,Upper middle income,Small economy,15.27,0.0,0.0,15.27,15.27,6720.0
+FY23,Maldives,MDV,Upper middle income,Small economy,7.43,7.43,0.0,14.86,11.26,9350.0
+FY23,Kosovo,XKX,Upper middle income,Gap,0.0,23.96,7.48,31.44,9.95,5140.0
+FY23,Guyana,GUY,Upper middle income,Small economy,0.0,15.71,4.9,20.61,9.91,7810.0
+FY23,St. Vincent and the Grenadines,VCT,Upper middle income,Small economy,0.0,16.01,0.0,16.01,8.25,8720.0
+FY23,Grenada,GRD,Upper middle income,Small economy,0.0,15.91,0.0,15.91,8.2,8890.0
+FY23,Dominica,DMA,Upper middle income,Small economy,0.0,15.68,0.0,15.68,8.08,8660.0
+FY23,St. Lucia,LCA,Upper middle income,Small economy,0.0,12.8,3.99,16.79,8.07,10030.0
+FY24,Guyana,GUY,High income,Small economy,0.0,51.66,16.14,67.8,32.58,14680.0
+FY24,Ethiopia,ETH,Low income,IDA-only,644.53,1287.6,0.0,1932.13,1539.03,960.0
+FY24,Mozambique,MOZ,Low income,IDA-only,546.02,-222.5,0.0,323.52,391.45,500.0
+FY24,Burkina Faso,BFA,Low income,IDA-only,0.0,391.85,100.82,492.67,309.39,840.0
+FY24,Burundi,BDI,Low income,IDA-only,277.97,0.0,0.0,277.97,277.97,280.0
+FY24,Somalia,SOM,Low income,IDA-only,246.91,0.0,0.0,246.91,246.91,570.0
+FY24,Uganda,UGA,Low income,IDA-only,0.0,282.36,19.5,301.86,203.34,930.0
+FY24,Niger,NER,Low income,IDA-only,0.0,269.13,35.52,304.65,200.06,650.0
+FY24,"Congo, Democratic Republic of",COD,Low income,IDA-only,0.0,162.48,218.19,380.67,193.32,610.0
+FY24,Central African Republic,CAF,Low income,IDA-only,173.58,0.0,0.0,173.58,173.58,520.0
+FY24,Afghanistan,AFG,Low income,IDA-only,165.41,0.0,0.0,165.41,165.41,370.0
+FY24,Chad,TCD,Low income,IDA-only,143.4,0.0,0.0,143.4,143.4,920.0
+FY24,Rwanda,RWA,Low income,IDA-only,0.0,172.46,59.1,231.56,141.6,970.0
+FY24,Malawi,MWI,Low income,IDA-only,131.58,0.0,0.0,131.58,131.58,610.0
+FY24,"Gambia, The",GMB,Low income,IDA-only,128.38,0.0,0.0,128.38,128.38,830.0
+FY24,Togo,TGO,Low income,IDA-only,0.0,145.18,37.43,182.61,114.65,1130.0
+FY24,"Yemen, Republic of",YEM,Low income,IDA-only,86.35,0.0,0.0,86.35,86.35,
+FY24,Mali,MLI,Low income,IDA-only,0.0,96.91,50.07,146.98,85.78,1000.0
+FY24,Sierra Leone,SLE,Low income,IDA-only,53.92,0.0,0.0,53.92,53.92,920.0
+FY24,Guinea-Bissau,GNB,Low income,IDA-only,47.83,0.0,0.0,47.83,47.83,960.0
+FY24,Liberia,LBR,Low income,IDA-only,0.0,46.81,9.76,56.57,36.12,660.0
+FY24,South Sudan,SSD,Low income,IDA-only,34.65,0.0,0.0,34.65,34.65,
+FY24,Madagascar,MDG,Low income,IDA-only,0.0,-1.72,59.29,57.57,20.66,500.0
+FY24,Eritrea,ERI,Low income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,
+FY24,Sudan,SDN,Low income,IDA-only,0.0,0.0,0.0,0.0,0.0,720.0
+FY24,Syria,SYR,Low income,IDA-only,0.0,0.0,0.0,0.0,0.0,720.0
+FY24,Nigeria,NGA,Lower middle income,Blend,0.0,1029.91,686.31,1716.22,562.01,2940.0
+FY24,Pakistan,PAK,Lower middle income,Blend,0.0,698.59,396.56,1095.15,355.79,1510.0
+FY24,Zambia,ZMB,Lower middle income,IDA-only,254.18,0.0,0.0,254.18,254.18,1170.0
+FY24,Tajikistan,TJK,Lower middle income,IDA-only,206.16,0.0,0.0,206.16,206.16,1360.0
+FY24,Bangladesh,BGD,Lower middle income,Gap,0.0,286.61,182.27,468.88,153.19,2850.0
+FY24,Uzbekistan,UZB,Lower middle income,Blend,0.0,369.72,109.84,479.55,151.41,2620.0
+FY24,Ghana,GHA,Lower middle income,Gap,0.0,254.65,185.32,439.97,144.72,2270.0
+FY24,Kenya,KEN,Lower middle income,Blend,0.0,607.73,-116.59,491.15,139.33,2170.0
+FY24,Cameroon,CMR,Lower middle income,Blend,0.0,212.16,133.96,346.12,113.04,1660.0
+FY24,Nepal,NPL,Lower middle income,Gap,0.0,238.69,69.94,308.63,97.4,1380.0
+FY24,Guinea,GIN,Lower middle income,IDA-only,0.0,106.13,31.96,138.09,85.51,1280.0
+FY24,Cambodia,KHM,Lower middle income,Gap,0.0,274.75,1.8,276.56,83.09,2270.0
+FY24,Tanzania,TZA,Lower middle income,IDA-only,0.0,30.35,144.64,174.99,74.41,1210.0
+FY24,Sri Lanka,LKA,Lower middle income,Gap,0.0,217.0,8.0,225.0,68.05,3620.0
+FY24,Benin,BEN,Lower middle income,Gap,0.0,127.8,67.98,195.78,63.4,1360.0
+FY24,Cote d'Ivoire,CIV,Lower middle income,Blend,0.0,13.51,157.58,171.1,62.15,2440.0
+FY24,Honduras,HND,Lower middle income,Gap,0.0,148.66,46.44,195.1,61.72,2700.0
+FY24,Myanmar,MMR,Lower middle income,IDA-only,0.0,65.5,20.47,85.97,53.05,1280.0
+FY24,Senegal,SEN,Lower middle income,Gap,0.0,66.12,60.2,126.32,42.03,1590.0
+FY24,Papua New Guinea,PNG,Lower middle income,Blend,0.0,106.25,16.89,123.14,38.1,2690.0
+FY24,Lesotho,LSO,Lower middle income,IDA-only,0.0,43.41,18.41,61.81,36.94,1270.0
+FY24,Kiribati,KIR,Lower middle income,Small economy,36.0,0.0,0.0,36.0,36.0,3280.0
+FY24,"Micronesia, Federated States of",FSM,Lower middle income,Small economy,35.43,0.0,0.0,35.43,35.43,4020.0
+FY24,Samoa,WSM,Lower middle income,Small economy,33.39,0.0,0.0,33.39,33.39,4130.0
+FY24,Djibouti,DJI,Lower middle income,IDA-only,0.0,47.2,0.0,47.2,32.79,3310.0
+FY24,Sao Tome and Principe,STP,Lower middle income,Small economy,32.39,0.0,0.0,32.39,32.39,2820.0
+FY24,Solomon Islands,SLB,Lower middle income,Small economy,21.08,16.06,5.02,42.16,31.21,2010.0
+FY24,Bhutan,BTN,Lower middle income,Small economy,0.0,43.89,13.71,57.6,27.68,3600.0
+FY24,Kyrgyz Republic,KGZ,Lower middle income,Gap,0.0,62.0,21.41,83.4,26.49,1540.0
+FY24,Cape Verde,CPV,Lower middle income,Small economy,0.0,29.45,14.03,43.48,20.35,4550.0
+FY24,Mauritania,MRT,Lower middle income,Gap,0.0,45.58,8.26,53.84,16.72,2010.0
+FY24,Comoros,COM,Lower middle income,Small economy,15.87,0.0,0.0,15.87,15.87,1630.0
+FY24,Lao People's Democratic Republic,LAO,Lower middle income,Gap,0.0,47.5,1.62,49.12,14.85,2300.0
+FY24,"Congo, Republic of",COG,Lower middle income,Blend,0.0,22.58,8.63,31.21,9.95,2170.0
+FY24,Vanuatu,VUT,Lower middle income,Small economy,6.53,4.98,1.55,13.07,9.67,4340.0
+FY24,Haiti,HTI,Lower middle income,IDA-only,0.01,0.0,0.0,0.01,0.01,1610.0
+FY24,Zimbabwe,ZWE,Lower middle income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,2580.0
+FY24,Timor-Leste,TLS,Lower middle income,Small economy,0.0,-11.89,5.22,-6.67,-4.21,1820.0
+FY24,Nicaragua,NIC,Lower middle income,Gap,0.0,-43.36,-7.86,-51.23,-15.91,2150.0
+FY24,Marshall Islands,MHL,Upper middle income,Small economy,44.99,0.0,0.0,44.99,44.99,7580.0
+FY24,Tonga,TON,Upper middle income,Small economy,32.09,0.0,0.0,32.09,32.09,5390.0
+FY24,Tuvalu,TUV,Upper middle income,Small economy,28.54,0.0,0.0,28.54,28.54,7460.0
+FY24,Fiji,FJI,Upper middle income,Small economy,0.0,32.13,24.32,56.45,25.53,5250.0
+FY24,Dominica,DMA,Upper middle income,Small economy,0.0,49.26,0.0,49.26,25.39,9740.0
+FY24,Grenada,GRD,Upper middle income,Small economy,0.0,36.21,0.0,36.21,18.67,9980.0
+FY24,St. Lucia,LCA,Upper middle income,Small economy,0.0,28.99,9.06,38.05,18.28,11680.0
+FY24,Kosovo,XKX,Upper middle income,Gap,0.0,37.8,16.42,54.22,17.4,5610.0
+FY24,St. Vincent and the Grenadines,VCT,Upper middle income,Small economy,0.0,22.42,0.0,22.42,11.56,9520.0
+FY24,Maldives,MDV,Upper middle income,Small economy,-3.51,18.74,0.0,15.23,6.15,10570.0
+FY25,Guyana,GUY,High income,Small economy,0.0,67.95,20.35,88.3,42.53,17770.0
+FY25,Ethiopia,ETH,Low income,IDA-only,741.7,454.29,0.0,1195.99,1057.29,1030.0
+FY25,Mozambique,MOZ,Low income,IDA-only,499.78,-222.5,0.0,277.28,345.21,540.0
+FY25,"Congo, Democratic Republic of",COD,Low income,IDA-only,0.0,328.35,290.91,619.27,335.37,680.0
+FY25,Uganda,UGA,Low income,IDA-only,0.0,388.26,-19.84,368.42,262.41,970.0
+FY25,Burundi,BDI,Low income,IDA-only,257.61,0.0,0.0,257.61,257.61,280.0
+FY25,Malawi,MWI,Low income,IDA-only,254.38,0.0,0.0,254.38,254.38,620.0
+FY25,Somalia,SOM,Low income,IDA-only,245.68,0.0,0.0,245.68,245.68,600.0
+FY25,Chad,TCD,Low income,IDA-only,223.97,0.0,0.0,223.97,223.97,910.0
+FY25,Niger,NER,Low income,IDA-only,0.0,278.17,66.94,345.11,217.92,640.0
+FY25,Burkina Faso,BFA,Low income,IDA-only,0.0,226.09,127.29,353.38,203.99,840.0
+FY25,Afghanistan,AFG,Low income,IDA-only,186.28,0.0,0.0,186.28,186.28,370.0
+FY25,Rwanda,RWA,Low income,IDA-only,0.0,213.57,22.91,236.48,156.81,1030.0
+FY25,Mali,MLI,Low income,IDA-only,0.0,185.85,68.93,254.78,154.52,1010.0
+FY25,Madagascar,MDG,Low income,IDA-only,0.0,152.08,86.8,238.88,137.65,510.0
+FY25,Sudan,SDN,Low income,IDA-only,131.92,0.0,0.0,131.92,131.92,660.0
+FY25,Syria,SYR,Low income,IDA-only,107.7,0.0,0.0,107.7,107.7,
+FY25,Togo,TGO,Low income,IDA-only,0.0,148.06,5.67,153.73,104.95,1190.0
+FY25,"Yemen, Republic of",YEM,Low income,IDA-only,91.47,0.0,0.0,91.47,91.47,
+FY25,"Gambia, The",GMB,Low income,IDA-only,82.1,0.0,0.0,82.1,82.1,870.0
+FY25,South Sudan,SSD,Low income,IDA-only,80.89,0.0,0.0,80.89,80.89,
+FY25,Central African Republic,CAF,Low income,IDA-only,75.63,0.0,0.0,75.63,75.63,530.0
+FY25,Liberia,LBR,Low income,IDA-only,0.0,72.62,19.74,92.36,57.73,710.0
+FY25,Sierra Leone,SLE,Low income,IDA-only,42.59,0.0,0.0,42.59,42.59,870.0
+FY25,Guinea-Bissau,GNB,Low income,IDA-only,29.3,0.0,0.0,29.3,29.3,970.0
+FY25,Eritrea,ERI,Low income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,
+FY25,Nigeria,NGA,Lower middle income,Blend,0.0,1577.93,237.26,1815.19,560.86,2590.0
+FY25,Tanzania,TZA,Lower middle income,IDA-only,0.0,337.45,225.42,562.87,317.54,1220.0
+FY25,Pakistan,PAK,Lower middle income,Blend,0.0,917.21,-23.21,894.0,266.61,1450.0
+FY25,Bangladesh,BGD,Lower middle income,Gap,0.0,302.11,290.23,592.34,197.64,2880.0
+FY25,Tajikistan,TJK,Lower middle income,IDA-only,196.75,0.0,0.0,196.75,196.75,1400.0
+FY25,Uzbekistan,UZB,Lower middle income,Blend,0.0,462.4,103.94,566.34,177.04,2880.0
+FY25,Zambia,ZMB,Lower middle income,IDA-only,150.99,0.0,0.0,150.99,150.99,1270.0
+FY25,Guinea,GIN,Lower middle income,IDA-only,0.0,174.11,44.02,218.14,137.19,1340.0
+FY25,Benin,BEN,Lower middle income,Gap,0.0,273.22,107.74,380.96,121.69,1390.0
+FY25,Cameroon,CMR,Lower middle income,Blend,0.0,157.23,178.0,335.23,112.8,1680.0
+FY25,Nepal,NPL,Lower middle income,Gap,0.0,289.36,65.85,355.21,111.09,1430.0
+FY25,Haiti,HTI,Lower middle income,IDA-only,108.73,0.0,0.0,108.73,108.73,1740.0
+FY25,Ghana,GHA,Lower middle income,Gap,0.0,264.71,17.95,282.66,86.03,2310.0
+FY25,Sri Lanka,LKA,Lower middle income,Gap,0.0,222.26,48.32,270.58,84.49,3550.0
+FY25,Honduras,HND,Lower middle income,Gap,0.0,185.12,63.59,248.71,78.98,2870.0
+FY25,Kenya,KEN,Lower middle income,Blend,0.0,202.02,47.32,249.34,78.05,2110.0
+FY25,"Micronesia, Federated States of",FSM,Lower middle income,Small economy,66.6,0.0,0.0,66.6,66.6,4270.0
+FY25,Papua New Guinea,PNG,Lower middle income,Blend,0.0,159.61,47.1,206.71,65.25,2800.0
+FY25,Senegal,SEN,Lower middle income,Gap,0.0,78.04,110.08,188.11,64.0,1620.0
+FY25,Cote d'Ivoire,CIV,Lower middle income,Blend,0.0,175.25,27.58,202.83,62.74,2510.0
+FY25,Myanmar,MMR,Lower middle income,IDA-only,62.3,0.0,0.0,62.3,62.3,1220.0
+FY25,Kyrgyz Republic,KGZ,Lower middle income,Gap,0.0,169.06,20.98,190.05,58.46,1840.0
+FY25,Bhutan,BTN,Lower middle income,Small economy,24.48,34.65,9.64,68.77,45.9,3730.0
+FY25,Djibouti,DJI,Lower middle income,IDA-only,45.77,0.0,0.0,45.77,45.77,3500.0
+FY25,Samoa,WSM,Lower middle income,Small economy,39.49,0.0,0.0,39.49,39.49,4800.0
+FY25,Kiribati,KIR,Lower middle income,Small economy,34.17,0.0,0.0,34.17,34.17,3710.0
+FY25,Solomon Islands,SLB,Lower middle income,Small economy,17.43,21.56,8.97,47.96,31.86,1980.0
+FY25,Sao Tome and Principe,STP,Lower middle income,Small economy,30.5,0.0,0.0,30.5,30.5,2810.0
+FY25,Mauritania,MRT,Lower middle income,Gap,0.0,83.15,11.47,94.62,29.17,2140.0
+FY25,Lao People's Democratic Republic,LAO,Lower middle income,Gap,0.0,65.81,9.52,75.34,23.26,2110.0
+FY25,Cambodia,KHM,Lower middle income,Gap,0.0,58.71,-0.97,57.74,17.26,2390.0
+FY25,Vanuatu,VUT,Lower middle income,Small economy,15.38,1.87,2.15,19.39,17.13,4210.0
+FY25,Eswatini,SWZ,Lower middle income,Small economy,0.0,31.2,0.0,31.2,16.08,3750.0
+FY25,Lesotho,LSO,Lower middle income,IDA-only,0.0,17.4,4.77,22.17,13.84,1260.0
+FY25,Cape Verde,CPV,Lower middle income,Small economy,0.0,8.98,13.88,22.86,9.75,4740.0
+FY25,Comoros,COM,Lower middle income,Small economy,3.92,0.0,0.0,3.92,3.92,1670.0
+FY25,"Congo, Republic of",COG,Lower middle income,Blend,0.0,-1.23,11.49,10.27,3.87,2310.0
+FY25,Zimbabwe,ZWE,Lower middle income,Inactive (no allocation),0.0,0.0,0.0,0.0,0.0,2550.0
+FY25,Nicaragua,NIC,Lower middle income,Gap,0.0,1.38,-1.94,-0.56,-0.3,2360.0
+FY25,Timor-Leste,TLS,Lower middle income,Small economy,0.0,-4.87,4.87,0.0,-0.72,1900.0
+FY25,Marshall Islands,MHL,Upper middle income,Small economy,55.98,0.0,0.0,55.98,55.98,7960.0
+FY25,Tonga,TON,Upper middle income,Small economy,44.65,0.0,0.0,44.65,44.65,5910.0
+FY25,Dominica,DMA,Upper middle income,Small economy,0.0,39.56,0.0,39.56,20.39,9990.0
+FY25,Kosovo,XKX,Upper middle income,Gap,0.0,34.24,12.26,46.49,14.79,6290.0
+FY25,Grenada,GRD,Upper middle income,Small economy,0.0,26.51,0.0,26.51,13.66,10100.0
+FY25,St. Vincent and the Grenadines,VCT,Upper middle income,Small economy,0.0,24.03,0.0,24.03,12.39,10210.0
+FY25,St. Lucia,LCA,Upper middle income,Small economy,0.0,23.4,0.0,23.4,12.06,12440.0
+FY25,Fiji,FJI,Upper middle income,Small economy,0.0,6.98,14.31,21.29,8.87,5670.0
+FY25,Suriname,SUR,Upper middle income,Small economy,0.0,17.0,0.0,17.0,8.76,5210.0
+FY25,Belize,BLZ,Upper middle income,Small economy,0.0,13.92,3.59,17.51,8.5,6850.0
+FY25,Tuvalu,TUV,Upper middle income,Small economy,2.18,0.0,0.0,2.18,2.18,7520.0
+FY25,Maldives,MDV,Upper middle income,Small economy,-3.51,3.51,0.0,-0.0,-1.7,11130.0

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aid per capita and armed conflict, 1990–2024</title>
+<link rel="stylesheet" href="https://use.typekit.net/ymp6ujv.css">
+<link rel="stylesheet" href="shared/styles.css">
+<style>
+  #map { width: 100%; height: auto; display: block; }
+  .country { stroke: #fff; stroke-width: 0.4; }
+  .country:hover { stroke: var(--cgd-teal-black); stroke-width: 1; }
+  .hatch { pointer-events: none; }
+  .hatch.war { stroke: var(--cgd-red); stroke-width: 1.8; stroke-linejoin: round; }
+  .dot { fill: var(--cgd-dark-gray); fill-opacity: .38; stroke: #fff; stroke-width: .4; pointer-events: none; }
+  .legend { display: flex; flex-wrap: wrap; gap: 1rem 1.75rem; align-items: flex-start; margin: 0.5rem 0 0.25rem; }
+  .swatches { display: flex; gap: 4px; flex-wrap: wrap; }
+  .sw { display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; color: var(--cgd-teal-black); min-width: 3.9rem; text-align: center; white-space: nowrap; }
+  .sw i { display: block; width: 100%; height: 12px; margin-bottom: 2px; }
+  .legend .hint { margin-top: 0.4rem; max-width: 36rem; }
+  .keyrow { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; margin-bottom: 4px; }
+  .keyrow svg { flex: none; }
+  #tip { min-width: min(230px, 80vw); }
+  #tip .warn { color: var(--cgd-red); }
+  #tip .fine { font-size: 0.7rem; }
+  #err { color: var(--cgd-red); font-weight: 500; }
+  @media (max-width: 560px) { .sw { min-width: 3.4rem; } }
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <div class="controls">
+    <button id="play" type="button" aria-label="Play or pause animation" title="Play / pause">&#9654;</button>
+    <div id="year" aria-live="polite">2024</div>
+    <input id="slider" type="range" min="1990" max="2024" step="1" value="2024" aria-label="Year">
+    <label class="toggle"><input type="checkbox" id="dots"> Show conflict locations</label>
+  </div>
+  <div id="stat" aria-live="polite"><span id="err" hidden></span></div>
+
+  <!-- aria-label rather than a <title> child: a <title> shows as a browser tooltip that covers the hover callout -->
+  <svg id="map" viewBox="0 0 960 500" role="img" aria-label="World map of aid per person and armed conflict, 1990–2024" aria-describedby="map-desc">
+    <desc id="map-desc">Countries are shaded by net official development assistance received per person. A red outline marks countries with 1,000 or more deaths from state-based armed conflict in the selected year. Use the year slider or play button to change the year; the sentence above the map summarises the selected year, and the full data can be downloaded as a CSV file.</desc>
+    <g id="countries"></g>
+    <g id="hatch"></g>
+    <g id="dotlayer"></g>
+  </svg>
+
+  <div class="legend">
+    <div>
+      <h3>ODA received per person (constant 2024 US$)</h3>
+      <div class="swatches" id="aidLegend"></div>
+      <p class="hint">Shades are quintiles within the selected year: each covers about a fifth of that year's aid recipients, so the dollar ranges change from year to year.</p>
+    </div>
+    <div>
+      <h3>War (UCDP)</h3>
+      <div class="keyrow"><svg width="40" height="20" aria-hidden="true"><rect x="1" y="1" width="38" height="18" fill="#2D99B5" stroke="#D15553" stroke-width="1.8"/></svg> <span>Country with 1,000+ deaths from state-based armed conflict in the year</span></div>
+      <div class="keyrow"><svg width="30" height="14" aria-hidden="true"><circle cx="15" cy="7" r="5.5" class="dot"/></svg> <span>Conflict location (optional grey circles), sized by deaths</span></div>
+    </div>
+  </div>
+  <p class="hint">Hover over or tap a country for its aid and conflict figures.</p>
+  <p class="datalink"><a id="dl" href="data/aid-conflict-country-year.csv" download>Download the data (CSV)</a></p>
+  <div id="tip" role="tooltip"></div>
+</div>
+
+<script>window.CGD_INTERACTIVE_NAME = 'aid-middle-income-conflict-map';</script>
+<script src="shared/tracking.js"></script>
+<script src="shared/iframe-resize.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"
+        integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i"
+        crossorigin="anonymous"></script>
+<script>
+fetch("data/map-data.json")
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(init)
+  .catch(() => {
+    const e = document.getElementById("err");
+    e.hidden = false; e.textContent = "The data could not be loaded. Please refresh the page.";
+  });
+
+function init(DATA) {
+  const Y0 = DATA.years[0], Y1 = DATA.years[DATA.years.length - 1];
+  const W = 960, H = 500;
+
+  // --- aid colour classes (CGD sequential palette, light -> dark) ---------------
+  // Shades are quintiles of ODA per person WITHIN each year: the cut points are recomputed from that
+  // year's recipients (rounded to whole dollars), so each shade holds about a fifth of them.
+  const COLORS = ["#BFDEE0", "#85A5AD", "#2D99B5", "#006970", "#1A272A"];
+  const NEG = "#FEE8BF", NODATA = "#DFE0E2";
+
+  const fmt0 = d3.format(",.0f");
+  const fmtM = v => v >= 1000 ? "$" + d3.format(",.2f")(v / 1000) + " bn" : "$" + fmt0(v) + " m";
+
+  const THRESH_BY_YEAR = DATA.years.map((_, i) => {
+    const vals = Object.values(DATA.aid).map(a => a[i]).filter(a => a && a[0] > 0).map(a => a[0]).sort(d3.ascending);
+    return [0.2, 0.4, 0.6, 0.8].map(p => Math.round(d3.quantileSorted(vals, p)));
+  });
+  let thresh = THRESH_BY_YEAR[THRESH_BY_YEAR.length - 1];
+
+  function aidColor(a) {
+    if (!a) return NODATA;
+    const v = a[0];
+    if (v < 0) return NEG;
+    let i = 0; while (i < thresh.length && v >= thresh[i]) i++;
+    return COLORS[i];
+  }
+
+  // --- legend (labels change with the year) ---------------------------------------
+  const leg = d3.select("#aidLegend");
+  function drawLegend() {
+    const t = thresh;
+    const labels = [`< $${t[0]}`, `$${t[0]}–${t[1]}`, `$${t[1]}–${t[2]}`, `$${t[2]}–${t[3]}`, `$${t[3]}+`];
+    leg.selectAll("*").remove();
+    [["net negative", NEG], ...labels.map((l, i) => [l, COLORS[i]]), ["no ODA reported", NODATA]]
+      .forEach(([l, c]) => {
+        const s = leg.append("div").attr("class", "sw");
+        s.append("i").style("background", c);
+        s.append("span").text(l);
+      });
+  }
+
+  // --- map ---------------------------------------------------------------------
+  const proj = d3.geoEqualEarth().fitExtent([[6, 4], [W - 6, H - 4]], DATA.geo);
+  const path = d3.geoPath(proj);
+
+  const feats = DATA.geo.features;
+  const countryG = d3.select("#countries").selectAll("path").data(feats).join("path")
+    .attr("class", "country").attr("d", path).attr("fill", NODATA);
+  const hatchG = d3.select("#hatch").selectAll("path").data(feats).join("path")
+    .attr("class", "hatch").attr("d", path).attr("fill", "none");
+  const dotG = d3.select("#dotlayer");
+
+  const yi = y => y - Y0;
+  const radius = d3.scaleSqrt().domain([0, 3000]).range([1.3, 8]).clamp(true);
+
+  let year = Y1;   // open on the latest year
+  const slider = document.getElementById("slider");
+  const yearEl = document.getElementById("year");
+  const dotsBox = document.getElementById("dots");
+
+  function render() {
+    const i = yi(year);
+    yearEl.textContent = year; slider.value = year;
+    thresh = THRESH_BY_YEAR[i]; drawLegend();
+
+    countryG.attr("fill", d => aidColor(DATA.aid[d.properties.iso3]?.[i]));
+    hatchG.classed("war", d => (DATA.conflict[d.properties.iso3]?.[i]?.[0] || 0) >= 2);
+
+    const cells = dotsBox.checked ? (DATA.grid[year] || []) : [];
+    dotG.selectAll("circle").data(cells).join("circle").attr("class", "dot")
+      .attr("cx", d => proj([d[1], d[0]])[0]).attr("cy", d => proj([d[1], d[0]])[1])
+      .attr("r", d => radius(d[2]));
+
+    // dynamic summary line
+    let war = 0;
+    Object.values(DATA.conflict).forEach(a => { const c = a[i]; if (c && c[0] >= 2) war++; });
+    document.getElementById("stat").textContent =
+      `${year}: ${war} ${war === 1 ? "country" : "countries"} had war-level fighting (1,000+ deaths from state-based conflict).`;
+  }
+
+  // --- tooltip -----------------------------------------------------------------
+  const tip = document.getElementById("tip"), wrap = document.getElementById("wrap");
+  function showTip(ev, d) {
+    const iso = d.properties.iso3, i = yi(year);
+    const a = DATA.aid[iso]?.[i], c = DATA.conflict[iso]?.[i];
+    let h = `<b>${d.properties.name}</b>`;
+    const inc = DATA.income[iso]?.[i];
+    h += `<div class="row"><span class="lab">Income group</span><span>${inc >= 0 ? DATA.incomeNames[inc] : "not classified"}</span></div>`;
+    const gn = DATA.gni?.[iso]?.[i];
+    h += `<div class="row"><span class="lab">GNI per capita</span><span>${gn != null ? "$" + fmt0(gn) : "not available"}</span></div>`;
+    if (a) {
+      h += `<div class="row"><span class="lab">ODA per person</span><span>${a[0] < 0 ? "−" : ""}$${fmt0(Math.abs(a[0]))}</span></div>`;
+      h += `<div class="row"><span class="lab">Total ODA</span><span>${a[1] < 0 ? "−" : ""}${fmtM(Math.abs(a[1]))}</span></div>`;
+      if (a[2] > 0) h += `<div class="warn">${a[2] >= 0.995 ? "All" : Math.round(a[2] * 100) + "%"} of this is reported under OECD Part II (countries in transition)</div>`;
+    } else {
+      h += `<div class="row"><span class="lab">ODA per person</span><span>no ODA reported</span></div>`;
+    }
+    if (c && (c[1] || c[2])) {
+      const lvl = c[0] >= 2 ? "War (1,000+ deaths)" : "Below 1,000 deaths";
+      h += `<div class="row"><span class="lab">State-based conflict</span><span>${lvl}</span></div>`;
+      h += `<div class="row"><span class="lab">State-based deaths</span><span>${fmt0(c[1])}</span></div>`;
+      if (c[2] > c[1]) h += `<div class="row"><span class="lab">All organised violence*</span><span>${fmt0(c[2])}</span></div><div class="lab fine">*incl. non-state and attacks on civilians</div>`;
+    } else {
+      h += `<div class="row"><span class="lab">Conflict</span><span>none recorded</span></div>`;
+    }
+    tip.innerHTML = h;
+    tip.style.opacity = 1;
+    moveTip(ev);
+  }
+  function moveTip(ev) {
+    const r = wrap.getBoundingClientRect();
+    let x = ev.clientX - r.left + 14, y = ev.clientY - r.top + 14;
+    if (x + 310 > r.width) x = Math.max(4, ev.clientX - r.left - 314);
+    y = Math.max(0, Math.min(y, r.height - tip.offsetHeight - 4));   // keep inside the page so no scrollbar appears
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  }
+  countryG.on("pointerenter pointermove", (ev, d) => showTip(ev, d))
+          .on("pointerleave", () => { tip.style.opacity = 0; });
+
+  // --- controls ----------------------------------------------------------------
+  slider.addEventListener("input", () => { year = +slider.value; render(); });
+  slider.addEventListener("change", () => CGDTracking.trackEngagement("filter", "year_slider", slider.value));
+  dotsBox.addEventListener("change", () => {
+    render();
+    CGDTracking.trackEngagement("filter", "conflict_locations_toggle", dotsBox.checked ? "on" : "off");
+  });
+  document.getElementById("dl").addEventListener("click", () => CGDTracking.trackEngagement("download", "download_data_csv"));
+
+  const playBtn = document.getElementById("play");
+  let timer = null;
+  function stop() { clearInterval(timer); timer = null; playBtn.innerHTML = "&#9654;"; }
+  playBtn.addEventListener("click", () => {
+    if (timer) { stop(); CGDTracking.trackEngagement("view_control", "play_pause_button", "pause"); return; }
+    if (year >= Y1) year = Y0;
+    playBtn.innerHTML = "&#10074;&#10074;";
+    render();
+    timer = setInterval(() => { if (year >= Y1) return stop(); year++; render(); }, 650);
+    CGDTracking.trackEngagement("view_control", "play_pause_button", "play");
+  });
+
+  render();
+  CGDTracking.trackView();
+}
+</script>
+</body>
+</html>
