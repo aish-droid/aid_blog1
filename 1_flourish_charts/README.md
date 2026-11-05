@@ -7,7 +7,7 @@ All five use the Flourish "line, bar and pie" template (id 121006). The chart ID
 |---|---|---|---|
 | 1a | [30806197](https://app.flourish.studio/visualisation/30806197/edit) | Figure 1a: People living in extreme poverty ($3 poverty line), by world region | Billions of people, 1990 to 2024 |
 | 1b | [30792818](https://app.flourish.studio/visualisation/30792818/edit) | Figure 1b: People living in extreme poverty ($3 poverty line), by country income class | Billions of people, 1990 to 2024. Jumps reflect countries being reclassified. |
-| 2 | [30792837](https://app.flourish.studio/visualisation/30792837/edit) | Figure 2: Aid per person in extreme poverty has shifted to middle-income countries | Net ODA per person in extreme poverty ($3 poverty line, ODA in constant 2024 USD) |
+| 2 | [30792837](https://app.flourish.studio/visualisation/30792837/edit) | Figure 2: How proportionate is net ODA to shares of extreme poverty over different income classes? | Share of net ODA vs share of people living in extreme poverty ($3 poverty line) by World Bank income class. |
 | 3 | [30792841](https://app.flourish.studio/visualisation/30792841/edit) | Figure 3: Progressivity of ODA from 1990-2024 | Share of net ODA going to the poorest recipient countries, accounting for 20% of the world population |
 | 7 | [30804677](https://app.flourish.studio/visualisation/30804677/edit) | Figure 7: Cost of Cutting Extreme Poverty to 1%, as a Share of GDP | Estimated annual cost of targeted cash transfers to bring the extreme-poverty rate to 1% by World Bank income class ($2.15 poverty line) |
 | 8a | [30807271](https://app.flourish.studio/visualisation/30807271/edit) | Figure 8a: Per capita personal remittances received, by recipient income group | Per capita flows in constant 2024 USD |
@@ -39,8 +39,10 @@ Source: <a href="https://pip.worldbank.org/" target="_blank" rel="noopener noref
 **2**
 
 ```html
-Source: <a href="https://data-explorer.oecd.org/vis?df[ds]=DisseminateFinalDMZ&amp;df[id]=DSD_DAC2@DF_DAC2A&amp;df[ag]=OECD.DCD.FSD" target="_blank" rel="noopener noreferrer">OECD DAC Table 2A</a> for net ODA; <a href="https://pip.worldbank.org" target="_blank" rel="noopener noreferrer">World Bank Poverty and Inequality Platform</a>, $3 2021 PPP data for extreme poverty. World Bank’s income classifications change over the years. Each line divides the total net ODA by the total number of extreme poor in that year for all countries in that income class.
+Source: <a href="https://data-explorer.oecd.org/vis?df[ds]=DisseminateFinalDMZ&amp;df[id]=DSD_DAC2@DF_DAC2A&amp;df[ag]=OECD.DCD.FSD" target="_blank" rel="noopener noreferrer">OECD DAC Table 2A</a> for net ODA; <a href="https://pip.worldbank.org" target="_blank" rel="noopener noreferrer">World Bank Poverty and Inequality Platform</a>, $3 2021 PPP data for extreme poverty. Shares are within low-, lower-middle- and upper-middle-income countries, using each country's World Bank income class in that year. Unallocated and unclassified aid is excluded. The last panel leaves Ukraine out of ODA, where it received about $36 billion in 2024. Ukraine was lower-middle income in 2022 and upper-middle income in 2023 and 2024.
 ```
+
+Figure 2 was rebuilt on 4 November 2026: it used to be a line chart of net ODA per extremely poor person (low-income, middle-income, and middle-income excluding Ukraine). It is now a grouped column chart with three panels (2020, 2024, and 2024 excluding Ukraine) and for each income class (labelled LIC, LMIC, UMIC) two bars: its share of net ODA and its share of people in extreme poverty. Data: `code/21_figure2_share_oda_vs_poor.py` writes `data/clean/figure2_share_oda_vs_poor.csv` (and an annual 2000-2024 version, `figure2_share_oda_vs_poor_annual.csv`). The previous data are kept in `data/clean/figure2_previous_aid_per_poor_person.csv`.
 
 **3**
 
