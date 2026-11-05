@@ -37,6 +37,12 @@
   figure#fig-8 { width: min(1280px, calc(100vw - 32px)); }       /* three charts side by side */
   .flo.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
   @media (max-width: 760px) { .flo.pair, .flo.trio { grid-template-columns: 1fr; } }
+  sup.fnref a { text-decoration: none; color: var(--light-teal); font-family: "sofia-pro", "Inter", sans-serif; font-weight: 700; font-size: 0.75em; padding: 0 1px; }
+  section.footnotes { max-width: 700px; margin: 56px auto 0; padding-top: 14px; border-top: 1px solid var(--gray); font-family: "sofia-pro", "Inter", sans-serif; font-size: 0.85rem; line-height: 1.5; }
+  section.footnotes h2 { font-size: 1rem; margin: 0 0 8px; }
+  section.footnotes ol { padding-left: 1.3em; }
+  section.footnotes li { margin-bottom: 0.5em; }
+  section.footnotes a.fnback { color: var(--light-teal); text-decoration: none; }
   .devnote { display: none; font-family: "sofia-pro", "Inter", sans-serif; font-size: 0.75rem; background: #FEE8BF; padding: 4px 10px; margin: 0 0 8px; max-width: none; }
   .devnote a { color: var(--teal); }
   body.notes .devnote { display: block; }
@@ -55,27 +61,28 @@
 </div>
 <article>
 <h1 data-edit>title?</h1>
-<p class="byline" data-edit>By [author]</p>
+<p class="byline" data-edit>By Rachel Glennerster and Aishwarya Venkat</p>
 <h2 data-edit>Where do the world’s extreme poor live?</h2>
-<p data-edit>If we look at the number of people in extreme poverty by continent, extreme poverty has shifted from Asia to Africa, with East Asia and the Pacific seeing the largest gains in the last 15 years. Regional shares of world extreme poverty moved from 30% to 69% for Sub-Saharan Africa (SSA), from 30% to 7% for South Asia, and from 28% to 6% for East Asia and the Pacific from 2010 to 2024 (Figure 1a). If we look at the shift in the shares of extreme poverty by income class in the same period, the share of middle-income countries (MICs) moved from 74% to 55%, and the share of low-income countries (LICs) moved from 26% to 44% (Figure 1b). The share of extreme poverty in MICs remains high, with five SSA countries - Nigeria, Tanzania, Kenya, Angola, and Ghana accounting for 42% of the extreme poverty count in middle-income countries.</p>
+<p data-edit>If we look at the number of people in extreme poverty by continent, extreme poverty has shifted from Asia to Africa, with East Asia and the Pacific seeing the largest gains in the last 15 years. Regional shares of world extreme poverty moved from 30% to 69% for Sub-Saharan Africa (SSA), from 30% to 7% for South Asia, and from 28% to 6% for East Asia and the Pacific from 2010 to 2024 (Figure 1a). If we look at the shift in the shares of extreme poverty by income class in the same period, the share of middle-income countries (MICs)<sup class="fnref"><a href="#fn-1" id="fnref-1">1</a></sup> moved from 74% to 55%, and the share of low-income countries (LICs) moved from 26% to 44% (Figure 1b). The share of extreme poverty in MICs remains high, especially in Africa. Five SSA countries - Nigeria, Tanzania, Kenya, Angola, and Ghana account for 42% of the extreme poor in middle-income countries.<sup class="fnref"><a href="#fn-2" id="fnref-2">2</a></sup></p>
 
 <figure class="fig hasflo" id="fig-1">
   <p class="devnote">Embedded live from Flourish (shared CGD account), side by side: <a href='https://app.flourish.studio/visualisation/30806197/edit' target='_blank' rel='noopener noreferrer'>1a by world region</a>, <a href='https://app.flourish.studio/visualisation/30792818/edit' target='_blank' rel='noopener noreferrer'>1b by income class</a>.</p>
   <div class="flo pair"><div class="flourish-embed flourish-chart" data-src="visualisation/30806197"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30792818"></div></div>
 </figure>
 <h2 data-edit>Is aid flowing to the poorest countries?</h2>
-<p data-edit>Figure 2 plots the aid per person in extreme poverty for middle- and low-income countries by dividing the total Official Development Assistance (ODA) received by countries classified as LICs or MICs in that year by the number of people in extreme poverty in those countries. From 2020 to 2024, for MICs this figure has gone up from $168 to $266, while for LICs it has gone down from $176 to $119, making the MICs/LICs ratio move from 0.95x to 2.23x. Since Ukraine accounts for a large share of the post-2021 increase in aid going to MICs, excluding it moves the MICs/LICs ratio from 0.93x to 1.55x.</p>
+<p data-edit>In 2020, LICs held 41% of the world’s extreme poor and received 40% of all net ODA. By 2024, those figures had moved to 45% and 27%, respectively. Excluding Ukraine from MICs due to the post-conflict aid spike in the region, LICs still received only 34% of net ODA in 2024. UMICs, even after excluding Ukraine, receive 15% of net ODA while holding only 6% of extreme poor (See Figure 2).</p>
 
 <figure class="fig hasflo" id="fig-2">
   <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30792837/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>.</p>
   <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30792837"></div></div>
 </figure>
-<p data-edit>Figure 3 plots a measure of the progressivity of ODA from 1990 to 2024, which calculates the share of aid going to the poorest recipient countries accounting for 20% of the total population. This figure has decreased from 62% at its peak in 2018 to 46% in 2024. From both Figures 2 and 3, the trends in aid going to the poorest countries are declining. The World Bank’s IDA arm that lends to the poorest countries shows a similar picture. Mathiasen, Landers, and Martinez (2026) find that across FY20-25, 42% of IDA financing volumes go to gap and blend countries on average, leaving only 54% for IDA-only countries. In FY25, countries above the operational income threshold ($1,335 for FY25) received 38% of the grant element in IDA (Figure 4).</p>
+<p data-edit>Figure 3 plots a measure of the progressivity of ODA from 1990 to 2024, which calculates the share of aid going to the poorest recipient countries accounting for 20% of the total world population<sup class="fnref"><a href="#fn-3" id="fnref-3">3</a></sup>. This figure has decreased from 62% at its peak in 2018 to 46% in 2024. Both Figures 2 and 3 show that the proportion of aid going to the poorest countries has declined.</p>
 
 <figure class="fig hasflo" id="fig-3">
   <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30792841/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>.</p>
   <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30792841"></div></div>
 </figure>
+<p data-edit>The World Bank’s IDA arm that lends to the poorest countries shows a similar picture. <a href="https://www.cgdev.org/publication/better-outcome-poorest-finding-right-ida-ibrd-balance" target="_blank" rel="noopener noreferrer">Mathiasen, Landers, and Martinez (2026)</a> find that across FY20-25, 42% of IDA financing volumes go to gap and blend countries on average, leaving only 54% for IDA-only countries. In FY25, countries above the operational income threshold<sup class="fnref"><a href="#fn-4" id="fnref-4">4</a></sup> ($1,335 for FY25) received 38% of the grant element in IDA. By income classes that we have used so far, on average in FY20-25 LICs got 44% of IDA allocations, and only 62% of the grant element. (Figure 4 shows the allocation and grant element by income classification and details IDA lending status).</p>
 
 <figure class="fig" id="fig-4">
   <p class="devnote">Final version: custom interactive in <code>2_cgd_interactives</code>, embedded as an iframe. This is the live page.</p>
@@ -94,7 +101,7 @@
   <p class="fsrc" data-edit>Net ODA received per person, in constant 2024 US$; the five shades are quintiles within the selected year. A red outline marks countries with 1,000 or more deaths in the year from state-based armed conflict. Hover over a country for its figures. Sources: <a href='https://data-explorer.oecd.org/vis?df[ds]=DisseminateFinalDMZ&amp;df[id]=DSD_DAC2@DF_DAC2A&amp;df[ag]=OECD.DCD.FSD' target='_blank' rel='noopener noreferrer'>OECD DAC Table 2A</a>; <a href='https://databank.worldbank.org/source/world-development-indicators' target='_blank' rel='noopener noreferrer'>World Bank World Development Indicators</a>; <a href='https://ucdp.uu.se/downloads/' target='_blank' rel='noopener noreferrer'>Uppsala Conflict Data Program</a> (UCDP GED v26.1 and UCDP/PRIO Armed Conflict Dataset).</p>
 </figure>
 <h2 data-edit>How do major donors perform on lending to the poorest countries?</h2>
-<p data-edit>Figure 6 plots the flows from major donors to recipients, classified by either income group or continent (a button switches between the two on the figure). Among the largest OECD country donors shown (the US, Canada, Germany, the UK, France and Japan), the largest share of each donor’s net ODA goes to regional or unallocated categories. (aid not assigned to a specific recipient country) This ranges from 40% for the US to 69% for the UK in 2024, except France and Japan, whose largest share goes to lower-MICs (41% and 56%). EU Institutions sent 62% of their net ODA in 2024 to UMICs and 60% to Europe, largely reflecting Ukraine, which alone received 54% of it. Multilateral organizations sent 47% of their net ODA in 2024 to LMICs and 29% to LICs. LICs received 30% of their ODA from multilateral organizations and another 21% from the US. Looking at recipients by continent, in 2024 Africa got 42% of its ODA from multilaterals and another 21% from the US; other donors and donor groups each provided no more than 8%. 21 of the 25 low-income recipient countries are in Africa, and 63% of Africa’s ODA comes from just two sources: multilateral organisations and the United States.</p>
+<p data-edit>Figure 6 plots the flows from major donors to recipients, classified by either income group or continent (a button switches between the two on the figure). Among the largest OECD country donors shown (the US, Canada, Germany, the UK, France and Japan), the largest share of each donor’s net ODA goes to regional or unallocated categories. (aid not assigned to a specific recipient country) This ranges from 40% for the US to 69% for the UK in 2024, except France and Japan, whose largest share goes to lower-MICs (41% and 56%). EU Institutions sent 62% of their net ODA in 2024 to UMICs and 60% to Europe, largely reflecting Ukraine, which alone received 54% of it. Multilateral organizations sent 47% of their net ODA in 2024 to LMICs and 29% to LICs. LICs received 30% of their ODA from multilateral organizations and another 21% from the US. Looking at recipients by continent, in 2024 Africa got 42% of its ODA from multilaterals and another 21% from the US; other donors and donor groups each provided no more than 8%. 21 of the 25 low-income recipient countries are in Africa, and 63% of Africa’s ODA comes from just two sources: multilateral organizations and the United States.</p>
 
 <figure class="fig" id="fig-6">
   <p class="devnote">Final version: custom interactive in <code>2_cgd_interactives</code>, embedded as an iframe. This is the live page.</p>
@@ -103,19 +110,16 @@
   <iframe src="../2_cgd_interactives/donor-recipient-sankey.html" title="Sankey diagram of net ODA from donors to recipients"></iframe>
   <p class="fsrc" data-edit>Net ODA from donors to recipients, in constant 2024 US$, official donors only. The largest bilateral donors are shown individually; European donors other than France, Germany and the United Kingdom are grouped, as are the Gulf countries; remaining small bilateral donors are grouped as 'Other bilateral donors'. Unallocated aid is shown as its own recipient. World Bank income classifications for countries change over the years. Source: <a href='https://davidroodman.com/data/' target='_blank' rel='noopener noreferrer'>David Roodman's ODA dataset</a>.</p>
 </figure>
-<h2 data-edit>Cost of ending extreme poverty</h2>
-<p data-edit>[Text for this section to come.] Figure 7 shows the annual cost of the transfer policy that would cut extreme poverty to 1%, as a share of each country's GDP.</p>
-
-<figure class="fig hasflo" id="fig-7">
-  <p class="devnote">Embedded live from Flourish (shared CGD account): <a href='https://app.flourish.studio/visualisation/30804677/edit' target='_blank' rel='noopener noreferrer'>open in Flourish</a>.</p>
-  <div class="flo"><div class="flourish-embed flourish-chart" data-src="visualisation/30804677"></div></div>
-</figure>
-<p data-edit>[Text for this section to come.] Figure 8 shows remittances, foreign direct investment and net ODA received per person, by recipient income group.</p>
-
-<figure class="fig hasflo" id="fig-8">
-  <p class="devnote">Embedded live from Flourish (shared CGD account), side by side: <a href='https://app.flourish.studio/visualisation/30807271/edit' target='_blank' rel='noopener noreferrer'>8a remittances</a>, <a href='https://app.flourish.studio/visualisation/30807273/edit' target='_blank' rel='noopener noreferrer'>8b foreign direct investment</a>, <a href='https://app.flourish.studio/visualisation/30807671/edit' target='_blank' rel='noopener noreferrer'>8c net ODA</a>.</p>
-  <div class="flo trio"><div class="flourish-embed flourish-chart" data-src="visualisation/30807271"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30807273"></div><div class="flourish-embed flourish-chart" data-src="visualisation/30807671"></div></div>
-</figure>
+<h2 data-edit>Cost of ending extreme poverty: LICs need more support</h2>
+<p data-edit><a href="https://www.nber.org/papers/w34583" target="_blank" rel="noopener noreferrer">Sahoo et al. 2025</a> estimate the cost of targeted transfers to bring countries’ extreme poverty rate to 1% as a share of GDP. Targeting challenges notwithstanding, after grouping their results by World Bank income classification (Figure 7), we can see that for almost all LICs, this cost is much higher compared to more than half of LMICs, for whom this cost is less than 5%. For Nigeria, which has a lot of extreme poor, the cost is 6%. Another metric to support that LICs need the support of ODA more severely than LMICs do is through the flows of personal remittances and private capital flows. Figure 8 compares net ODA, personal remittances, and foreign direct investment (FDI) net inflows across LICs, LMICs, and UMICs. For LICs, per capita ODA is more than 3x remittances and 2.5x FDI net inflows on average in 2020-24.</p>
+<h2 data-edit>Conclusion</h2>
+<section class="footnotes"><h2>Notes</h2>
+<ol>
+<li id="fn-1"><span data-edit>MICs include upper- and lower-middle-income countries. All income classifications are as per <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups" target="_blank" rel="noopener noreferrer">World Bank classifications</a></span> <a class="fnback" href="#fnref-1" aria-label="Back to the text">&#8617;</a></li>
+<li id="fn-2"><span data-edit>Shares come from <a href="https://pip.worldbank.org/poverty-calculator" target="_blank" rel="noopener noreferrer">World Bank PIP</a>-modelled estimates</span> <a class="fnback" href="#fnref-2" aria-label="Back to the text">&#8617;</a></li>
+<li id="fn-3"><span data-edit>To calculate this: 1) for each year, countries are ranked by Gross National Income (GNI), 2) then the share of the country’s population in the total population of ranked countries is cumulatively summed for the bottom-ranking countries to get 20% (for a country on the threshold, a pro-rated share is taken to get exactly 20%); and 3) the share of ODA going to the chosen share of countries in 2) is divided by the total ODA received by the ranked recipients.</span> <a class="fnback" href="#fnref-3" aria-label="Back to the text">&#8617;</a></li>
+<li id="fn-4"><span data-edit>Countries above the income threshold include blends, gaps, and small economies, and also 4 IDA-only countries: Guinea, Haiti, Tajikistan, and Djibouti</span> <a class="fnback" href="#fnref-4" aria-label="Back to the text">&#8617;</a></li>
+</ol></section>
 </article>
 
 <script src="https://public.flourish.studio/resources/embed.js"></script>
